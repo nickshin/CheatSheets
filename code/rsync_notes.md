@@ -1,8 +1,8 @@
 # Rsync Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this code found in this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -12,7 +12,7 @@ here are some useful pages I found very helpful (to digest) that I
 sometimes refer to every now and then:
 
 - [rsync tips &amp; tricks](http://web.archive.org/web/20100728130038/http://sial.org/howto/rsync/)
-<span class="note1">(archive.org)</span> -- [rsync tips &amp; tricks](http://sial.org/howto/rsync/) <span class="note1">(original)</span>
+_(archive.org)_ -- [rsync tips &amp; tricks](http://sial.org/howto/rsync/) _(original)_
 	- notes on trailing slashes - very important to know the differences
 	- using it with ssh for remote copying interactively (i.e. with password challenge)
 	- setting it up with ssh for unattended (i.e. no password challenge) periodic backups
@@ -132,12 +132,4 @@ $rsynccmd --delete $EXCLUDE_THESE --exclude-from=$EXCLUDES_FILE --filter=". $FIL
 ```
 
 * * *
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

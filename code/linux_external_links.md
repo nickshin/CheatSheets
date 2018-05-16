@@ -1,8 +1,8 @@
 ## External Links: Linux
 
-- written by Nick Shin - nick.shin@gmail.com
-- this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)
-- and, is from - <https://www.nickshin.com/CheatSheets/>
+written by Nick Shin - nick.shin@gmail.com<br>
+this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -70,7 +70,7 @@ The external links list was getting so large, I placed them here.
 
 #### optimizations
 - [Make Linux faster and lighter](http://www.tuxradar.com/content/make-linux-faster-and-lighter)
-- [Fedora 17](https://harald.hoyer.xyz/2013/11/13/fedora-boot-optimization/) Boot Optimization (from 15 to 2.5 seconds)</a>
+- [Fedora 17 Boot Optimization (from 15 to 2.5 seconds)](https://harald.hoyer.xyz/2013/11/13/fedora-boot-optimization/)
 
 #### fixes
 - [Swap CTRL &amp; CapsLock (everywhere)](http://askubuntu.com/questions/149971/how-do-you-remap-a-key-to-the-caps-lock-key-in-xubuntu#223674)
@@ -79,11 +79,4 @@ The external links list was getting so large, I placed them here.
 - [Create symlink with Msys2](http://superuser.com/a/1044337)
 
 * * *
-
-
-
-
-<style>
-ul { font-size: 11px; }
-</style>
 

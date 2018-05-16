@@ -1,8 +1,8 @@
 # SMTP Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -39,11 +39,13 @@ can help give messages instant recognisability that may require immediate attent
 
 ## DEBUGGING:
 send a test msg (or use "email verification" mode):
+
 ```sh
 echo "msg body" | mail -s "msg subj" username@gmail.com
 ```
 
 if things still bomb, make sure to look at log files:
+
 ```sh
 sendmail -bv username@gmail.com		# "email verification": ACL test - does not go in any inbox
 cat /var/log/mail.log | tail -20
@@ -62,6 +64,7 @@ just follow these instructions: (pretty much works right out of the box)
 	- scroll down to EXIM
 
 handy commands while testing:
+
 ```sh
 sudo mailq                                    # show mail queue
 sudo exiqgrep -z -i | sudo xargs exim -Mrm    # nuke all msgs in queue
@@ -73,6 +76,7 @@ sudo exiqgrep -z -i | sudo xargs exim -Mrm    # nuke all msgs in queue
 
 the following may be needed: **nuke existing postfix install**
 and then **re-install** it to start with a clean slate.
+
 ```sh
 sudo apt-get purge postfix
 sudo aptitude install postfix
@@ -83,6 +87,7 @@ and then follow these instructions:
 - [How to Secure Postfix Using Let’s Encrypt](https://www.upcloud.com/support/secure-postfix-using-lets-encrypt/)
 
 handy commands while testing:
+
 ```sh
 mailq                    # show mail queue
 sudo postsuper -d ALL    # nuke all msgs in queue
@@ -146,12 +151,4 @@ bob@example.net
 ```
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

@@ -1,8 +1,8 @@
 # SQL Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this code found in this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -81,6 +81,7 @@ root_prompt> mysql sampleDBname < etc_etc_etc.sql
 ```
 
 where `createusers.sql` might contain:
+
 ```sql
 REPLACE INTO user ( host, user, password )
 VALUES (
@@ -100,10 +101,12 @@ VALUES (
 	'Y', 'Y', 'Y'
 );
 ```
-- <span class="indent">note: REPLACE will INSERT if no entry matches</span>
+
+	- note: REPLACE will INSERT if no entry matches
 
 
 where `createtable.sql` might contain:
+
 ```sql
 CONNECT sampleDBname;
 
@@ -125,7 +128,8 @@ CREATE TABLE sampleDBtable (
 	primary key (id)
 );
 ```
-- <span class="indent">note: there is no "REPLACE" equivalent with "CREATE" TABLE</span>
+
+	- note: there is no "REPLACE" equivalent with "CREATE" TABLE
 
 * * *
 
@@ -165,6 +169,7 @@ mysql_prompt> CREATE TABLE sampleDBtable ( ... see createtable.sql above ... );
 ### remote access examples:
 
 - Set up the `host` table (assuming it has not yet been set up)
+
 ```sh
 mysql_root> INSERT INTO host ( host, db,
 				Select_priv, Insert_priv, Update_priv,
@@ -177,6 +182,7 @@ mysql_root> INSERT INTO host ( host, db,
 ```
 
 - Update the `user` table, granting access to a new **host+user** combination.
+
 ```sh
 mysql_root> INSERT INTO user (host,user,password)
 # with these example entries:
@@ -185,6 +191,7 @@ mysql_root> INSERT INTO user (host,user,password)
 ```
 
 - Update the `db` table.
+
 ```sh
 mysql_root> INSERT INTO db ( host, db, user,
 			Select_priv, Insert_priv, Update_priv,
@@ -281,6 +288,7 @@ mysql_prompt> SELECT host,db,user FROM db;
 ### misc tips
 
 - to list all the table index information
+
 ```sh
 # the following two are the same
 mysql_prompt> SHOW KEYS FROM tableItem;
@@ -288,6 +296,7 @@ mysql_prompt> SHOW INDEX FROM sampleDBtable FROM sampleDBname;
 ```
 
 - to list all the entries from the table
+
 ```sh
 # the following two are the same
 mysql_prompt> SHOW COLUMNS FROM sampleDBtable;
@@ -295,33 +304,28 @@ mysql_prompt> SHOW FIELDS FROM sampleDBtable;
 ```
 
 - narrow a search
+
 ```sh
 mysql_prompt> SHOW FIELDS FROM sampleDBtable LIKE '%yyy';
 ```
 
 - SEARCH
+
 ```sh
 mysql_prompt> SELECT * FROM sampleDBtable WHERE tableItem LIKE '%zzz';
 ```
 
 - multiple columns
+
 ```sh
 mysql_prompt> SELECT tableItem,tableItem2 FROM sampleDBtable;
 ```
 
 - list unique entries
+
 ```sh
 mysql_prompt> SELECT DISTINCT tableItem FROM sampleDBtable;
 ```
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

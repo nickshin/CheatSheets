@@ -1,8 +1,8 @@
 # 3D notes #1
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 * * *
@@ -30,6 +30,7 @@ the order of the parameters in D3DX.
 #### OpenGL, matrix operations are pre-concatenated
 
 That is, operation M1 followed by M2 results in this:
+
 ```c
 v' = M1 x M2 x v
 ```
@@ -51,6 +52,7 @@ TCI = glTranslatef( 0-centerd[0], 0-centerd[1], 0-centerd[2] )
 note: matrix multiplication (transformation) is automatically applied (to an initial
 identity matrix) after each function call above and is stored internally (in
 that initial matrix).  to retrieve the results, use:
+
 ```c
 glGet( GL_MODELVIEW_MATRIX, GLfloats* values );
 // then multiply returned [ matrix *** ] with [ vector !!! ] to complete the transformation
@@ -58,17 +60,20 @@ glGet( GL_MODELVIEW_MATRIX, GLfloats* values );
 
 If you expressed that code in column-major notation (used by OpenGL), you get this:
 - note: **PRE-CONCATENATED** notation
+
 ```c
 v' = TP x TC x RA x RS x S x RSI x TCI x v
 ```
 
 The row-major (used by D3D) equivalent is this:
 - note: **POST-CONCATENATED** notation
+
 ```c
   v' = v x TCI x RSI x S x RS x RA x TC x TP
 ```
 
 #### The D3DX code equivalent is this:
+
 ```c
 D3DXTranslation ( &TP,   position );
 D3DXTranslation ( &TC,   centerd );
@@ -80,6 +85,7 @@ D3DXTranslation ( &TCI, -centerd );
 ```
 
 #### note: the following is the PRE-CONCATENATED equivalent
+
 ```c
 D3DXMatrixIdentity( &M );
 D3DXMatrixMultiply( &M, &TP, &M );
@@ -95,6 +101,7 @@ glLoadMatrixf( &M );
 
 note: the following is the **POST-CONCATENATED** implimentation
 - see the difference between [ parameter AND implimentation ] order
+
 ```c
 D3DXMatrixIdentity( &M );
 D3DXMatrixMultiply( &M, &M, &TCI );
@@ -134,6 +141,7 @@ between pre/post-concatenated notation -- but try NOT to do this...
 
 in general, uses column major:
 - i.e:`4x1 *4 ==> matrix`
+
 ```
 T (4x4) transformation matrix
 v (4x1) a vector
@@ -152,6 +160,7 @@ who uses RHCS
 - openGL
 - XNA
 	- but, culling is like LHCS by default, to change it:
+
 ```c
 RasterizerState stat = newRasterizerState();
 stat.CullMode = CullMode.CullClockwiseFace;
@@ -163,6 +172,7 @@ stat.CullMode = CullMode.None;
 
 in general, uses row major:
 - i.e: `1x4 *4 ==> matrix`
+
 ```
 v (1x4) a vector
 T (4x4) transformation matrix
@@ -195,6 +205,7 @@ otherwise:
 
 - `normal_vector = cross_product` : and needs to be normalized to be a unit vector
 	- because in general:
+
 ```
 cross_product length is the area (parallelogram) between the two vectors
 a.k.a: the magnitude of the two vector's perpendicular (normal) vector
@@ -203,6 +214,7 @@ a.k.a: the magnitude of the two vector's perpendicular (normal) vector
 <http://mathworld.wolfram.com/ScalarTripleProduct.html>
 
 vector triple product notation:
+
 ```c
 [ A, B, C ] = A dot ( B x C )
             = B dot ( C x A )
@@ -216,12 +228,14 @@ vector triple product notation:
 <http://mathworld.wolfram.com/VectorQuadrupleProduct.html>
 
 lagrange's identity
+
 ```c
 ( A x B ) dot ( A x B ) = ( A dot A ) ( B dot B ) - ( A dot B ) ( A dot B )
 ( A x B ) dot ( C x D ) = ( A dot C ) ( B dot D ) - ( A dot D ) ( B dot C )
 ```
 
 vector quadruple product:
+
 ```c
 ( A x B ) ^2 = A^2 B^2 - ( A dot B )^2
 ( A x B ) x ( A x B ) = B ( A dot ( A x B ) ) - ( A dot B ) ( A x B )
@@ -239,6 +253,7 @@ vector quadruple product:
 <http://en.wikipedia.org/wiki/Trigonometric_identity>
 
 useful identities...
+
 ```c
 sin theta = (+-) sqrt( 1 - dot_product )
 
@@ -314,6 +329,7 @@ eq of a line = ( v3b - v3a )
 <http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html>
 
 closest point (p) from point (v3c) to line (as noted above):
+
 ```c
           ( v3a - v3c ) dot ( line )
 t = ( - ) --------------------------
@@ -321,6 +337,7 @@ t = ( - ) --------------------------
 ```
 
 vector from point (v3c) to (v3a) flipped:
+
 ```c
           ( v3c - v3a ) dot ( line )
 t = ( + ) --------------------------
@@ -333,6 +350,7 @@ note: if t < 0.0, p is behind segment AB
 ```
 
 dist v3c to line:
+
 ```c
       dist2( ( line ) cross ( v3a - v3c ) )
 d^2 = ------------------------------------------
@@ -340,6 +358,7 @@ d^2 = ------------------------------------------
 ```
 
 with vector quadruple product identity:
+
 ```c
       dist2( ( v3c - v3a ) cross ( v3c - v3b ) )
 d^2 = ------------------------------------------
@@ -363,6 +382,7 @@ it is best to restrict calculations to 2D (coplanar) and then check to see if
 3rd coords values collapse (intersect) or differs (dist between 2 lines).
 
 intersection of two lines:
+
 ```c
 // commented out lines of code represent 3D vectors if all points were coplanar...
 // inline comments, are 2D notes...
@@ -401,6 +421,7 @@ if it is between ( 0 < s or t < 1 ), the intersection is within the (respective)
 <http://mathworld.wolfram.com/Line-LineDistance.html>
 
 distance between lines: (can be skewed lines)
+
 ```c
       dist2( line_c dot ( line_a cross line_b ) )
 d^2 = -------------------------------------------
@@ -435,6 +456,7 @@ note: if t < 0.0, points are going farther apart
 <http://mathworld.wolfram.com/Circle-LineIntersection.html>
 
 use point (circle pos) to line dist calculations
+
 ```c
 if dist is > radius - no intersection
 if dist == radius - tangent
@@ -457,6 +479,7 @@ then take unit vector of ( line ): u		// v3a to v3b, normalized
 <http://mathworld.wolfram.com/Plane.html>
 
 components of a plane:
+
 ```
 plane normal (n) -- a unit vector
 "the" point (p) on the plane through the plane's normal from origin
@@ -464,6 +487,7 @@ plane's constant# (c)  a.k.a. dist of plane from origin
 ```
 
 eq of a plane:
+
 ```c
 n dot p = -c
 n dot ( a - p ) = 0		// note: a-p need not be of unit length...
@@ -552,13 +576,4 @@ line & box tests:
 - then use terse checks: "line plane" tests against all sides on the box
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

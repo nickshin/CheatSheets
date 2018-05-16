@@ -1,16 +1,16 @@
 # Networking Server Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 ## Node.js
 
-<span class="indent">My #1 goto link: [wss://](https://github.com/einaros/ws/blob/master/examples/ssl.js)
-(with excellent **http vs. https** setup tips!)</span>
+- My #1 goto link: [wss://](https://github.com/einaros/ws/blob/master/examples/ssl.js)
+(with excellent **http vs. https** setup tips!)
 
-<span class="indent">My master nodejs starter file: [network_nodejs.js](network_nodejs.js)</span>
+- My master nodejs starter file: [network_nodejs.js](network_nodejs.js)
 
 #### http
 - [http://](http://nodejs.org/)
@@ -34,26 +34,27 @@ and, is from - <https://www.nickshin.com/CheatSheets/></span>
 - [node-simple-xmpp](https://github.com/simple-xmpp/node-simple-xmpp)
 
 #### TLS(SSL)
-<span class="indent">it is amazing how easy it is in Node.js to add a TLS wrapper to nearly any communication protocol it supports</span>
-- [TLS](http://nodejs.org/api/tls.html)
-- [PEM](https://github.com/andris9/pem)
-<br>&nbsp;
-- [https://](http://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)
-- [amqps://](https://github.com/postwait/node-amqp#connection-options-and-url)
-- [xmpps://](https://github.com/node-xmpp/node-xmpp-server/blob/master/examples/s2s_echo_tls.js)
+- it is amazing how easy it is in Node.js to add a TLS wrapper to nearly any communication protocol it supports
+	- [TLS](http://nodejs.org/api/tls.html)
+	- [PEM](https://github.com/andris9/pem)
+	
+	- [https://](http://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)
+	- [amqps://](https://github.com/postwait/node-amqp#connection-options-and-url)
+	- [xmpps://](https://github.com/node-xmpp/node-xmpp-server/blob/master/examples/s2s_echo_tls.js)
 
 * * *
 ## HTTPd
 
-#### setting up SSL <span class="note1">for Apache</span>
+#### setting up SSL _for Apache_
 - [HTTPD - Apache2 Web Server :: HTTPS Configuration](https://help.ubuntu.com/10.04/serverguide/C/httpd.html#https-configuration)
-<span class='note1'>(on Ubuntu)</span>
+_(on Ubuntu)_
 
 #### .htaccess
 - [Stupid htaccess Tricks](http://perishablepress.com/stupid-htaccess-tricks/)
 - My [network_notes2_htaccess.pl](network_notes2_htaccess.pl) to generate .htaccess files for Apache and lighttpd
 
 #### CGI configuration
+
 ```apache
 # remember to 'chmod 755 script/executable'
 # (just in case it isn't obvious) **DO NOT enable cgi on untrusted folders**
@@ -142,7 +143,7 @@ location /fastCGI/ {
 #### FastCGI configuration
 - in general, web servers connects to spawned processes (can be remote)
 	- unlike apache, **lighttpd [and] nginx does not automatically** spawn [blind] FastCGI processes
-	<span class="note1">([nginx.org](http://wiki.nginx.org/FcgiExample#Spawning_a_FastCGI_Process))</span>
+	([nginx.org](http://wiki.nginx.org/FcgiExample#Spawning_a_FastCGI_Process))
 	- so, remember to **start a sufficient number instances** of the program to handle concurrent requests,
 		and these programs remain running to handle further incoming requests (i.e. does not exit)
 	- ensure FastCGI processes stay running -- so, just in case they die unexpectedly, use **process watchers** such as:
@@ -155,12 +156,13 @@ location /fastCGI/ {
 		- [runsv](http://smarden.org/runit/runsv.8.html)
 
 - don't forget to:
+
 ```sh
 chown -R www-data.www-data /var/www/html/fastCGI
 chmod 755 /var/www/html/fastCGI/*
 ```
 
-- <span class="note1">(just in case it isn't obvious)</span> if ".fcgi" program is edited, pid needs to be killed to be reloaded
+- _(just in case it isn't obvious)_ if ".fcgi" program is edited, pid needs to be killed to be reloaded
 
 - [Apache](http://www.cyberciti.biz/tips/rhel-fedora-centos-apache2-external-php-spawn.html)
 
@@ -187,13 +189,13 @@ chmod 755 /var/www/html/fastCGI/*
 </IfModule>
 ```
 
-- <span class="note1">Apache notes:</span>
+- _Apache notes:_
 	- another nice [mod_fastcgi](http://www.openjpeg.org/jpip/doc/ApacheFastCGITutorial.pdf) howto
 	- **WARNING:** a note about [mod_fcgid](http://itkia.com/external-fastcgi-with-apache/)
 		- **mod_fcgid CAN NOT** be use to **connect** to externally spawned FastCGI process.
 			It can **only launch and manage** the processes itself.
 		- in other words, it'll be just like a simple "CGI-bin" execution
-<br>&nbsp;
+
 
 - [lighttpd](http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModFastCGI)
 
@@ -269,12 +271,13 @@ server {
 }
 ```
 
-- <span class="note1">Nginx notes:</span>
+- _Nginx notes:_
 	- remember, Nginx can only connect to listening processes
 
 <!--
 [//] # ( TODO: - source codes for fcgi_example_* can be found [here](fcgi_example.tgz). )
 [//] # ( TODO: - note:                                                                  )
+
 [//] # ( TODO: ```                                                                      )
 [//] # ( TODO: 	http://localhost/fcgi_example_0  => ./fcgi_00_CGIFAST.pl                )
 [//] # ( TODO: 	http://localhost/fcgi_example_0s => ./fcgi_00_CGIFAST.pl                )
@@ -310,25 +313,25 @@ server {
 			this is now done inside [ rabbitmq-jsonrpc-channel ]
 	- [compile the RabbitMQ JSON-RPC-channel plugin](http://hg.rabbitmq.com/rabbitmq-jsonrpc-channel/file/rabbitmq_v2_4_0/README) (README)
 		- GOOD EXTRA HELPFUL INFO
-			- <span class="note1">shutdown server</span>
-			- <span class="note1">goto: rabbitmq-jsonrpc-channel</span>
-			- <span class="note1">then: make run</span>
-			- <span class="note1">point browser to: http://localhost:55672/</span>
+			- _shutdown server_
+			- _goto: rabbitmq-jsonrpc-channel_
+			- _then: make run_
+			- _point browser to: http://localhost:55672/_
 		- JSON-RPC: examples -> Simple JSONRPC test
-			- <span class="note1">NOTE: test server output when connecting</span>
-			- <span class="note1">NOTE: channel stays connected until page is closed</span>
-			- <span class="note1">YAY !</span>
+			- _NOTE: test server output when connecting_
+			- _NOTE: channel stays connected until page is closed_
+			- _YAY !_
 		- JSON-RPC: examples -> Simple chat application
-			- <span class="note1">works as advertised</span>
-			- <span class="note1">YAY !</span>
+			- _works as advertised_
+			- _YAY !_
 
 <!--
 [//] # ( #### perl clients )
 -->
 
 #### python clients
-- [Rabbits and warrens](http://web.archive.org/web/20100529043620/http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/) <span class='note1'>(archive.org)</span>
-	-- [Rabbits and warrens](http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/) <span class='note1'>(original)</span>
+- [Rabbits and warrens](http://web.archive.org/web/20100529043620/http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/) _(archive.org)_
+	-- [Rabbits and warrens](http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/) _(original)_
 
 <!--
 [//] # ( #### ruby clients )
@@ -349,7 +352,7 @@ server {
 -->
 
 #### ejabberd: server components
-- [<span class='note1'>Echo Bot Part Two:</span> Making A Component](http://metajack.im/2008/10/09/echo-bot-part-two-making-a-component/)
+- [_Echo Bot Part Two:_ Making A Component](http://metajack.im/2008/10/09/echo-bot-part-two-making-a-component/)
 - [Net::Jabber 2.0 examples component_accept.pl](http://cpansearch.perl.org/src/REATMON/Net-Jabber-2.0/examples/component_accept.pl)
 - **WARNINGS:**
 	- component can be writen and started by **any user** as long as they know the port number and **secret** value
@@ -357,7 +360,7 @@ server {
 		- **TRY NOT TO DO THIS**
 		- or else make sure component responds only when **TO:** matches component name
 		- clients might take 1st response if any component responds (and possibly encounter something it's not expecting)
-	- if message comes in type 'error' -- it's most likely that 'componentname' was used instead of 'componentname<span class="bold">@hostname</span>'
+	- if message comes in type 'error' -- it's most likely that 'componentname' was used instead of 'componentname`@hostname`'
 		- do not try to 'fix' this component side
 		- keep 'error' type or ignore the message -- this is the expected behavior of badly crafted messages
 
@@ -366,8 +369,8 @@ server {
 	- follow github link and read the easy to follow instructions
 	- test with: [Node.js &amp; WebSocket - Simple chat tutorial](http://martinsikora.com/nodejs-and-websocket-simple-chat-tutorial)
 
-#### ejabberd + HTTP binding <span class='note1'>(for older browsers...)</span>
-- [<span class='note1'>Install JWChat with</span> ejabberd's HTTP-Bind <span class='note1'>and file server</span>](http://www.ejabberd.im/jwchat-localserver)
+#### ejabberd + HTTP binding _(for older browsers...)_
+- [_Install JWChat with_ ejabberd's HTTP-Bind _and file server_](http://www.ejabberd.im/jwchat-localserver)
 
 ```erlang
 %% ejabberd.cfg
@@ -394,7 +397,7 @@ server {
 {acl, admin, {user, "someuser", "localhost"}}.
 ```
 
-- <span class="note1">ejabberd's HTTP-Bind notes:</span>
+- _ejabberd's HTTP-Bind notes:_
 	- then login to [ http://localhost:5280/admin/ ] with admin account
 	- Virtual Hosts -> localhost -> users can be created/modified/deleted here
 
@@ -410,6 +413,7 @@ server {
 		- shows ejabberd w/http-bind also works with strophejs
 		- but no long lived connection example
 		- build strophejs
+
 ```sh
 apt-get install yui-compressor
 export YUI_COMPRESSOR=/usr/share/yui-compressor/yui-compressor.jar
@@ -427,8 +431,8 @@ point browser to: http://localhost:5280/web/strophejs/examples/echobot.html
 
 		- LOGIN in with: username@domain
 
-#### ejabberd: config <span class='note1'>(please see: [offical docs](http://www.process-one.net/en/ejabberd/docs/))</span>
-- setup admins: <span class='note1'>(**Create an XMPP Account for Administration**)</span>
+#### ejabberd: config _(please see: [offical docs](http://www.process-one.net/en/ejabberd/docs/))_
+- setup admins: _(**Create an XMPP Account for Administration**)_
 
 ```sh
 sudo ejabberdctl stop
@@ -446,24 +450,14 @@ sudo ejabberdctl register userA FQDN password
 sudo ejabberdctl register userN FQDN password
 ```
 
-- to allow user created accounts: <span class='note1'>(**mod_register**)</span>
-	- change from:<br>
-<span class="note1 indent">{access, register, [{**deny**, all}]}.</span>
-	- to:<br>
-<span class="note1 indent">{access, register, [{**allow**, all}]}.
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **(WARINING NOT RECOMMENDED!!!)**<br>&nbsp;
+- to allow user created accounts: (`mod_register`)
+	- change from:
+		- `{access, register, [{`**deny**`, all}]}.`
+	- to:
+		- `{access, register, [{`**allow**`, all}]}.`  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **(WARINING NOT RECOMMENDED!!!)**
+
 
 - [The simplest way to create a new ejabberd user with PHP](http://www.ejabberd.im/node/3126)
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-.bold                     { font-weight: bold; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

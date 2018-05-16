@@ -1,14 +1,14 @@
 # stunnel Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
-I have tried a few VPN solutions, <span class="note1">(such as PPP-SSH & OpenVPN)</span>
+I have tried a few VPN solutions, _(such as PPP-SSH & OpenVPN)_
 eons ago and found that they have a horrendous amount of setup that touches
-some system files <span class="note1">(/etc/hosts & /etc/resolv.conf)</span> and
+some system files _(/etc/hosts & /etc/resolv.conf)_ and
 running commands that require super user access:
 
 | **iptables** | modify firewall rules |
@@ -26,17 +26,15 @@ networked computers.  No system files or super user commands are required
 to make this work.
 
 [ssh TCP forwarding](http://www.freebsd.org/cgi/man.cgi?query=ssh#TCP_FORWARDING)
-works the same way.  But "stunnel is running as it's own daemon, you can
-use this port forward without first establishing the ssh connection."
-<span class="note1">-- [stunnel.org](http://www.stunnel.org/examples/generic_tunnel.html)</span>
+works the same way.  But "stunnel is running as it's own daemon, you can use
+this port forward without first establishing the ssh connection." _-- [stunnel.org](http://www.stunnel.org/examples/generic_tunnel.html)_
 
-<span class="note1">( A fun read:
-[SSH Tunnels: Bypass (Almost) Any Firewall](http://polishlinux.org/apps/ssh-tunneling-to-bypass-corporate-firewalls/).
-)</span>
+_( A fun read: [SSH Tunnels: Bypass (Almost) Any Firewall](http://polishlinux.org/apps/ssh-tunneling-to-bypass-corporate-firewalls/).)_
 
 * * *
 
 To double check your ssh server's fingerprint:
+
 ```
 ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
 ```
@@ -44,9 +42,10 @@ ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
 * * *
 
 stunnel code snipets
-<span class="note1">(see [man page](http://www.stunnel.org/faq/stunnel.html) for details on these options)</span>:
+_(see [man page](http://www.stunnel.org/faq/stunnel.html) for details on these options)_:
 
 - stunnel_server.conf
+
 ```ini
 foreground = yes
 client = no
@@ -59,6 +58,7 @@ connect = 10081
 ```
 
 - stunnel_client.conf
+
 ```ini
 foreground = yes
 client = yes
@@ -71,18 +71,11 @@ connect = 10.11.12.13:10080
 ```
 
 Then, execute on the respective computers:
+
 ```
 user@server:~# stunnel stunnel_server.conf
 user@client:~# stunnel stunnel_client.conf
 ```
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

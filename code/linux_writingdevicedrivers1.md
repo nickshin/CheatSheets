@@ -1,8 +1,8 @@
 # Writing Linux Device Drivers
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -28,13 +28,15 @@ modinfo *.ko
 - linux/module.h
 	- every kernel module needs to include this
 	- for list of available symbols exported by kernel:
+
 ```sh
 cat /proc/kallsyms
 ```
 
 - linux/kernel.h
 	- printk()
-	- KERN_ALERT KERN_INFO etc.  (there are 8 priorities)<br>&nbsp;
+	- KERN_ALERT KERN_INFO etc.  (there are 8 priorities)
+
 
 - linux/fs.h
 
@@ -101,7 +103,7 @@ clean:
 
 - fairly complete module summary with: MACROS, parameters, init, exit 
 
-More char\_driver examples see: SolidusCode and rulingminds/mod\_\*
+More `char_driver` examples see: `SolidusCode` and `rulingminds/mod_*`
 
 * * *
 
@@ -192,7 +194,7 @@ ret_val = ioctl( fd, ioctl_request_ID, data );
 **system calls**
 
 user process fill the registers with values, then tells the kernel to jump
-(via interrupt 0x80) to a previously defined location in the kernel
+(via `interrupt 0x80`) to a previously defined location in the kernel
 -- this is no longer running in restricted user mode
 
 * * *
@@ -201,14 +203,14 @@ user process fill the registers with values, then tells the kernel to jump
 
 - make a syscall
 
-- note: sys_call_table is no longer exported
+- note: `sys_call_table` is no longer exported
 	- to keep people from doing potential harmful things,
-		you will have to patch your current kernel in order to have sys_call_table exported.
+		you will have to patch your current kernel in order to have `sys_call_table` exported.
 		In the example directory you will find a README and the patch.
 
 * * *
 
-To add a new syscall to the kernel: see <span class="bold">rulingminds/0_system_calls_notes.txt</span>
+To add a new syscall to the kernel: see `rulingminds/0_system_calls_notes.txt`
 
 * * *
 * * *
@@ -276,14 +278,4 @@ struct usb_serial_device_type {
 ```
 
 * * *
-
-
-
-
-<style>
-.bold                     { font-weight: bold; }
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
 

@@ -1,8 +1,8 @@
 # External Links: Network IO
 
-- written by Nick Shin - nick.shin@gmail.com
-- this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)
-- and, is from - <https://www.nickshin.com/CheatSheets/>
+written by Nick Shin - nick.shin@gmail.com<br>
+this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -78,11 +78,4 @@ The external links list was getting so large, I placed them here.
 -->
 
 * * *
-
-
-
-
-<style>
-ul { font-size: 11px; }
-</style>
 

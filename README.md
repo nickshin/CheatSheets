@@ -37,9 +37,9 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 
 ### C
 
-<span class="bold">[c_cheatsheet1.c](code/c_cheatsheet1.c)</span> will describe
-**design patterns** in C
-(<span class="note1">even though patterns are normally used with Object Oriented languages</span>)
+##### [c_cheatsheet1.c](code/c_cheatsheet1.c)
+will describe **design patterns** in C
+(even though patterns are normally used with Object Oriented languages)
 - creational patterns
 - structural patterns
 - behavioral patterns
@@ -77,7 +77,7 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 
 ### C++
 
-<span class="bold">[cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)</span> covers the following C++ usage:
+##### [cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)</span> covers the following C++ usage:
 - constructors
 - destructors
 - base, derived, multiple inheritance and friendship classes

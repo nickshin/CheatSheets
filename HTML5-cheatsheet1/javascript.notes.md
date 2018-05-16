@@ -1,8 +1,8 @@
 # Javascripts Notes
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -400,14 +400,4 @@ bad practice. If the HTML text contains a &lt;script&gt; tag or its equivalent,
 then an evil script will run. This again could be due to server incompetence.
 
 * * *
-
-
-
-
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.blink                    { text-decoration: blink; }
-</style>
 

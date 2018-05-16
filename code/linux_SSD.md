@@ -1,8 +1,8 @@
 # SSD tablets &amp; laptops
 
-<span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
+written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/></span>
+and, is from - <https://www.nickshin.com/CheatSheets/>
 
 * * *
 
@@ -11,13 +11,14 @@ and, is from - <https://www.nickshin.com/CheatSheets/></span>
 Ubuntu MATE 16.04 - works mostly<br>
 Ubuntu Studio 16.04 - will bomb on grub installation
 
-<span class='note1'>**NOTE:** just in case grub doesn't stick: follow these wonderful instructions to fix it</span>
-- <span class="note1"><http://superuser.com/questions/376470/how-to-reinstall-grub2-efi></span>
+_**NOTE:** just in case grub doesn't stick: follow these wonderful instructions to fix it_
+- _<http://superuser.com/questions/376470/how-to-reinstall-grub2-efi>_
 
 * * *
 * * *
 
 ## prep USB stick
+
 ```sh
 dd bs=4M if=ubuntu-mate-16.04-desktop-amd64.iso of=/dev/sdX
 ```
@@ -27,22 +28,25 @@ dd bs=4M if=ubuntu-mate-16.04-desktop-amd64.iso of=/dev/sdX
 
 ## multiboot USB
 
-<span class="note1">i like to test grub configurations first "virtually" on my desktop (much faster) before burning the copies to the USB stick (much slower)...  </span>
+_i like to test grub configurations first "virtually" on my desktop (much faster) before burning the copies to the USB stick (much slower)..._
 
 ### target "device"
 
 ##### [ disk image ]
+
 ```sh
 dd if=/dev/zero of=disk.img bs=1M count=30     # 30MB test image - using dummy iso files for testing grub.conf scripts
 DEVICE=disk.img
 ```
 
 ##### [ thumb stick ]
+
 ```sh
 DEVICE=/dev/sdX    # your USB stick
 ```
 
 ### create partitions
+
 ```sh
 gdisk $DEVICE
 	o
@@ -92,6 +96,7 @@ parted --script $DEVICE \
 ### format partitions
 
 ##### [ disk image ]
+
 ```sh
 sudo apt-get install kpartx    # to create device maps from partition tables
 sudo kpartx -l $DEVICE         # list existing partition mapping
@@ -106,6 +111,7 @@ sudo mkdir -p mnt/boot/iso
 ```
 
 ##### [ thumb stick ]
+
 ```sh
 sudo mkfs.vfat /dev/sdX2
 sudo mkfs.ext4 /dev/sdX3
@@ -116,6 +122,7 @@ sudo mkdir -p mnt/boot/iso
 ```
 
 ### grub-install
+
 ```sh
 sudo apt-get install grub-efi-amd64 grub-pc-bin qemu
 	# grub-efi-amd64 yields target: x86_64-efi
@@ -136,16 +143,19 @@ sudo grub-install --removable --recheck --no-floppy --boot-directory=./mnt/boot 
 ```
 
 ### add grub/iso files
+
 ```sh
 sudo cp -duvpr grub mnt/boot/.
 ```
 
 ##### [ disk image ]
+
 ```sh
 echo dummy | sudo tee mnt/boot/iso/distro_XYZ.iso    # repeat for however many iso files listed in grub.conf
 ```
 
 ##### [ thumb stick ]
+
 ```sh
 sudo cp -duvpr iso mnt/boot/.
 ```
@@ -187,12 +197,12 @@ sudo cp -duvpr iso mnt/boot/.
 			- [NAS4Free](http://distrowatch.com/table.php?distribution=nas4free)
 			- [OpenMediaVault](http://distrowatch.com/table.php?distribution=openmediavault)
 			- [Rockstor](http://distrowatch.com/table.php?distribution=rockstor)
-<br>&nbsp;
+
 			- [LinHES](http://distrowatch.com/table.php?distribution=linhes)
 			- [Mythbuntu](http://distrowatch.com/table.php?distribution=mythbuntu)
 			- [OpenELEC](http://distrowatch.com/table.php?distribution=openelec)
 			- [OSMC](http://distrowatch.com/table.php?distribution=osmc)
-<br>&nbsp;
+
 			- [SteamOS](http://distrowatch.com/table.php?distribution=steamos)
 
 		- firewall
@@ -218,6 +228,7 @@ sudo cp -duvpr iso mnt/boot/.
 * * *
 
 ### clean up
+
 ```sh
 sudo umount efi
 sudo umount mnt
@@ -226,7 +237,8 @@ sudo kpartx -d $DEVICE
 
 * * *
 
-### rinse and repeat <span class="note1"> (disk image centric) </span>
+### rinse and repeat _(disk image centric)_
+
 ```sh
 sudo kpartx -av disk.img ; sudo mount /dev/mapper/loop0p3 mnt
 sudo cp -duvpr grub mnt/boot/.
@@ -234,6 +246,7 @@ sudo umount mnt; sudo kpartx -d disk.img
 qemu-system-i386 -machine accel=kvm:tcg disk.img -serial stdio
 qemu-system-x86_64 -enable-kvm -bios bios.bin disk.img
 ```
+
 <!--
 [//] # ( sudo grub-emu )
 -->
@@ -247,10 +260,12 @@ qemu-system-x86_64 -enable-kvm -bios bios.bin disk.img
 ## SSD
 
 ### no acccess time
+
 ```sh
 sudo vi /etc/fstab
 ```
 - NOTE: noatime,nodiratime,discard
+
 ```sql
 /dev/sdbX / ext4 noatime,nodiratime,discard,errors=remount-ro 0 1
 tmpfs /tmp tmpfs defaults 0 0
@@ -258,6 +273,7 @@ tmpfs /var/tmp tmpfs defaults 0 0
 ```
 
 ### deadline scheduler
+
 ```sh
 cat /sys/block/sdX/queue/scheduler
 	### ensure [deadline] is used
@@ -265,6 +281,7 @@ cat /sys/block/sdX/queue/scheduler
 ```
 
 ### swappiness
+
 ```sh
 cat /proc/sys/vm/swappiness
 	### make sure it is less than 10
@@ -276,11 +293,15 @@ sudo vi /etc/sysctl.conf
 ```
 
 ### check health
+
 ```sh
 sudo smartctl -data -A /dev/sdX
 ```
 
-- value starts at 100 - <span class="blink">replace/backup drive at 10 or below</span>
+- value starts at 100
+	- **replace/backup drive at 10 or below**
+	- **replace/backup drive at 10 or below**
+	- **replace/backup drive at 10 or below**
 
 * * *
 * * *
@@ -288,6 +309,7 @@ sudo smartctl -data -A /dev/sdX
 ## Screen
 
 ### DPI
+
 ```sh
 sudo vi /etc/X11/xinit/xinitrc
 ```
@@ -329,9 +351,9 @@ xbacklight -set 80     # set to 80% of max value
 xbacklight -get        # get the current level
 ```
 
-<span class="indent">bind (inc/dec) commands to keyboard hotkeys<span>
+	- bind (inc/dec) commands to keyboard hotkeys
 
-<span class="indent">and, add the "Brighness Controller" app to the panel</span>
+	- and, add the "Brighness Controller" app to the panel
 
 - Note: xrandr will set the overall system brightness.
      xbacklight will be relative to that.
@@ -348,6 +370,7 @@ xbacklight -get        # get the current level
 	- also, three and four finger touch gestures works
 
 ### Surface Pro 3
+
 ```sh
 sudo vi /usr/share/X11/xorg.conf.d/10-evdev.conf
 ```
@@ -366,7 +389,7 @@ Section "InputClass"
 EndSection
 ```
 
-<span class="indent note1">**TODO:** find out how to get (surface pro 3) touchpad option to show up in [ System Settings -&gt; Mouse ]</span>
+	- **TODO:** find out how to get (surface pro 3) touchpad option to show up in [ System Settings -&gt; Mouse ]
 
 * * *
 * * *
@@ -417,14 +440,14 @@ EndSection
 ### devices
 
 - <https://help.ubuntu.com/community/AsusZenbook>
-	- LCD <span class="note1">(DPI)</span>
-	- Touchpad <span class="note1">(multi touch)</span>
+	- LCD _(DPI)_
+	- Touchpad _(multi touch)_
 
 - <https://help.ubuntu.com/community/AsusZenbookPrime#Changing_brightness_workaround_2>
-	- Touchpad <span class="note1">(multi touch)</span>
+	- Touchpad _(multi touch)_
 
 - <http://askubuntu.com/questions/620726/ubuntu-on-surface-pro-3-or-linux-at-all>
-	- surface pro 3 <span class="note1">(touchpad)</span>
+	- surface pro 3 _(touchpad)_
 
 
 ### multiboot USB
@@ -453,8 +476,8 @@ EndSection
 ## depricated (surface pro 3) resources
 
 these instructions are no longer needed...<br>
-<span class="note1">left here for reference just in case system recovery is needed<br>
-(for example) to run firmware updates</span>
+_left here for reference just in case system recovery is needed<br>
+(for example) to run firmware updates_
 
 ### download a recovery image
 - [start from scratch](https://www.microsoft.com/surface/en-us/support/warranty-service-and-recovery/downloadablerecoveryimage)
@@ -463,7 +486,7 @@ these instructions are no longer needed...<br>
 do updates and then create a recovery stick
 - [still running old win8? upgrade to win10](https://www.microsoft.com/surface/en-us/support/install-update-activate/windows-10-upgrade)
 - [do updates](https://www.microsoft.com/surface/en-us/support/performance-and-maintenance/install-software-updates-for-surface)
-<br>&nbsp;
+
 - [create recovery stick](https://www.microsoft.com/surface/en-us/support/storage-files-and-folders/create-a-recovery-drive)
 
 ### boot recovery stick
@@ -474,22 +497,4 @@ do updates and then create a recovery stick
 - [accessing UEFI](https://www.microsoft.com/surface/en-us/support/warranty-service-and-recovery/how-to-use-the-bios-uefi) (not really needed anymore these days)
 
 * * *
-
-
-
-
-<style>
-ul ul ul, .note1          { font-size: 11px; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.blink {
-  animation: blink 1s steps(5, start) infinite;
-  -webkit-animation: blink 1s steps(5, start) infinite;
-}
-@keyframes blink {
-  to { visibility: hidden; }
-}
-@-webkit-keyframes blink {
-  to { visibility: hidden; }
-</style>
 
