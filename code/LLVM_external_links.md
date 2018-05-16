@@ -150,13 +150,13 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 [//] # ( 	- [BEAMJIT: An LLVM based just-in-time compiler for Erlang](http://llvm.org/devmtg/2014-04/PDFs/Talks/drejhammar.pdf)           )
 -->
 
-		**WORKSHOPS !!!**
+	- **WORKSHOPS !!!**
 		- [Refactoring a large C++ codebase using clang](http://llvm.org/devmtg/2014-04/PDFs/Talks/NickRefactoring.pdf)
 			- [CODE](http://llvm.org/devmtg/2014-04/PDFs/Talks/Nick-talk.tar.gz)
 		- [Building an LLVM Backend](http://llvm.org/devmtg/2014-04/PDFs/Talks/Building%20an%20LLVM%20backend.pdf)
 			- [CODE](http://github.com/frasercrmck/llvm-leg)
 
-		Posters
+	- Posters
 		- [LLVM AArch64 buildbot](http://llvm.org/devmtg/2014-04/PDFs/Posters/aarch64_buildbot_poster.pdf)
 		- [Fast JIT code generation](http://llvm.org/devmtg/2014-04/PDFs/LightningTalks/fast-jit-code-generation.pdf)
 			- [tiny-llvm-codegen](http://github.com/mseaborn/tiny-llvm-codegen)
@@ -181,11 +181,11 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 [//] # ( 		- slide 21+ comparison of LLVM vs. GCC backend notes )
 -->
 
-		**WORKSHOPS !!!**
+	- **WORKSHOPS !!!**
 		- [Howto: Implementing LLVM Integrated Assembler](http://www.embecosm.com/appnotes/ean10/ean10-howto-llvmas-1.0.pdf) (good howto)
 		- [The Clang AST - a tutorial](http://llvm.org/devmtg/2013-04/klimek-slides.pdf)
 
-		Posters
+		- Posters
 		- [Code Editing in Local Style](http://llvm.org/devmtg/2013-04/conn-poster.pdf)
 
 - [Nov 7, 2012](http://llvm.org/devmtg/2012-11/)
@@ -204,7 +204,7 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 <!--
 [//] # ( 	- [Building Linux with LLVM](http://llvm.org/devmtg/2012-04-12/Slides/Mark_Charlebois.pdf) )
 -->
-		**WORKSHOPS !!!**
+	- **WORKSHOPS !!!**
 		- [What LLVM can do for you](http://llvm.org/devmtg/2012-04-12/Slides/Workshops/David_Chisnall.pdf) (good howto)
 <!--
 [//] # ( 		- [Building a backend in 24 hours](http://llvm.org/devmtg/2012-04-12/Slides/Workshops/Anton_Korobeynikov.pdf) )

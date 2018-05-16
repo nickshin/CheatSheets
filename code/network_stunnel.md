@@ -11,6 +11,8 @@ eons ago and found that they have a horrendous amount of setup that touches
 some system files _(/etc/hosts & /etc/resolv.conf)_ and
 running commands that require super user access:
 
+| command | notes |
+| --- | --- |
 | **iptables** | modify firewall rules |
 | **route add** | change the routing tables |
 | **mknod + modprobe** | create a network device |

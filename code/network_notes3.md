@@ -81,11 +81,10 @@ _(see what it will take to get libWebSocket, libCurl and WebRTC compiled with th
 [//] # ( ```                                                                                                               )
 -->
 
-- See this whitepaper on: [NAT Traversal ... using STUN, TURN and ICE](http://web.archive.org/web/20120313075557/http://www.voiptraversal.com/) for an overall view of this system
+- See this whitepaper on:
+[NAT Traversal ... using STUN, TURN and ICE](http://web.archive.org/web/20120313075557/http://www.voiptraversal.com/)
+_(by Simon Perreault)_ for an overall view of this system
 	- see this [PDF](http://www.viagenie.ca/publications/2008-09-24-astricon-stun-turn-ice.pdf) for a crash course on:
-<!--
-[//] # ( _(by Simon Perreault)_ )
--->
 		- **STUN**: _(slides 6 - 8)_
 			- _client finds 'outside IP address' from STUN server:_
 				- this punches a temporay hole in the firewall (see **NAT-type**> notes just below)
@@ -112,10 +111,9 @@ _(see what it will take to get libWebSocket, libCurl and WebRTC compiled with th
 		- **TURN**: _(slides 11 - 17)_
 			- _peer traffic are all relayed through a TURN server_
 
-	- see this [PDF](http://web.archive.org/web/20110304095700/http://www.interop.com/lasvegas/2006/presentations/downloads/session-border-controllers-d-wing.pdf) for an example on:
-<!--
-[//] # ( _(by Dan Wing)_ )
--->
+	- see this
+[PDF](http://web.archive.org/web/20110304095700/http://www.interop.com/lasvegas/2006/presentations/downloads/session-border-controllers-d-wing.pdf)
+_(by Dan Wing)_ for an example on:
 		- **ICE** _(slides 11 and on)_:
 			- _tries a combination of STUN and TURN to determine best method to connect peers_
 

@@ -35,17 +35,18 @@ git commit -m 'lfs tracking zip files'
 - GitLab is pretty nice...
 	- <https://about.gitlab.com/downloads/#ubuntu1404>
 
-- `sudo vi /etc/gitlab/gitlab.rb`
+> `sudo vi /etc/gitlab/gitlab.rb`
 
-	- to change the URL shown on webpages -- NOTE: **MUST USE FQDN** !!! postfix need this...
+- to change the URL shown on webpages -- NOTE: **MUST USE FQDN** !!! postfix need this...
 
 ```sh
 external_url 'http://gitbox.internal:8080'
+# e.g. can use alt-port
+# !!! keep an eye on `/var/log/gitlab/nginx/current`
+# !!! if port already in use -- this will be spammed in logfile
 ```
-		- e.g. can use alt-port
-		- !!! keep an eye on `/var/log/gitlab/nginx/current` -- if port already in use -- this will be spammed in logfile
 
-	- enable Git LFS -- both are **REQUIRED**
+- enable Git LFS -- both are **REQUIRED**
 
 ```sh
 gitlab_rails['lfs_enabled'] = true
@@ -54,8 +55,8 @@ gitlab_rails['lfs_storage_path'] = "/var/opt/gitlab/git-data/lfs-objects"
 gitlab_rails['lfs_storage_path'] = "/mnt/nas/lfs-objects"
 ```
 
-	- setting up different data storing directory
-		- <http://stackoverflow.com/questions/19902417/change-the-data-directory-gitlab-to-store-repos-elsewhere/25876643#25876643>
+- setting up different data storing directory
+	- <http://stackoverflow.com/questions/19902417/change-the-data-directory-gitlab-to-store-repos-elsewhere/25876643#25876643>
 
 ```sh
 # NO SYMLNKS

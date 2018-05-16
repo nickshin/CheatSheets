@@ -35,7 +35,8 @@ _i like to test grub configurations first "virtually" on my desktop (much faster
 ##### [ disk image ]
 
 ```sh
-dd if=/dev/zero of=disk.img bs=1M count=30     # 30MB test image - using dummy iso files for testing grub.conf scripts
+# 30MB test image - using dummy iso files for testing grub.conf scripts
+dd if=/dev/zero of=disk.img bs=1M count=30
 DEVICE=disk.img
 ```
 
@@ -136,11 +137,18 @@ the following can be done either/or (UEFI or BIOS boot) -- as well as, in this o
 -->
 
 ```sh
-sudo grub-install --removable --recheck --no-nvram --efi-directory=./efi --boot-directory=./mnt/boot --target=x86_64-efi
-sudo grub-install --removable --recheck --no-floppy --boot-directory=./mnt/boot --target=i386-pc /dev/loop0
-	# mnt/boot/grub is created
-	# NOTE: --{efi,boot}-directory can be relative to where the command is run
+sudo grub-install --removable --recheck \
+				--no-nvram --efi-directory=./efi \
+				--boot-directory=./mnt/boot --target=x86_64-efi
+
+sudo grub-install --removable --recheck \
+				--no-floppy \
+				--boot-directory=./mnt/boot --target=i386-pc \
+				/dev/loop0
 ```
+
+- `mnt/boot/grub` is created
+- NOTE: `--{efi,boot}-directory` can be relative to where the command is run
 
 ### add grub/iso files
 
@@ -151,7 +159,8 @@ sudo cp -duvpr grub mnt/boot/.
 ##### [ disk image ]
 
 ```sh
-echo dummy | sudo tee mnt/boot/iso/distro_XYZ.iso    # repeat for however many iso files listed in grub.conf
+# repeat for however many iso files listed in grub.conf
+echo dummy | sudo tee mnt/boot/iso/distro_XYZ.iso
 ```
 
 ##### [ thumb stick ]
@@ -389,7 +398,7 @@ Section "InputClass"
 EndSection
 ```
 
-	- **TODO:** find out how to get (surface pro 3) touchpad option to show up in [ System Settings -&gt; Mouse ]
+- **TODO:** find out how to get (surface pro 3) touchpad option to show up in [ System Settings -&gt; Mouse ]
 
 * * *
 * * *

@@ -47,7 +47,7 @@ The external links list was getting so large, I placed them here.
 		[Git for Windows](https://git-scm.com/download/win) (Git-Bash)
 	- [How are msys, msys2, and msysgit related to each other?](http://stackoverflow.com/a/35099458)
 
-- [Synergy](https://github.com/symless/synergy)
+- [Synergy](https://github.com/symless/synergy-core)
 
 #### Nice to Have:
 - [Apache Guacamole](http://guacamole.incubator.apache.org/)
