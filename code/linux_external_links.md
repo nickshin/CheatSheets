@@ -1,7 +1,3 @@
-<style>
-ul { font-size: 11px; }
-</style>
-
 ## External Links: Linux
 
 - written by Nick Shin - nick.shin@gmail.com
@@ -83,4 +79,11 @@ The external links list was getting so large, I placed them here.
 - [Create symlink with Msys2](http://superuser.com/a/1044337)
 
 * * *
+
+
+
+
+<style>
+ul { font-size: 11px; }
+</style>
 

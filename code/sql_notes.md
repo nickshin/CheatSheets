@@ -1,9 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # SQL Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -321,4 +315,13 @@ mysql_prompt> SELECT DISTINCT tableItem FROM sampleDBtable;
 ```
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+.indent, pre              { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
 

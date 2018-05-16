@@ -1,10 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.blink                    { text-decoration: blink; }
-</style>
-
 # Javascripts Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -407,4 +400,14 @@ bad practice. If the HTML text contains a &lt;script&gt; tag or its equivalent,
 then an evil script will run. This again could be due to server incompetence.
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+.blink                    { text-decoration: blink; }
+</style>
 

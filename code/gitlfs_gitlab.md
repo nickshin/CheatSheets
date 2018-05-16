@@ -1,10 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.underline                { text-decoration: underline; }
-</style>
-
 # Git-LFS Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -246,4 +239,14 @@ eval "$(ssh-agent -s)"
 - atlassian's sourcetree also looks good
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+.underline                { text-decoration: underline; }
+</style>
 

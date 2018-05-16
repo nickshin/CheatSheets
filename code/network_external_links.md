@@ -1,7 +1,3 @@
-<style>
-ul { font-size: 11px; }
-</style>
-
 # External Links: Network IO
 
 - written by Nick Shin - nick.shin@gmail.com
@@ -82,4 +78,11 @@ The external links list was getting so large, I placed them here.
 -->
 
 * * *
+
+
+
+
+<style>
+ul { font-size: 11px; }
+</style>
 

@@ -1,11 +1,3 @@
-<style>
-.bold          { font-weight: bold; }
-ol, .note1     { font-size: 11px; }
-.super, .note2 { font-size: 9px; }
-.super         { vertical-align: super; }
-.underline     { text-decoration: underline; }
-</style>
-
 <!--
 [//] # (LEFT OFF ON: search for TODO                                          )
 [//] # (LEFT OFF ON: search for TODO                                          )
@@ -505,4 +497,17 @@ my <span class="bold">[vim_notes.txt](https://github.com/nickshin/vimfiles/vim_n
 ## License
 
 [Unlicense](http://unlicense.org/)
+
+* * *
+
+
+
+
+<style>
+.bold          { font-weight: bold; }
+ol, .note1     { font-size: 11px; }
+.super, .note2 { font-size: 9px; }
+.super         { vertical-align: super; }
+.underline     { text-decoration: underline; }
+</style>
 

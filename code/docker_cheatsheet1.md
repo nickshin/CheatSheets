@@ -1,10 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.blink                    { text-decoration: blink; }
-</style>
-
 # Docker.IO
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -309,4 +302,14 @@ docker push <tagName>
 - [DockerCon video: Cluster Management and Containerization at Twitter](http://blog.docker.com/2014/06/dockercon-video-cluster-management-and-containerization-at-twitter/)
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+.blink                    { text-decoration: blink; }
+</style>
 

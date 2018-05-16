@@ -1,18 +1,3 @@
-<style>
-ul ul ul, .note1          { font-size: 11px; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.blink {
-  animation: blink 1s steps(5, start) infinite;
-  -webkit-animation: blink 1s steps(5, start) infinite;
-}
-@keyframes blink {
-  to { visibility: hidden; }
-}
-@-webkit-keyframes blink {
-  to { visibility: hidden; }
-</style>
-
 # SSD tablets &amp; laptops
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -489,4 +474,22 @@ do updates and then create a recovery stick
 - [accessing UEFI](https://www.microsoft.com/surface/en-us/support/warranty-service-and-recovery/how-to-use-the-bios-uefi) (not really needed anymore these days)
 
 * * *
+
+
+
+
+<style>
+ul ul ul, .note1          { font-size: 11px; }
+.indent, pre              { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+.blink {
+  animation: blink 1s steps(5, start) infinite;
+  -webkit-animation: blink 1s steps(5, start) infinite;
+}
+@keyframes blink {
+  to { visibility: hidden; }
+}
+@-webkit-keyframes blink {
+  to { visibility: hidden; }
+</style>
 

@@ -1,9 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # 3D notes #1
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -558,4 +552,13 @@ line & box tests:
 - then use terse checks: "line plane" tests against all sides on the box
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
 

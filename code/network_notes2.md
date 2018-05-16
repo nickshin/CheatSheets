@@ -1,10 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-.bold                     { font-weight: bold; }
-.indent, pre              { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # Networking Server Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -463,4 +456,14 @@ sudo ejabberdctl register userN FQDN password
 - [The simplest way to create a new ejabberd user with PHP](http://www.ejabberd.im/node/3126)
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+.bold                     { font-weight: bold; }
+.indent, pre              { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
 

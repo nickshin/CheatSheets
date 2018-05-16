@@ -1,10 +1,3 @@
-<style>
-.bold                     { font-weight: bold; }
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # Writing Linux Device Drivers
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -283,4 +276,14 @@ struct usb_serial_device_type {
 ```
 
 * * *
+
+
+
+
+<style>
+.bold                     { font-weight: bold; }
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
 

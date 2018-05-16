@@ -1,9 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # Rsync Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -138,3 +132,12 @@ $rsynccmd --delete $EXCLUDE_THESE --exclude-from=$EXCLUDES_FILE --filter=". $FIL
 ```
 
 * * *
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
+

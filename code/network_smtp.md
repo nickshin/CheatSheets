@@ -1,8 +1,3 @@
-<style>
-.note1                    { font-size: 11px; }
-.markdown-body pre code   { font-size: 80%; }
-</style>
-
 # SMTP Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -151,4 +146,12 @@ bob@example.net
 ```
 
 * * *
+
+
+
+
+<style>
+.note1                    { font-size: 11px; }
+.markdown-body pre code   { font-size: 80%; }
+</style>
 

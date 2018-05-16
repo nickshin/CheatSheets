@@ -1,10 +1,3 @@
-<style>
-ul ul ul ul ul, .note1    { font-size: 11px; }
-pre                       { margin-left: 2em; }
-.markdown-body pre code   { font-size: 80%; }
-.underline                { text-decoration: underline; }
-</style>
-
 # Networking Server Notes
 
 <span class="note1">written by Nick Shin - nick.shin@gmail.com<br>
@@ -121,4 +114,14 @@ OpenSSL is a mess.  Want to evaluate the following libs:
 			- <span class='note1'>tries a combination of STUN and TURN to determine best method to connect peers</span>
 
 * * *
+
+
+
+
+<style>
+ul ul ul ul ul, .note1    { font-size: 11px; }
+pre                       { margin-left: 2em; }
+.markdown-body pre code   { font-size: 80%; }
+.underline                { text-decoration: underline; }
+</style>
 

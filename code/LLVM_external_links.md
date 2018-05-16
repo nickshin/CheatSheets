@@ -1,9 +1,3 @@
-<style>
-.bold           { font-weight: bold; }
-ul, .note1      { font-size: 11px; }
-.indent         { margin-left: 2em; }
-</style>
-
 # External Links: LLVMLinux with LLVM, Clang and LLDB
 
 - written by Nick Shin - nick.shin@gmail.com
@@ -340,4 +334,13 @@ Note: this list would make more sense if read from <span class="bold">bottom</sp
 -->
 
 * * *
+
+
+
+
+<style>
+.bold           { font-weight: bold; }
+ul, .note1      { font-size: 11px; }
+.indent         { margin-left: 2em; }
+</style>
 
