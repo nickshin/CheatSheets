@@ -130,7 +130,7 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 
 # LLVM
 
-## LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh) (_coming soon_)
+#### LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh) (_coming soon_)
 - notes and boilerplate LLVM &amp; Clang project
 
 **external links:**
@@ -156,9 +156,13 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 	- references to functions
 	- and some boiler plate code
 
-## [perl_cheatsheet3.pm](code/perl_cheatsheet3.pm) _(example perl module)_
+## [perl_cheatsheet3.pm](code/perl_cheatsheet3.pm)
+- example perl module
+
 ## [perl_cheatsheet4.pl](code/perl_cheatsheet4.pl)
-## [perl_cheatsheet5.pl](code/perl_cheatsheet5.pl) _(using the perl module)_
+
+## [perl_cheatsheet5.pl](code/perl_cheatsheet5.pl)
+- using the perl module
 - while showing the tiny differences on:
 	- require
 	- use
@@ -295,9 +299,8 @@ ruby network_notes1.rb code
 # HTML5
 
 ## [HTML5-cheatsheet1](HTML5-cheatsheet1)
+- WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
 - covers the following HTML5 topics:
-	- WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
-
 	1. canvas
 	1. css3
 	1. devicemotion ¹
@@ -318,9 +321,8 @@ ruby network_notes1.rb code
 	1. webworkers ⁵
 
 ## [HTML5-cheatsheet2](HTML5-cheatsheet2)
+-  WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
 - covers the following demos:
-	-  WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
-
 	1. AudioAPI
 	1. Audio Element (webaudio revisited -- tests): _(NOTE: this is NOT AudioAPI but the &lt;audio&gt; element)_
 	1. drag &amp; drop ¹
@@ -336,7 +338,7 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 1. WARNING: WebKit does NOT support subworkers (but Mozilla does).  Mozilla does NOT support SharedWorker (but WebKit does).
 1. Work In Progress... coming soon
 
-## HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
+#### HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
 - covers the following topics:
 	- emscripten
 		- web assembly
@@ -382,7 +384,7 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 	- some of my most used docker snippets
 	- local/private registry notes
 
-## docker_cheatsheet2.md[](code/docker_cheatsheet2.md) _(coming soon)_
+#### docker_cheatsheet2.md[](code/docker_cheatsheet2.md) _(coming soon)_
 - provisioning _(machine)_
 - clustering/scheduling _(swarm &amp; swarmkit)_
 - orchestration _(composer)_
@@ -393,7 +395,7 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 [//] # ( https://lostechies.com/gabrielschenker/2016/11/25/docker-and-swarmkit-part-6-new-features-of-v1-13/ )
 -->
 
-## docker_cheatsheet3.md[](code/docker_cheatsheet3.md) _(coming soon)_
+#### docker_cheatsheet3.md[](code/docker_cheatsheet3.md) _(coming soon)_
 - my favorite Dockerfiles
 - unikernels
 
