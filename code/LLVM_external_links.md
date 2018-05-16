@@ -139,16 +139,6 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 	- [Passes in LLVM](http://llvm.org/devmtg/2014-04/PDFs/Talks/Passes.pdf)
 	- [Custom Alias-analysis in an LLVM-backed region-based Dynamic Binary Translator](http://llvm.org/devmtg/2014-04/PDFs/Talks/Spink.pdf)
 	- [clang-cl: what it is, how it works, and how to use it](http://llvm.org/devmtg/2014-04/PDFs/Talks/clang-cl.pdf) (works with Visual Studio!)
-<!--
-[//] # ( 	- [LTO: History and work to be done](http://llvm.org/devmtg/2014-04/PDFs/Talks/LTO-slides.pdf)                                  )
-[//] # ( 	- [Efficient code generation for weakly ordered architectures](http://llvm.org/devmtg/2014-04/PDFs/Talks/Reinoud-EuroLLVM.pdf)  )
-[//] # ( 		<br>interesting memory models:                                                                                              )
-[//] # ( 		- atomic read/modify/write                                                                                                  )
-[//] # ( 		- compare and exchange                                                                                                      )
-[//] # ( 		- atomic qualifiers on load / store                                                                                         )
-[//] # ( 	- [Fabric Engine and KL: LLVM for 3D Digital Content Creation](http://llvm.org/devmtg/2014-04/PDFs/Talks/FabricEngine-LLVM.pdf) )
-[//] # ( 	- [BEAMJIT: An LLVM based just-in-time compiler for Erlang](http://llvm.org/devmtg/2014-04/PDFs/Talks/drejhammar.pdf)           )
--->
 
 	- **WORKSHOPS !!!**
 		- [Refactoring a large C++ codebase using clang](http://llvm.org/devmtg/2014-04/PDFs/Talks/NickRefactoring.pdf)
@@ -162,6 +152,17 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 			- [tiny-llvm-codegen](http://github.com/mseaborn/tiny-llvm-codegen)
 			- [libcpu](https://github.com/libcpu/libcpu)
 		- [DBILL: An Efficient and Retargetable Dynamic Binary Instrumentation Framework using LLVM Backend](http://llvm.org/devmtg/2014-04/PDFs/Posters/DBILL_poster.pdf)
+<!--
+[//] # ( 	- [LTO: History and work to be done](http://llvm.org/devmtg/2014-04/PDFs/Talks/LTO-slides.pdf)                                  )
+[//] # ( 	- [Efficient code generation for weakly ordered architectures](http://llvm.org/devmtg/2014-04/PDFs/Talks/Reinoud-EuroLLVM.pdf)  )
+[//] # ( 		<br>interesting memory models:                                                                                              )
+[//] # ( 		- atomic read/modify/write                                                                                                  )
+[//] # ( 		- compare and exchange                                                                                                      )
+[//] # ( 		- atomic qualifiers on load / store                                                                                         )
+[//] # ( 	- [Fabric Engine and KL: LLVM for 3D Digital Content Creation](http://llvm.org/devmtg/2014-04/PDFs/Talks/FabricEngine-LLVM.pdf) )
+[//] # ( 	- [BEAMJIT: An LLVM based just-in-time compiler for Erlang](http://llvm.org/devmtg/2014-04/PDFs/Talks/drejhammar.pdf)           )
+-->
+
 
 - [Nov 6, 2013](http://llvm.org/devmtg/2013-11/)
 	- [New Address Sanitizer Features](http://llvm.org/devmtg/2013-11/slides/Serebryany-ASAN.pdf)
@@ -176,17 +177,18 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 
 - [Apr 29, 2013](http://llvm.org/devmtg/2013-04/)
 	- [Rebuild of all Debian packages using Clang instead of gcc](http://llvm.org/devmtg/2013-04/ledru-slides.pdf)
-<!--
-[//] # ( 	- [LLVM on IBM POWER processors: a progress report](http://llvm.org/devmtg/2013-04/weigand-slides.pdf) )
-[//] # ( 		- slide 21+ comparison of LLVM vs. GCC backend notes )
--->
 
 	- **WORKSHOPS !!!**
 		- [Howto: Implementing LLVM Integrated Assembler](http://www.embecosm.com/appnotes/ean10/ean10-howto-llvmas-1.0.pdf) (good howto)
 		- [The Clang AST - a tutorial](http://llvm.org/devmtg/2013-04/klimek-slides.pdf)
 
-		- Posters
+	- Posters
 		- [Code Editing in Local Style](http://llvm.org/devmtg/2013-04/conn-poster.pdf)
+<!--
+[//] # ( 	- [LLVM on IBM POWER processors: a progress report](http://llvm.org/devmtg/2013-04/weigand-slides.pdf) )
+[//] # ( 		- slide 21+ comparison of LLVM vs. GCC backend notes )
+-->
+
 
 - [Nov 7, 2012](http://llvm.org/devmtg/2012-11/)
 	- [Parsing Documentation Comments in Clang](http://llvm.org/devmtg/2012-11/Gribenko_CommentParsing.pdf)
@@ -201,12 +203,11 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 - [Apr 12, 2012](http://llvm.org/devmtg/2012-04-12/)
 	- [lld - the LLVM Linker](http://llvm.org/devmtg/2012-04-12/Slides/Michael_Spencer.pdf)
 	- [Turning control flow graphs into function call graphs](http://llvm.org/devmtg/2012-04-12/Slides/Pablo_Barrio.pdf)
-<!--
-[//] # ( 	- [Building Linux with LLVM](http://llvm.org/devmtg/2012-04-12/Slides/Mark_Charlebois.pdf) )
--->
+
 	- **WORKSHOPS !!!**
 		- [What LLVM can do for you](http://llvm.org/devmtg/2012-04-12/Slides/Workshops/David_Chisnall.pdf) (good howto)
 <!--
+[//] # ( 	- [Building Linux with LLVM](http://llvm.org/devmtg/2012-04-12/Slides/Mark_Charlebois.pdf) )
 [//] # ( 		- [Building a backend in 24 hours](http://llvm.org/devmtg/2012-04-12/Slides/Workshops/Anton_Korobeynikov.pdf) )
 -->
 
@@ -245,6 +246,7 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 - [Aug 23, 2008](http://llvm.org/devmtg/2008-08-23/)
 	- [py2llvm: Python to LLVM translator](http://llvm.org/devmtg/2008-08-23/py2llvm.pdf)
 	- [Binaries are not only output](http://llvm.org/devmtg/2008-08-23/binaries_are_not_only_output.pdf)
+
 
 - [Aug 1, 2008](http://llvm.org/devmtg/2008-08/)
 	- [Building an Efficient JIT](http://llvm.org/devmtg/2008-08/Begeman_EfficientJIT.pdf)
@@ -327,16 +329,16 @@ Note: this list would make more sense if read from **bottom** -&gt; **up**
 ### [LLD - The LLVM Linker](http://lld.llvm.org/)
 
 <!--
-- Use and Extension
-	- [Tutorial](http://lldb.llvm.org/tutorial.html)
-	- [GDB and LLDB Command Examples](http://lldb.llvm.org/lldb-gdb.html)
-	- [Variable Formatting](http://lldb.llvm.org/varformats.html)
-	- [Python Reference](http://lldb.llvm.org/python-reference.html)
-	- [Python Example](http://lldb.llvm.org/scripting.html)
+[//] # ( - Use and Extension                                                               )
+[//] # ( 	- [Tutorial](http://lldb.llvm.org/tutorial.html)                               )
+[//] # ( 	- [GDB and LLDB Command Examples](http://lldb.llvm.org/lldb-gdb.html)          )
+[//] # ( 	- [Variable Formatting](http://lldb.llvm.org/varformats.html)                  )
+[//] # ( 	- [Python Reference](http://lldb.llvm.org/python-reference.html)               )
+[//] # ( 	- [Python Example](http://lldb.llvm.org/scripting.html)                        )
 
-- Resources
-	- [Python API Documentation](http://lldb.llvm.org/python_reference/index.html)
-	- [C++ API Documentation](http://lldb.llvm.org/cpp_reference/html/index.html)
+[//] # ( - Resources                                                                       )
+[//] # ( 	- [Python API Documentation](http://lldb.llvm.org/python_reference/index.html) )
+[//] # ( 	- [C++ API Documentation](http://lldb.llvm.org/cpp_reference/html/index.html)  )
 -->
 
 * * *

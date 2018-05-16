@@ -38,6 +38,7 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 ### C
 
 ##### [c_cheatsheet1.c](code/c_cheatsheet1.c)
+
 will describe **design patterns** in C
 (even though patterns are normally used with Object Oriented languages)
 - creational patterns
@@ -77,7 +78,8 @@ will describe **design patterns** in C
 
 ### C++
 
-##### [cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)</span> covers the following C++ usage:
+##### [cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)
+covers the following C++ usage:
 - constructors
 - destructors
 - base, derived, multiple inheritance and friendship classes
@@ -86,13 +88,15 @@ will describe **design patterns** in C
 - polymorphism
 - type casting
 
-<span class="bold">[cpp_cheatsheet2.cpp](code/cpp_cheatsheet2.cpp)</span> covers the following C++ usage:
+##### [cpp_cheatsheet2.cpp](code/cpp_cheatsheet2.cpp)
+covers the following C++ usage:
 - templates
 - const-ness
 - dynamic memory
 - exceptions
 
-<span class="bold">[cpp_cheatsheet3.cpp](code/cpp_cheatsheet3.cpp)</span> covers the following:
+##### [cpp_cheatsheet3.cpp](code/cpp_cheatsheet3.cpp)
+covers the following:
 - STL programming
 	- containers
 	- algorithms
@@ -102,8 +106,8 @@ will describe **design patterns** in C
 - and using class string
 
 **external links:**
-- <span class="note1">[Bartlomiej Filipek](https://www.bfilipek.com) - an amazing resource on all things c++</span>
-- <span class="note1">keep a page opened to: [cppreference.com](http://cppreference.com/)</span>
+- _[Bartlomiej Filipek](https://www.bfilipek.com) - an amazing resource on all things c++_
+- _keep a page opened to: [cppreference.com](http://cppreference.com/)_
 
 <!--
 [//] # ( - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
@@ -127,8 +131,7 @@ will describe **design patterns** in C
 
 ### LLVM
 
-(<span class="note1">coming soon</span>)
-<span class="bold">LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh)</span>
+##### LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh) (_coming soon_)
 notes and boilerplate LLVM &amp; Clang project
 
 **external links:**
@@ -138,14 +141,14 @@ notes and boilerplate LLVM &amp; Clang project
 
 ### Perl
 
-<span class="bold">[perl_cheatsheet1.pl.inc](code/perl_cheatsheet1.inc)</span>
+##### [perl_cheatsheet1.pl.inc](code/perl_cheatsheet1.inc)
 written to be included in by perl_cheatsheet2 and contains the following perl snippets:
 - unique sort
 - time n date
 - file notes
 - wget
 
-<span class="bold">[perl_cheatsheet2.pl](code/perl_cheatsheet2.pl)</span>
+##### [perl_cheatsheet2.pl](code/perl_cheatsheet2.pl)
 executable and contains more perl snippets:
 - file IO
 - fork
@@ -154,9 +157,9 @@ executable and contains more perl snippets:
 - references to functions
 - and some boiler plate code
 
-<span class="bold">[perl_cheatsheet3.pm](code/perl_cheatsheet3.pm)</span> is an example perl module and
-<span class="bold">[perl_cheatsheet4.pl](code/perl_cheatsheet4.pl)</span> &amp;
-<span class="bold">[perl_cheatsheet5.pl](code/perl_cheatsheet5.pl)</span> uses the perl module
+##### [perl_cheatsheet3.pm](code/perl_cheatsheet3.pm) _(example perl module)_
+##### [perl_cheatsheet4.pl](code/perl_cheatsheet4.pl)
+##### [perl_cheatsheet5.pl](code/perl_cheatsheet5.pl) _(using the perl module)_
 while showing the tiny differences on:
 - require
 - use
@@ -165,15 +168,16 @@ while showing the tiny differences on:
 - controlled (manually) exported names
 
 **external links:**
-- <span class="note1">good collection of perl tips: [Perl Training Australia - Perl Tips](http://perltraining.com.au/tips/)</span>
-- <span class="note1">and if you ever thought to yourself, "someone has to have written this in PERL"...
-chances are: someone did and threw it up on <span class="bold">[CPAN](http://www.cpan.org/)</span></span>
+- _good collection of perl tips: [Perl Training Australia - Perl Tips](http://perltraining.com.au/tips/)_
+- _and if you ever thought to yourself, "someone has to have written this in PERL"...
+chances are: someone did and threw it up on **[CPAN](http://www.cpan.org/)**_
 
 * * *
 
 ### Python
 
-<span class="bold">[python_cheatsheet1.py](code/python_cheatsheet1.py)</span> covers the following python usage:
+##### [python_cheatsheet1.py](code/python_cheatsheet1.py)
+covers the following python usage:
 - some of my most used python snippets
 - file IO
 - dictionary
@@ -181,25 +185,26 @@ chances are: someone did and threw it up on <span class="bold">[CPAN](http://www
 - classes
 
 <!--
-[//] # ( <span class="bold">python_cheatsheet2.py[](code/python_cheatsheet2.py)</span> covers the following C/C++ with python interaction )
-[//] # ( - access python scripts from C/C++ code )
-[//] # ( - access C/C++ code from python script  )
-[//] # ( - dynamic library loading in python     )
-[//] # ( - script load/reloading in C/C++        )
-[//] # ( - handle basic data structures          )
-[//] # ( 	- structs                            )
-[//] # ( 	- union                              )
-[//] # ( 	- pointers                           )
-[//] # ( 	- return values                      )
+[//] # ( ##### python_cheatsheet2.py[](code/python_cheatsheet2.py) )
+[//] # ( covers the following C/C++ with python interaction        )
+[//] # ( - access python scripts from C/C++ code                   )
+[//] # ( - access C/C++ code from python script                    )
+[//] # ( - dynamic library loading in python                       )
+[//] # ( - script load/reloading in C/C++                          )
+[//] # ( - handle basic data structures                            )
+[//] # ( 	- structs                                              )
+[//] # ( 	- union                                                )
+[//] # ( 	- pointers                                             )
+[//] # ( 	- return values                                        )
 -->
 
 here are some more python code i have made free to the public:
 - [https://www.nickshin.com/bookmark_tools/](https://www.nickshin.com/bookmark_tools/)
 
-**external links:**<br>
-- <span class="note1">keep a page opened to: [Python: Library Reference](http://docs.python.org/library/index.html)</span>
-- <span class="note1">and if you ever thought to yourself, "someone has to have written this in PYTHON"...
-chances are: someone did and threw it up on <span class="bold">[PyPI](https://pypi.python.org/pypi)</span></span>
+**external links:**
+- _keep a page opened to: [Python: Library Reference](http://docs.python.org/library/index.html)_
+- _and if you ever thought to yourself, "someone has to have written this in PYTHON"...
+chances are: someone did and threw it up on **[PyPI](https://pypi.python.org/pypi)**_
 
 * * *
 
@@ -208,21 +213,21 @@ chances are: someone did and threw it up on <span class="bold">[PyPI](https://py
 Please see my [networking notes](#network) for more sample code written in
 Ruby used to generate the all of the network code and pretty printed HTML files.
 
-**external links:**<br>
-- <span class="note1">[Ruby for the Attention Deficit Disorder Programmer](http://www.fincher.org/tips/Languages/Ruby/)
-cheatsheet/crash course</span>
-- <span class="note1">on command line arguments:</span>
-	- <span class="note1">[stackoverflow.com](http://stackoverflow.com/questions/5688685/getoptlong-ruby-help)</span>
-	- <span class="note1">[o'reilly linuxdevcenter.com](http://linuxdevcenter.com/pub/a/linux/2003/09/18/ruby_csv.html?page=2)</span>
-- <span class="note1">and if you ever thought to yourself, "someone has to have written this in RUBY"...
-chances are: someone did and threw it up on <span class="bold">[RubyGems](http://rubygems.org/)</span></span>
+**external links:**
+- _[Ruby for the Attention Deficit Disorder Programmer](http://www.fincher.org/tips/Languages/Ruby/)
+cheatsheet/crash course_
+- _on command line arguments:_
+	- _[stackoverflow.com](http://stackoverflow.com/questions/5688685/getoptlong-ruby-help)_
+	- _[o'reilly linuxdevcenter.com](http://linuxdevcenter.com/pub/a/linux/2003/09/18/ruby_csv.html?page=2)_
+- _and if you ever thought to yourself, "someone has to have written this in RUBY"...
+chances are: someone did and threw it up on **[RubyGems](http://rubygems.org/)**_
 
 * * *
 
 ### Network
 
-<span class="bold">[network_notes1.rb](code/network_notes1.rb)</span> covers networking sockets (open read write close)
-(both peer2peer and multi-users) in:
+##### [network_notes1.rb](code/network_notes1.rb)
+covers networking sockets (open read write close) (for both peer2peer and multi-users) in:
 - C/C++
 - C#
 - Exlixir
@@ -234,13 +239,15 @@ chances are: someone did and threw it up on <span class="bold">[RubyGems](http:/
 - Ruby
 - Scala
 
-if the "all in one file" is too confusing to look at <span class="note1">(hurray for VIM! ":set filetype=lang")</span>,
+if the "all in one file" is too confusing to look at _(hurray for VIM! ":set filetype=lang")_,
 run the script to generate all of the network code for the different programming languages:
+
 ```sh
 ruby network_notes1.rb code
 ```
 
-<span class="bold">[network_notes2.md](code/network_notes2.md)</span> covers the following networking snippets:
+##### [network_notes2.md](code/network_notes2.md)
+covers the following networking snippets:
 - [Node.js](code/network_nodejs.js)
 	- http(s)://
 	- ws(s)://
@@ -258,17 +265,18 @@ ruby network_notes1.rb code
 		- HTTP binding
 		- admin
 
-<span class="bold">[network_notes2_htaccess.pl](code/network_notes2_htaccess.pl)</span>
+##### [network_notes2_htaccess.pl](code/network_notes2_htaccess.pl)
 generates .htaccess files (for authentication access) for
 - Apache
 - lighttpd
 
-<span class="bold">[network_notes3.md](code/network_notes3.md)</span> covers the following networking snippets:
+##### [network_notes3.md](code/network_notes3.md)
+covers the following networking snippets:
 - Concurrency
 - WebSockets
 - WebRTC
 - SSL (libraries)
-- behind firewall <span class="note1">(STUN TURN ICE)</span>
+- behind firewall _(STUN TURN ICE)_
 
 **my notes** on:
 - [stunnel.md](code/network_stunnel.md)
@@ -280,42 +288,44 @@ generates .htaccess files (for authentication access) for
 [//] # ( TODO: - selenium[](code/network_selenium.md) )
 -->
 
-**external links** (<span class="note1">Writing Network Servers</span>)
+**external links** (_Writing Network Servers_)
 - the list was getting large, they are placed here: [network_external_links](code/network_external_links.md)
 
 * * *
 
 ### HTML5
 
-<span class="bold">[HTML5-cheatsheet1](HTML5-cheatsheet1)</span> covers the following HTML5 topics:
+##### [HTML5-cheatsheet1](HTML5-cheatsheet1)
+covers the following HTML5 topics:
 1. WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
 	1. canvas
 	1. css3
-	1. devicemotion<span class="super">[1]</span>
-	1. deviceorientation<span class="super">[1]</span>
-	1. eventsource<span class="super">[2]</span>
-	1. fullscreen<span class="super">[1]</span>
-	1. geolocation<span class="super">[1]</span>
-	1. javascript<span class="super">[2]</span> classes and modules
+	1. devicemotion ¹
+	1. deviceorientation ¹
+	1. eventsource ²
+	1. fullscreen ¹
+	1. geolocation ¹
+	1. javascript ² classes and modules
 	1. svg
 	1. webaudio and webvideo
-	1. webGL<span class="super">[1]</span>: requestAnimationFrame
-	  <span class="note1">(warning: many mobile <span class="underline">browsers</span> do not have hardware acceleration)</span>
-	1. websocket<span class="super">[2]</span>
+	1. webGL ¹: requestAnimationFrame
+	  _(warning: many mobile **browsers** do not have hardware acceleration)_
+	1. websocket ²
 	1. webstorage: appcache
-	1. webstorage: FileReader<span class="super">[3]</span>
-	1. webstorage: indexDB<span class="super">[2] [4]</span>
+	1. webstorage: FileReader ³
+	1. webstorage: indexDB ² ⁴
 	1. webstorage: localStorage
-	1. webworkers<span class="super">[5]</span>
+	1. webworkers ⁵
 
-<span class="bold">[HTML5-cheatsheet2](HTML5-cheatsheet2)</span> covers the following demos:
+##### [HTML5-cheatsheet2](HTML5-cheatsheet2)
+covers the following demos:
 1. WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
 	1. AudioAPI
-	1. Audio Element (webaudio revisited -- tests): <span class="note1">(NOTE: this is NOT AudioAPI but the &lt;audio&gt; element)</span>
-	1. drag &amp; drop<span class="super">[1]</span>
-	1. gamepad<span class="super">[6]</span> <span class="note1">(note: it seems better to just map pad to keyboard strokes...)</span>
-	1. mouselock<span class="super">[6]</span>
-	1. swipegesture<span class="super">[2]</span>: sketchpad + noclickdelay
+	1. Audio Element (webaudio revisited -- tests): _(NOTE: this is NOT AudioAPI but the &lt;audio&gt; element)_
+	1. drag &amp; drop ¹
+	1. gamepad ⁶ _(note: it seems better to just map pad to keyboard strokes...)_
+	1. mouselock ⁶
+	1. swipegesture ²: sketchpad + noclickdelay
 
 note: all files are written static (i.e. plain ol' HTML) so they can be looked up or run as-is.
 1. copy of reference source (or close to it) for testing purposes
@@ -325,7 +335,8 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 1. WARNING: WebKit does NOT support subworkers (but Mozilla does).  Mozilla does NOT support SharedWorker (but WebKit does).
 1. Work In Progress... coming soon
 
-<span class="note1">(coming soon)</span> <span class="bold">HTML5-cheatsheet3[](HTML5-cheatsheet3)</span> covers the following topics:
+##### HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
+covers the following topics:
 - emscripten
 	- web assembly
 	- webgl2
@@ -333,45 +344,48 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 	- file manager (async and local storage)
 
 **external links:**
-- <span class="note1">[HTML 5 Rocks](http://www.html5rocks.com/en/) - the mother load of all things HTML5</span>
-- <span class="note1">[HTML 5 Canvas Tutorials](http://www.html5canvastutorials.com/) - excellent crash course on using the canvas</span>
-- <span class="note1">[HTML 5 Demos and Examples](http://html5demos.com/) - a nice collection of little HTML5 howtos</span>
-- <span class="note1">[Stories In Flight: HTML5/CSS3 Cheatsheet](http://www.storiesinflight.com/html5/) - a nice and little and easy to read summary of HTML5 features</span>
-- <span class="note1">[HTML5 differences from HTML4](http://www.w3.org/TR/html5-diff/) - a very terse but good read on HTML5 differences</span>
+- _[HTML 5 Rocks](http://www.html5rocks.com/en/) - the mother load of all things HTML5_
+- _[HTML 5 Canvas Tutorials](http://www.html5canvastutorials.com/) - excellent crash course on using the canvas_
+- _[HTML 5 Demos and Examples](http://html5demos.com/) - a nice collection of little HTML5 howtos_
+- _[Stories In Flight: HTML5/CSS3 Cheatsheet](http://www.storiesinflight.com/html5/) - a nice and little and easy to read summary of HTML5 features_
+- _[HTML5 differences from HTML4](http://www.w3.org/TR/html5-diff/) - a very terse but good read on HTML5 differences_
 
 * * *
 
 ### PHP
 
-<span class="bold">[php_cheatsheet1.php](code/php_cheatsheet1.php)</span> covers the following PHP usage:
+##### [php_cheatsheet1.php](code/php_cheatsheet1.php)
+covers the following PHP usage:
 - predefined variables: _GET _POST _SERVER _FILES
 - binary and file handling
 - passing by reference
 - classes
 
-<span class="bold">[php_cheatsheet2.php](code/php_cheatsheet2.php)</span> covers the following PHP usage:
+##### [php_cheatsheet2.php](code/php_cheatsheet2.php)
+covers the following PHP usage:
 - user agent detection
 - crafted headers
 - memcache
-- NoSQL <span class="note1">(coming soon, my most used snippets...)</span>
+- NoSQL _(coming soon, my most used snippets...)_
 
 **external links**
-- <span class="note1">it might be useful to enable
-[PHP: short_open_tag](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag)</span>
-- <span class="note1">keep a page opened to: [PHP: function reference](http://www.php.net/manual/en/funcref.php)</span>
+- _it might be useful to enable
+[PHP: short_open_tag](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag)_
+- _keep a page opened to: [PHP: function reference](http://www.php.net/manual/en/funcref.php)_
 
 * * *
 
 ### Linux
 
-<span class="bold">[docker_cheatsheet1.md](code/docker_cheatsheet1.md)</span> covers the following:
+##### [docker_cheatsheet1.md](code/docker_cheatsheet1.md)
+covers the following:
 - some of my most used docker snippets
 - local/private registry notes
 
-<span class="bold">docker_cheatsheet2.md[](code/docker_cheatsheet2.md)</span> <span class="note1">(coming soon)</span>
-- provisioning <span class="note1">(machine)</span>
-- clustering/scheduling <span class="note1">(swarm &amp; swarmkit)</span>
-- orchestration <span class="note1">(composer)</span>
+##### docker_cheatsheet2.md[](code/docker_cheatsheet2.md) _(coming soon)_
+- provisioning _(machine)_
+- clustering/scheduling _(swarm &amp; swarmkit)_
+- orchestration _(composer)_
 - service discovery
 - monitoring/security
 
@@ -379,7 +393,7 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 [//] # ( https://lostechies.com/gabrielschenker/2016/11/25/docker-and-swarmkit-part-6-new-features-of-v1-13/ )
 -->
 
-<span class="bold">docker_cheatsheet3.md[](code/docker_cheatsheet3.md)</span> <span class="note1">(coming soon)</span>
+##### docker_cheatsheet3.md[](code/docker_cheatsheet3.md) _(coming soon)_
 - my favorite Dockerfiles
 - unikernels
 
@@ -395,74 +409,79 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 [//] # ( http://erlangonxen.org/                                    )
 -->
 
-<span class="bold">[LLVM_Linux_cheatsheet1.sh](code/LLVM_Linux_cheatsheet1.sh)</span> notes on building LLVMLinux with LLVM, Clang and LLDB
+##### [LLVM_Linux_cheatsheet1.sh](code/LLVM_Linux_cheatsheet1.sh)
+- notes on building LLVMLinux with LLVM, Clang and LLDB
 
-<span class="bold">[linux_writingdevicedrivers1.md](code/linux_writingdevicedrivers1.md)</span> covers the following:
+##### [linux_writingdevicedrivers1.md](code/linux_writingdevicedrivers1.md)
+covers the following:
 - kernel module programming
 - character device driver
 - usb stick example
 
-<span class="bold">[linux_SSD.md](code/linux_SSD.md)</span> notes on SolidStateDrive optimizations, display DPI settings and surface pro 3 configurations
+##### [linux_SSD.md](code/linux_SSD.md)
+-notes on SolidStateDrive optimizations, display DPI settings and surface pro 3 configurations
 
 **external links:**
--  the list was getting large, they are placed here: [Linux_external_links](code/linux_external_links.md)
+- the list was getting large, they are placed here: [Linux_external_links](code/linux_external_links.md)
 
 * * *
 
 ### Vim
 
-[https://github.com/nickshin/vimfiles](https://github.com/nickshin/vimfiles)
+##### [https://github.com/nickshin/vimfiles](https://github.com/nickshin/vimfiles)
 
-latest <span class="bold">[vimrc](https://github.com/nickshin/vimfiles/vimrc)</span> file I use:
-- editor configuration
-- plugin mapings
-- and some archived configs and maps for reference
+- latest [vimrc](https://github.com/nickshin/vimfiles/vimrc) file I use:
+	- editor configuration
+	- plugin mapings
+	- and some archived configs and maps for reference
 
-my <span class="bold">[vim_notes.txt](https://github.com/nickshin/vimfiles/vim_notes.txt)</span> on plugins &amp; stuff
-- a list of plugins i found useful in the past or currently
-- a bit of how to use them and where to find them
-- and old settings that i used to use...
+- my [vim_notes.txt](https://github.com/nickshin/vimfiles/vim_notes.txt) on plugins &amp; stuff
+	- a list of plugins i found useful in the past or currently
+	- a bit of how to use them and where to find them
+	- and old settings that i used to use...
 
-<span class="bold">[vim_fetch.sh](https://github.com/nickshin/vimfiles/vim_fetch.sh)</span> plugins
-- normally, plugins only need be placed in: **.vim/bundle**
-- but sometimes, some packages needs some extra hand holding to get em working (especially when working on a bunch of different OS)
-- this script helps me remember them
+-[vim_fetch.sh](https://github.com/nickshin/vimfiles/vim_fetch.sh) plugins
+	- normally, plugins only need be placed in: **.vim/bundle**
+	- but sometimes, some packages needs some extra hand holding to get em working (especially when working on a bunch of different OS)
+	- this script helps me remember them
 
 **external links:**
 - HowTos:
-	- <span class="note1">[Vim Book](ftp://ftp.vim.org/pub/vim/doc/book/vimbook-OPL.pdf) (get a hard copy so you can write notes in it...)</span>
-	- <span class="note1">[Derek Wyatt's Vim Tutorial Videos](http://derekwyatt.org/vim/tutorials/) (HIGHLY RECOMMENDED !!! excellent crash course on Vim)</span>
-	- <span class="note1">[vimcasts.org](http://vimcasts.org/episodes/archive) (MUST WATCH for intermediate Vim users)</span>
-	- <span class="note1">**:h index** (HIGHLY RECOMMENDED !!! after watching the vids above,
+	- _[Vim Book](ftp://ftp.vim.org/pub/vim/doc/book/vimbook-OPL.pdf) (get a hard copy so you can write notes in it...)_
+	- _[Derek Wyatt's Vim Tutorial Videos](http://derekwyatt.org/vim/tutorials/) (HIGHLY RECOMMENDED !!! excellent crash course on Vim)_
+	- _[vimcasts.org](http://vimcasts.org/episodes/archive) (MUST WATCH for intermediate Vim users)_
+	- _**:h index** (HIGHLY RECOMMENDED !!! after watching the vids above,
 		spend a night with this help page -- don't jump out of it, just skim and keep re-skim'ing this page -- and
-		you will be well on your way to mastering Vim)</span>
+		you will be well on your way to mastering Vim)_
 
 - Tips:
-	- <span class="note1">[vim quick reference card](http://tnerual.eriogerg.free.fr/vimqrc.html)</span>
-	- <span class="note1">[Graphical vi-vim Cheat Sheet and Tutorial](http://www.viemu.com/a_vi_vim_graphical_cheat_sheet_tutorial.html)</span>
-	- <span class="note1">[How to paste text into Vim command line](http://stackoverflow.com/questions/3997078/how-to-paste-text-into-vim-command-line) <span class="note1">(advanced -- and a lot of good info on registers)</span></span>
-	- <span class="note1">[vim tips](http://www.rayninfo.co.uk/vimtips.html) <span class="note1">(NOTE: you may need to click on this link twice -- the first time may send you to a vim webring...)</span></span>
+	- _[vim quick reference card](http://tnerual.eriogerg.free.fr/vimqrc.html)_
+	- _[Graphical vi-vim Cheat Sheet and Tutorial](http://www.viemu.com/a_vi_vim_graphical_cheat_sheet_tutorial.html)_
+	- _[How to paste text into Vim command line](http://stackoverflow.com/questions/3997078/how-to-paste-text-into-vim-command-line) (advanced -- and a lot of good info on registers)_
+	- _[vim tips](http://www.rayninfo.co.uk/vimtips.html) (NOTE: you may need to click on this link twice -- the first time may send you to a vim webring...)_
 
 - Writing your own plugins:
-	- <span class="note1">[Writing Vim Plugins](http://stevelosh.com/blog/2011/09/writing-vim-plugins/) <span class="note1">by steve losh</span></span>
-		- <span class="note1">**:help usr_41**</span>
-		- <span class="note1">**:help write-plugin**</span>
-		- <span class="note1">[A Byte of Vim](http://files.swaroopch.com/vim/byte_of_vim_v051.pdf) <span class="note1">by Swaroop C H</span></span>
-		  <span class="note1">  - search for "en:Scripting"</span>
-		- <span class="note1">[Learning the vi Editor/Vim/VimL Script language](https://en.wikibooks.org/wiki/Learning_the_vi_Editor/Vim/VimL_Script_language)</span>
+	- _[Writing Vim Plugins](http://stevelosh.com/blog/2011/09/writing-vim-plugins/) by steve losh_
+		- _**:help usr_41**_
+		- _**:help write-plugin**_
+		- _[A Byte of Vim](http://files.swaroopch.com/vim/byte_of_vim_v051.pdf) by Swaroop C H_
+			- _search for "en:Scripting"_
+		- _[Learning the vi Editor/Vim/VimL Script language](https://en.wikibooks.org/wiki/Learning_the_vi_Editor/Vim/VimL_Script_language)_
 
 * * *
 
 ### 3D Math
 
-<span class="bold">[3D_notes1](code/3D_notes1.md)</span> covers the following 3D math:
+##### [3D_notes1](code/3D_notes1.md)
+covers the following 3D math:
 - matrix math
 - vector math
 - lines w/ points, lines, circles equations
 - planes w/ points, lines, planes equations
 
 <!--
-[//] # ( TODO: <span class="bold">3D_notes2[](code/3D_notes2.md)</span> covers the following 3D math: )
+[//] # ( TODO: ##### 3D_notes2[](code/3D_notes2.md) )
+[//] # ( TODO: covers the following 3D math:        )
 [//] # ( TODO: - quaternions )
 [//] # ( TODO: - curves      )
 [//] # ( TODO: - surfaces    )
@@ -473,24 +492,24 @@ my <span class="bold">[vim_notes.txt](https://github.com/nickshin/vimfiles/vim_n
 ### Misc
 
 - [my bookmarks](https://www.nickshin.com/bookmark_tools/demo/index.html)
-- [Git-LFS](code/gitlfs_gitlab.md) <span class="note1">(with GitLab)</span>
+- [Git-LFS](code/gitlfs_gitlab.md) _(with GitLab)_
 - [rsync](code/rsync_notes.md)
 - [sql](code/sql_notes.md)
 
 **external links:**
-- <span class="note1">Git:</span>
-	- <span class="note1">[GIT cheat sheet](http://www.rsbac.org/documentation/dev/scm/git#the_cheat_sheet_this_is_where_you_find_all_common_commands)</span>
-	- <span class="note1">[Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)</span>
-	- <span class="note1">[How to Create a shared Git Repository in Debian (ssh, git-daemon, gitweb)](http://linuxclues.blogspot.com/2013/06/git-daemon-ssh-create-repository-debian.html) <span class="note1">(onsite repository)</span></span>
-	- <span class="note1">[Lesser Known Git Commands](https://dzone.com/articles/lesser-known-git-commands)</span>
-	- <span class="note1">[Git Submodules: Core Concept, Workflows, And Tips](https://dzone.com/articles/core-concept-workflows-and-tips)</span>
-	- <span class="note1">[Git Large File Storage](https://git-lfs.github.com/)</span>
-	- <span class="note1">[Git rebase](https://medium.freecodecamp.com/git-rebase-and-the-golden-rule-explained-70715eccc372#.qdpwnk4af)</span>
-	- <span class="note1">[GitKraken Tips](https://blog.axosoft.com/tag/gitkrakentip/)</span>
+- _Git:_
+	- _[GIT cheat sheet](http://www.rsbac.org/documentation/dev/scm/git#the_cheat_sheet_this_is_where_you_find_all_common_commands)_
+	- _[Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)_
+	- _[How to Create a shared Git Repository in Debian (ssh, git-daemon, gitweb)](http://linuxclues.blogspot.com/2013/06/git-daemon-ssh-create-repository-debian.html) (onsite repository)_
+	- _[Lesser Known Git Commands](https://dzone.com/articles/lesser-known-git-commands)_
+	- _[Git Submodules: Core Concept, Workflows, And Tips](https://dzone.com/articles/core-concept-workflows-and-tips)_
+	- _[Git Large File Storage](https://git-lfs.github.com/)_
+	- _[Git rebase](https://medium.freecodecamp.com/git-rebase-and-the-golden-rule-explained-70715eccc372#.qdpwnk4af)_
+	- _[GitKraken Tips](https://blog.axosoft.com/tag/gitkrakentip/)_
 
-- <span class="note1">Cheat Sheets Collections</span>
-	- <span class="note1">[Cheat-Sheets.org](http://www.cheat-sheets.org/)</span>
-	- <span class="note1">[OverAPI.com](http://overapi.com/)</span>
+- _Cheat Sheets Collections_
+	- _[Cheat-Sheets.org](http://www.cheat-sheets.org/)_
+	- _[OverAPI.com](http://overapi.com/)_
 
 * * *
 
@@ -499,15 +518,4 @@ my <span class="bold">[vim_notes.txt](https://github.com/nickshin/vimfiles/vim_n
 [Unlicense](http://unlicense.org/)
 
 * * *
-
-
-
-
-<style>
-.bold          { font-weight: bold; }
-ol, .note1     { font-size: 11px; }
-.super, .note2 { font-size: 9px; }
-.super         { vertical-align: super; }
-.underline     { text-decoration: underline; }
-</style>
 
