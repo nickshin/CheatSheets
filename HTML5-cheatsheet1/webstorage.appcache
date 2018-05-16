@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# 2011-10-17 01:52 v1
+
+# Explicitly cached entries
+webstorage-appcache.html
+
+
+FALLBACK:
+# redirect all files in server/ to offline.html when offline.
+servers/ storage/offline.html
+
+# redirect all files in image/large/ to smileyface.png when offline.
+images/large/ images/smileyface.png
+
+
+NETWORK:
+# All other resources (e.g. sites) require the user to be online.
+# for example: presence status, notifications, feeds, ad networks, etc.
+*
+
+# Additional resources to cache
+CACHE:
+js/DebugLog.js
+

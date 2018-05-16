@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<!--
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- drag & drop
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/dnd/basics/
++ http://html5doctor.com/native-drag-and-drop/
+~ http://www.gotproject.com/blog/post2.html
+~ http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW5
+
+DEMO!!!
++ http://html5demos.com/drag
+
+notes:
+- this is basically a copy of the DEMO above...
+- works on all desktop browsers. but, not on safari 5.1.2 (worked on 5.0.6)...
+  o http://stackoverflow.com/questions/7002832/safari-5-1-broke-html-native-drag-and-drop
+
+TODO:
+~ tablet support needs a hack (gotproject.com/blog/post2.html)...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>Drag &amp; Drop : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+<!-- ================================================== -->
+
+<style type="text/css">
+li {
+	list-style: none;
+}
+
+li a {
+	text-decoration: none;
+	color: #000;
+	margin: 10px;
+	width: 150px;
+	border: 3px dashed #999;
+	background: #eee;
+	padding: 10px;
+	display: block;
+}
+
+*[draggable=true] {
+	-moz-user-select:none;
+	-khtml-user-drag: element;
+	cursor: move;
+}
+
+*:-khtml-drag {
+	background-color: rgba(238,238,238, 0.5);
+}
+
+li a:hover:after {
+	content: ' (drag me)';
+}
+
+ul {
+	margin-left: 200px;
+	min-height: 300px;
+}
+
+li.over {
+	border-color: #333;
+	background: #ccc;
+}
+
+#bin {
+	background: url(images/bin.jpg) top right no-repeat;
+	height: 250px;
+	width: 166px;
+	float: left;
+	border: 5px solid #000;
+	position: relative;
+	margin-top: 0;
+}
+
+#bin.over {
+	background: url(images/bin.jpg) top left no-repeat;
+}
+
+#bin p {
+	font-weight: bold;
+	text-align: center;
+	position: absolute;
+	bottom: 20px;
+	width: 166px;
+	font-size: 32px;
+	color: #fff;
+	text-shadow: #000 2px 2px 2px;
+}
+</style>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<!-- .................................................. -->
+<!-- drag & drop {{{2 -->
+<!-- .................................................. -->
+
+<script>
+function dnd_onload() {
+	var eat = ['yum!', 'gulp', 'burp!', 'nom'];
+
+	var yum = document.createElement('p');
+		yum.style.opacity = 1;
+
+	// making all <li> draggable
+	var el = null;
+	var links = document.querySelectorAll('li > a');
+	for (var i = 0; i < links.length; i++) {
+		el = links[i];
+		el.setAttribute('draggable', 'true');
+		el.addEventListener('dragstart', function (e) {	// this / e.target is the source node.
+
+			e.dataTransfer.effectAllowed = 'copy';		// only dropEffect='copy' will be dropable
+			// possible values are: none, copy, copyLink, copyMove, link, linkMove, move, all, and uninitialized. 
+
+			e.dataTransfer.setData('Text', this.id);	// this is where the magic happens
+//			e.dataTransfer.setData('text/html', this.innerHTML); // another possible object content
+
+			// it is possible to change the drag icon instead of brower's default "ghost image" feedback
+			// TRY IT by uncommenting the following lines:
+//			var dragIcon = document.createElement('img');
+//			dragIcon.src = 'images/google_logo_small.png';
+//			e.dataTransfer.setDragImage(dragIcon, -10, -10);
+		}, false);
+		el.addEventListener('dragend', function (e) {	// this / e.target is the source node.
+			// do any clean up here...
+		}, false);
+	}
+
+
+	// the HEART of the drag & drop API
+	var bin = document.querySelector('#bin');
+
+	bin.addEventListener('dragenter', function (e) {	// this / e.target is the CURRENT HOVER target.
+		this.className = 'over';
+		// Note: dragenter can also look at e.dataTransfer.dropEffect -- in fact, it probably makes more sense here...
+	}, false);
+
+	bin.addEventListener('dragover', function (e) {
+		// NOTE: this event will be fired every time the pointer moves...
+		// so don't do any heavy changes here (such as innerHTML & className assignments).
+		// but this event is where 'dynamic' eye candy "stuff" can be done...
+		if (e.preventDefault) e.preventDefault();		// necessary, allows us to drop
+		e.dataTransfer.dropEffect = 'copy';				// possible values are: none, copy, link, move. 
+	}, false);
+
+	bin.addEventListener('dragleave', function (e) {	// this / e.target is PREVIOUS TARGET element.
+		this.className = '';
+	}, false);
+
+	bin.addEventListener('drop', function (e) {			// this / e.target is CURRENT TARGET element.
+		if (e.stopPropagation) e.stopPropagation();		// stops the browser from redirecting
+		bin.className = '';
+
+		// NOTE: DataTransfer object...
+		var el = document.getElementById(e.dataTransfer.getData('Text'));
+		el.parentNode.removeChild(el);
+
+		// simple nom text + fade effect
+		yum.innerHTML = eat[parseInt(Math.random() * eat.length)];
+		var y = yum.cloneNode(true);
+		bin.appendChild(y);
+		setTimeout(function () {
+			var t = setInterval(function () {
+				if (y.style.opacity <= 0)
+					clearInterval(t);
+				else
+					y.style.opacity -= 0.1;
+			}, 50);
+		}, 250);
+	}, false);
+}
+</script> 
+
+<!-- .................................................. -->
+<!-- drag & drop }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		dnd_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- ================================================== -->
+
+<article>
+<p>Drag the list items over the dustbin, and drop them to have the bin eat the item</p>
+<div id="bin"></div>
+<ul>
+<li><a id="one" href="#">one</a></li>
+<li><a href="#" id="two">two</a></li>
+<li><a href="#" id="three">three</a></li>
+<li><a href="#" id="four">four</a></li>
+<li><a href="#" id="five">five</a></li>
+</ul>
+</article>
+
+<!-- ================================================== -->
+</body>
+</html>

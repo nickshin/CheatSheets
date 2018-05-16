@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- appcache
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://appcachefacts.info/
++ http://www.html5rocks.com/en/tutorials/appcache/beginner/
+
+manifest attribute can point to an absolute URL or relative path
+but an absolute URL must be under the same origin as the web application
+	<html manifest="example.appcache">
+	<html manifest="http://www.example.com/example.appcache">
+
+
+manifest file can have any file extension, but must be served with the
+mime-type text/cache-manifest.
+For example, in Apache, add to .htaccess config file
+(remember to enable mod_rewrite or AllowOverride all):
+	AddType text/cache-manifest .appcache
+
+----------------------------------------
+Updating the cache:
+Once an application is offline it remains cached until one of the following happens:
+   - The user clears their browser's data storage for your site.
+   - THE MANIFEST FILE IS MODIFIED. Note: updating a FILE LISTED in
+     the manifest doesn't mean the browser will re-cache that resource.
+     The manifest file itself must be altered (this includes comments).
+   - The app cache is programatically (javascript) updated.
+
+If manifest file or resource specified fails to download,
+	the entire update fails.
+
+Forcing an update server side:
+  - http://nick.zoic.org/art/html5/taming-cache-manifest-caching.html
+
+----------------------------------------
+cached data limited to 5MB - but browsers can adjust this 'suggested' value
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ISSUES:
+
+it seems that browser will show 'cached' files/pages if it has them.
+
+in the FALLBACK section:
++ this works with embedded or linked items, such as:
+  o <link href>		css
+  o <script src>	js
+  o <a href>		link
+  o <img src>		images
+  o <source src>	audio/video
+
+- need to test:
+  o <iframe src>
+  o <style> ... { ... url() ... }
+
+* DOES NOT WORK (?) with URLs loaded via javascript
+  is this too 'dynamic' for the browser to match with these rules?
+
+* also, this does not work with directory listing
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EXAMPLES:
+- webaudiovideo.appcache :: cached files only
+- eventsource.appcache   :: network (online) options
+- webstorage.appcache    :: all manifest sections
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html manifest='webstorage.appcache'>
+<head>
+<title>AppCache : WebStoreage : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<b>App Cache Tests</b>
+
+<p>
+Take a look at the <a href='servers/sse.pl'>servers/sse.pl</a> file (offline).
+<p>
+<img src='images/large/Jupiter_gany.jpg'>
+
+<!-- ================================================== -->
+
+</body>
+</html>

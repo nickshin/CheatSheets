@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- swipegestures
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ fast click
+  o http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone
+  o http://code.google.com/mobile/articles/fast_buttons.html
+    - Calling preventDefault() will stop links from being activated.
+    - Calling stopPropagation() guarantees that other behaviors don't get a chance to handle the same click event.
++ click drag/trace: sketchpad
+  o http://tenderlovingcode.com/static/download/draw.html
+
+DEMO!!!
++ 
+
+notes:
+- this is basically a combination of the two links above...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>SwipeGesture : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<!-- .................................................. -->
+<!-- fast click (touch) & mouse {{{2 -->
+<!-- .................................................. -->
+
+<script>
+function swipe_gestures( el, cb_endup, cb_move, cb_startdown, cb_cancelout ) {
+	this.element = el;
+
+	this.cb_endup = cb_endup;
+	this.cb_movemove = cb_move;
+	this.cb_startdown = cb_startdown;
+//	this.cb_cancelout = cb_cancelout;
+
+	this.position_start = { x:0, y:0 };
+	this.position_last = { x:0, y:0 };
+	this.isEnabled = 1;
+
+	if( window.Touch ) {
+		el.addEventListener('touchstart', this, false);
+		this.getCoordinates = this.touchPosition;
+		this.setListeners = this.touchSetListeners;
+		this.clearListeners = this.touchClearListeners;
+		this.gestureEventHandler = this.touchHandleEvent;
+	} else {
+		el.addEventListener('mousedown', this, false);
+		this.getCoordinates = this.mousePosition;
+		this.setListeners = this.mouseSetListeners;
+		this.clearListeners = this.mouseClearListeners;
+		this.gestureEventHandler = this.mouseHandleEvent;
+	}
+}
+
+swipe_gestures.prototype = {
+	// ========================================
+	// MOUSE CENTRIC
+	mousePosition: function(event) {
+		var pos = {
+			x: 0,
+			y: 0
+		};
+		if ( event.x != undefined && event.y != undefined) {
+			pos.x = event.x;
+			pos.y = event.y;
+		} else {				// Firefox method to get the position
+			pos.x = event.clientX + document.body.scrollLeft +
+					document.documentElement.scrollLeft;
+			pos.y = event.clientY + document.body.scrollTop +
+					document.documentElement.scrollTop;
+		}
+		pos = this.addOffsetParent( pos );
+		return pos;
+	},
+
+	mouseSetListeners: function() {
+//		document.body.addEventListener('mousemove', this, false);
+		this.element.addEventListener('mousemove', this, false);
+		this.element.addEventListener('mouseup', this, false);
+//		this.element.addEventListener('mouseout', this, false);
+	},
+
+	mouseClearListeners: function() {
+//		document.body.removeEventListener('mousemove', this, false);
+		this.element.removeEventListener('mousemove', this, false);
+		this.element.removeEventListener('mouseup', this, false);
+//		this.element.removeEventListener('mouseout', this, false);
+	},
+
+	mouseHandleEvent: function(e) {
+		switch(e.type) {
+			case 'mousedown': this.startdown(e); break;
+			case 'mousemove': this.movemove(e); break;
+			case 'mouseup': this.endup(e); break;
+//			case 'mouseout': this.cancelout(); break;
+		}
+	},
+
+	// ========================================
+	// TOUCHPAD CENTRIC
+	touchPosition: function(event) {
+		var pos = {
+			x: event.targetTouches[0].pageX,
+			y: event.targetTouches[0].pageY
+		};
+		pos = this.addOffsetParent( pos );
+		return pos;
+	},
+
+	touchSetListeners: function() {
+		document.body.addEventListener('touchmove', this, false);
+		this.element.addEventListener('touchend', this, false);
+//		this.element.addEventListener('touchcancel', this, false);
+	},
+
+	touchClearListeners: function() {
+		document.body.removeEventListener('touchmove', this, false);
+		this.element.removeEventListener('touchend', this, false);
+//		this.element.removeEventListener('touchcancel', this, false);
+	},
+
+	touchHandleEvent: function(e) {
+		switch(e.type) {
+			case 'touchstart': this.startdown(e); break;
+			case 'touchmove': this.movemove(e); break;
+			case 'touchend': this.endup(e); break;
+//			case 'touchcancel': this.cancelout(); break;
+		}
+	},
+
+
+	// ========================================
+	// COMMON HANDLERS
+
+	handleEvent: function(e) {
+		if ( this.isEnabled )
+			this.gestureEventHandler(e);
+	},
+
+	startdown: function(event) {
+		event.stopPropagation(); // eat the event
+		this.position_start = this.getCoordinates(event);
+		this.position_last = this.position_start;
+		this.setListeners();
+		this.cb_startdown(this);
+	},
+
+	movemove: function(event) {
+		event.preventDefault(); // prevent elastic scrolling
+		this.position_last = this.getCoordinates(event);
+		this.cb_movemove(this);
+	},
+
+	endup: function(event) {
+		event.stopPropagation(); // eat the event
+		this.clearListeners();
+		this.cb_endup(this);
+	},
+
+//	cancelout: function(event) {
+//		this.clearListeners();
+//		this.cb_cancelout(this);
+//	},
+
+	addOffsetParent: function(pos) {
+		var offsetParent = this.element.offsetParent;
+		while( offsetParent ) {
+			pos.x -= offsetParent.offsetLeft;
+			pos.y -= offsetParent.offsetTop;
+			offsetParent = offsetParent.offsetParent;
+		}
+		return pos;
+	},
+
+	enable:  function() { this.isEnabled = 1; },
+	disable: function() { this.isEnabled = 0; }
+};
+</script>
+
+<!-- .................................................. -->
+<!-- fast click (touch) & mouse }}}2 -->
+<!-- sketchpad {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	var noop = function() {}
+	var sp = null; // note: this object is the same as the callback parameter...
+	var ctx = null;
+
+	function sketchpad_onload() {
+		var canvas = document.getElementById('sketchpad');
+		ctx = canvas.getContext('2d');
+
+		sp = new swipe_gestures( canvas, sp_endup, sp_move, sp_startdown, noop );
+	}
+
+	function sp_startdown( sp ) {
+		ctx.beginPath();
+		ctx.moveTo(sp.position_last.x, sp.position_last.y);
+	}
+
+	function sp_move( sp ) {
+		ctx.lineTo(sp.position_last.x, sp.position_last.y);
+        ctx.stroke();
+	}
+
+	function sp_endup( sp ) {
+		sp_move( sp ); // =)
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- sketchpad }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		sketchpad_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<canvas id="sketchpad" width="766" height="944" style="border: 1px solid #000;"> 
+
+</body>
+</html>

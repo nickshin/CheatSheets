@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- file API
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/file/dndfiles/
++ http://html5-demos.appspot.com/static/html5storage/index.html#slide44
+
++ http://davidflanagan.com/Talks/jsconf11/BytesAndBlobs.html
+  o     All Files are Blobs
+  o Not all Blobs are Files
+
+
+DEMO!!!
++ http://html5demos.com/file-api-simple
++ http://html5demos.com/file-api
+
+
+CHROME ONLY:
++ http://www.html5rocks.com/en/tutorials/file/filesystem/
++ http://html5-demos.appspot.com/static/html5storage/index.html#slide54
+
+
+notes:
++ read local files in JavaScript without sending anything to server
+
+
++ FileReader.readAsBinaryString(Blob|File):
+  o The result property will contain the file/blob's data as a binary string.
+    Every byte is represented by an integer in the range [0..255].
+
++ FileReader.readAsText(Blob|File, opt_encoding)
+  o The result property will contain the file/blob's data as a text string.
+    By default the string is decoded as 'UTF-8'.
+    Use the optional encoding parameter can specify a different format.
+
++ FileReader.readAsDataURL(Blob|File)
+  o The result property will contain the file/blob's data encoded as a data URL.
+
++ FileReader.readAsArrayBuffer(Blob|File)
+  o The result property will contain the file/blob's data as an ArrayBuffer object.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>FileAPI : WebStoreage : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type='text/javascript' src='js/DebugLog.js'></script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// for this file, replacing (hooking) the log() and throw()
+	// with the DEBUGLOG system
+	var log_hook = DEBUGLOG.printhook;
+	var throw_hook = DEBUGLOG.printhook;
+	function debuglog_onload() {
+		DEBUGLOG.setElementById( 'logwindow' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js }}}2 -->
+<!-- fileAPI {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function file_slice( fname ) {
+		var start = 0;
+		var stop  = 10;
+
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			// when using onloadend: need to check readyState
+			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+				document.getElementById('byte_content').textContent = evt.target.result;
+				document.getElementById('byte_range').textContent = 
+					['Read bytes: ', start + 1, ' - ', stop + 1,
+					 ' of ', fname.size, ' byte file'].join('');
+			}
+		};
+		var blob = fname.slice(start, stop + 1);
+		reader.readAsBinaryString(blob);
+	}
+
+	function file_load_img( fname ) {
+		var reader = new FileReader();
+		reader.onload = function (event) {
+			var el = document.getElementById('via_data_url');
+//			el.innerHTML = event.target.result; // use this to see what the 'data' looks like
+			var img = new Image();
+			img.src = event.target.result;
+			el.innerHTML = '';
+			el.appendChild(img);
+		};
+		reader.readAsDataURL(fname);
+	}
+
+	function fileAPI_onload() {
+		if ( ! window.FileReader ) {
+			log_hook( 'WARNING: BROWSER DOES NOT HAVE FileReader() SUPPORT!!!' );
+		}
+		var inputbox = document.getElementsByTagName('input')[0];
+		inputbox.onchange = function (e) {
+			e.preventDefault();
+			var fname = inputbox.files[0];
+
+			// TEST #1
+			file_load_img(fname);
+
+			// TEST #2
+			// yes, the "file" from the "input box"...
+			if ( fname.webkitSlice )
+			  fname.slice = fname.webkitSlice;
+			else if ( fname.mozSlice )
+			  fname.slice = fname.mozSlice;
+			file_slice(fname);
+
+			return false;
+		};
+
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- fileAPI }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		debuglog_onload();
+		fileAPI_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- .................................................. -->
+<hr>
+<input type=file id='file'>
+<hr>
+<div id="via_data_url">select an image file via input box above...</div>
+<hr>
+<div id="byte_range"> range of bytes are printed here...</div>
+<div id="byte_content"></div>
+<hr>
+
+<!-- ================================================== -->
+
+</body>
+</html>

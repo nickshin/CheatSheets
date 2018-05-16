@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+this file was written to hunt down why <audio> doesn't work on iOS as expected....
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+<html><title>audio tests 1</title>
+<head>
+<style>
+</style>
+</head>
+<body>
+Straight forward Audio loads via [ Audio.src ] and via XMLHttpRequest with [ dataURLs ]
+
+<p>
+	<div id='status'></div>
+
+Note:<br>
+Firefox, Chrome, Android and Opera support ogg/vorbis.<br>
+IE9, Safari, Chrome, Android and iOS support mp3.<br>
+Safari, Chrome, IE and iOS support AAC.<br>
+<select id="ext" onchange="reload_snds();">
+<option value="mp3">mp3</option>
+<option value="ogg">ogg</option>
+<option value="wav" selected>wav</option>
+</select>
+
+	<div id='buttons'></div>
+
+	<p>
+	<div id='base64_mp3'></div>
+	<div id='base64_ogg'></div>
+	<div id='base64_wav'></div>
+
+<script>
+
+/*
+Multiple methods of loading audio assets are attemped here:
+- direct loading:
+  o mp3
+  o ogg
+  o wav
+
+- indirect loading:
+  o dataURL
+
+- these all work on desktop browsers (with their respective supported audio types) out of the box
+
+- BUT: iOS (as of 5.1.1) does NOT support playing back dataURL...
+
+
+Other issues found:
+- iOS does not respect the volume parameter
+  o http://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/Device-SpecificConsiderations/Device-SpecificConsiderations.html#//apple_ref/doc/uid/TP40009523-CH5-SW11
+
+- iOS does not automatically load audio assets until a user-initiated input is done
+  o http://stackoverflow.com/questions/4259928/how-can-i-autoplay-media-in-ios-4-2-1-mobile-safari/4449793#4449793
+*/
+
+
+// http://www.w3.org/wiki/HTML/Elements/audio
+//	var eventToListenFor = 'loadeddata';
+//	var eventToListenFor = 'canplay';
+//	var eventToListenFor = 'canplaythrough';
+//	var eventToListenFor = 'durationchange';
+	var eventToListenFor = 'ended'; // note: on new load and immediate play: this is fired (no audio was downloaded yet)
+// none of the above matters on iOS, see 'user-initiated' input note further above...
+
+
+	var snd_list = [
+			[ 'icecream',		'60608__morgantj__icecreamtruck' ]
+		,	[ 'jingle',			'105228__club-sound__old-fashion-radio-jingle-2' ]
+		,	[ 'yay',			'139971__jessepash__crowd-yay-applause-25ppl-medium' ]
+		,	[ 'coinshuffle',	'60769__dobroide__20080928-coins-05' ]
+		,	[ 'coinwin',		'69682__lukaso__coinwin' ]
+		,	[ 'cha-ching',		'75235__creek23__cha-ching' ]
+		,	[ 'coindrop',		'90397__ehproductions__money1' ]
+	];
+	var snd_objs = [];
+	var snd_rdy = 0;
+	function load_snds() {
+		var html = '';
+		var path = 'media/';
+		var sel = document.getElementById('ext');
+		snd_rdy = 0;
+		update_loaded();
+		for ( var i = 0; i < snd_list.length; i++ ) {
+			snd_objs[i] = {};
+			var a = new Audio();
+			a.addEventListener(eventToListenFor, audio_loaded, false);
+			a.preload = 'auto';
+			a.src = path + snd_list[i][1] + '.' + sel.value;
+			a.volume = 0.01; // NOTE: iOS does not respect this...
+			a.play();
+			snd_objs[i].sndObj = a;
+
+			html += '<input type=button value="' + snd_list[i][0] +
+					'" OnClick="playsnd(' + i + ');">\n';
+			if ( i && ! ( i % 3 ) )
+				html += '<br>';
+		}
+		var el = document.getElementById('buttons');
+		el.innerHTML = html;
+	}
+	function audio_loaded() {
+		this.removeEventListener(eventToListenFor, audio_loaded, false);
+		this.volume = 1;
+		snd_rdy++;
+		update_loaded();
+	}
+	function playsnd( index ) {
+		var snd = snd_objs[index].sndObj;
+		snd.pause();
+		if ( snd.currentTime ) // on iOS, this is not accessible until audio asset is playable
+			snd.currentTime = 0;
+		snd.play();
+	}
+	function update_loaded() {
+		var el = document.getElementById('status');
+		el.innerHTML = 'audio loaded: ' + snd_rdy + '/' + snd_objs.length + '<br>via event: ' + eventToListenFor;
+	}
+
+	function reload_snds() {
+		snd_rdy = 0;
+		load_snds();
+	}
+
+	onload = function() {
+		load_snds();
+		fetch_base64();
+	};
+</script>
+
+<script>
+function fetch_base64() {
+	fetch_base64_ext( 'mp3' );
+	fetch_base64_ext( 'ogg' );
+	fetch_base64_ext( 'wav' );
+}
+function fetch_base64_ext( ext ) {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if ( xmlhttp.readyState==4 && xmlhttp.status==200) {
+			if ( xmlhttp.responseText == '' ) {
+				alert( 'server has aborted request...' );
+				return;
+			}
+			set_audio(xmlhttp.responseText, ext);
+		}
+	}
+
+	xmlhttp.open("GET","media/90397__ehproductions__money1_" + ext + ".txt",true);
+	xmlhttp.send();
+}
+
+function set_audio( data, ext ) {
+	var el = document.getElementById('base64_'+ext);
+	el.innerHTML += '<audio id="html5_audio_' + ext + '" src="' + data + '"></audio>' +
+			'<input type=button value="base64 ' + ext + ' test" OnClick="play_audio(\'' + ext + '\');">\n';
+}
+function play_audio(ext) {
+    var el = document.getElementById('html5_audio_'+ext);
+	el.pause();
+	el.play();
+}
+</script>
+</body>
+</html>

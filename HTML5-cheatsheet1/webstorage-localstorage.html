@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- localStorage
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/offline/whats-offline/#toc-web-storage
++ http://www.html5rocks.com/en/tutorials/offline/storage/#web-storage
+
+DEMO!!!
++ http://html5demos.com/storage-events
+
+notes:
++ localStorage: persistant object (across windows too)
++ sessionStorage: clears when window is closed
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>LocalStorage : WebStoreage : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type='text/javascript' src='js/DebugLog.js'></script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// for this file, replacing (hooking) the log() and throw()
+	// with the DEBUGLOG system
+	var log_hook = DEBUGLOG.printhook;
+	var throw_hook = DEBUGLOG.printhook;
+	function debuglog_onload() {
+		DEBUGLOG.setElementById( 'logwindow' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js }}}2 -->
+<!-- localStorage {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function augmentStorage() {
+		// http://hacks.mozilla.org/2009/06/localstorage/
+		Storage.prototype.setObject = function(key, value) {
+			this.setItem(key, JSON.stringify(value));
+		}
+
+		Storage.prototype.getObject = function(key) {
+			return JSON.parse(this.getItem(key));
+		}
+	}
+
+	function localStorage_onload() {
+		log_hook( '<b>localStorage</b>' );
+
+		// ====================
+		augmentStorage();
+
+		// ====================
+		log_hook( 'the <b>API</b> way' );
+		localStorage.clear();
+		localStorage.setItem('foo', 'bar');
+		log_hook( 'getItem: ' + localStorage.getItem('foo') );
+		log_hook( 'key(0): ' + localStorage.key(0) );
+		localStorage.removeItem('foo');
+		log_hook( 'length: ' + localStorage.length );
+	
+		// ====================
+		log_hook( '<hr>' );
+		log_hook( 'the <b>object</b> way' );
+		localStorage.length = 0;
+		localStorage.foo = 'bar';
+		log_hook( 'getItem: ' + localStorage.foo );
+		log_hook( 'getItem: ' + localStorage['foo'] );
+		log_hook( 'key(0): ' + localStorage[0] );
+		delete localStorage['foo'];
+		log_hook( 'length: ' + localStorage.length );
+		
+		// ====================
+		log_hook( '<hr>' );
+		log_hook( '<b>JSON</b> objects' );
+		var data = {
+			greeting:	'hello there!',
+			question1:	"what's your name?",
+			answer1:	'some call me tim?',
+			question2:	"what's the meaning of life?",
+			answer2:	'the answer is 42'
+		};
+		localStorage.setObject( 'data', data );
+		var get = localStorage.getObject( 'data' );
+		log_hook( JSON.stringify( get ) );
+
+		// ====================
+		// nuke everything
+		localStorage.clear();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- localStorage }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		debuglog_onload();
+		localStorage_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- ================================================== -->
+
+</body>
+</html>

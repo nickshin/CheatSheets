@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- css3
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/3d/css/
++ http://www.joelambert.co.uk/flux/transgallery.html
+  o Hardware accelerated image transitions using CSS3.
+
++ http://www.instantshift.com/2010/03/15/47-css-tips-tricks-to-take-your-site-to-the-next-level/
+  o css cookbook snippets
+
++ http://www.google.com/webfonts
+  o webfont cookbook snippets
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>CSS3 : test code</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+<!-- ================================================== -->
+
+<!--
+# WARNING: see google font api for details, but these files can be big...
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
+
+
+# more ways to <link> google webfont files:
+
+# alt#2
+<style>
+	@import url(http://fonts.googleapis.com/css?family=Tangerine);
+</style>
+
+# alt#3
+<style>
+	@font-face {
+		font-family: 'Tangerine';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Tangerine'), url('http://themes.googleusercontent.com/static/fonts/tangerine/v2/HGfsyCL5WASpHOFnouG-RLO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
+	}
+</style>
+-->
+
+
+<!-- .................................................. -->
+<!-- CSS centering {{{2 -->
+<!-- .................................................. -->
+
+<style>
+/*
+http://www.w3.org/Style/Examples/007/center.en.html
+http://blog.themeforest.net/tutorials/vertical-centering-with-css/
+*/
+
+	p.center { text-align: center; }
+	
+	p.blocktext {
+		border: thin solid black;
+		margin-left: auto;
+		margin-right: auto;
+		width: 8em;
+		/* note: this is the same as an image, but does not use "display: block" style rule */
+	}
+	
+	img.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		/* note: this is the same as the block of text, but does not use "width" style rule */
+	}
+	
+	.vcenter {
+	    border: thin dotted black;
+	    display: table-cell;
+	    vertical-align: middle;
+	    height: 12em;
+	}
+
+</style>
+
+<style> /* http://www.impressivewebs.com/demo-files/center-divs/ */
+
+	#parent {
+		border: solid 1px #aaa;
+		text-align: center;
+		white-space: nowrap;
+		font-size: 20px;
+		letter-spacing: 35px;
+		line-height: 12px;
+		overflow: hidden;
+		width: 615px;
+	}
+	
+	.child {
+		width: 100px;
+		height: 100px;
+		border: solid 1px #ccc;
+		display: inline-block;
+		letter-spacing: normal;
+		font-size: normal;
+		white-space: normal;
+		text-align: normal;
+		vertical-align: middle;
+	}
+	
+	.child {
+		*display: inline;
+		*margin: 0 20px 0 20px;
+	}
+
+</style>
+
+<!-- .................................................. -->
+<!-- CSS centering }}}2 -->
+<!-- center text over images {{{2 -->
+<!-- .................................................. -->
+
+<style>
+	/* http://alt-web.com/DEMOS/CSS-Sold-Out-Text-over-image.shtml */
+	.ProdDiv {/** image container **/
+		position:relative;
+/* try commenting out these one at a time... */
+		width: 250px;			/**some width in pixels, ems or %**/
+		text-align: center;		/* this centers the image on this layer */
+	}
+	.Sold {/** text **/
+		position: absolute;
+		text-align:center;		/* this centers the text on this layer */
+
+/* try percentages versus pixel -- and with or without width defined in .ProdDiv */
+		/**adjust as needed**/
+		top: 18%;
+		left: 12%;
+
+		/**note: CSS3 TRANSFORM: ROTATE DOESN'T WORK IN ALL BROWSERS YET**/
+		-webkit-transform: rotate(-20deg); /**safari, chrome**/
+		-moz-transform: rotate(-20deg); /**firefox**/
+		transform: rotate(-20deg); /**other browsers**/
+	}
+
+	/* the following are misc rules not essential to the centering effect */
+	.ProdDiv {
+		border: thin silver solid;
+		background: gray;
+		margin: 0.5em;
+		padding: 0.5em;
+	}
+	.Sold, .theText {/** text **/
+		font:bold 2.5em/1.5em Georgia, "Times New Roman", Times, serif;
+		color: red;
+		background: black;
+	}
+</style>
+
+<style>
+	.theButtonPosition {
+		/* to place the object somewhere specific */
+		top: 0px;
+		left: 200px;
+		position: absolute;
+	}
+	.theButton {
+		/* spell out this object -- note: these are based on "images/smileyface.png" dimensions */
+		width: 200px;
+/*		height: 200px; */
+		position: relative;
+	}
+	.theText {
+		position: absolute;
+	    border: thin dotted black;
+
+	/* these will not work with a "caption-like" outline
+	    display: table-cell;
+	    vertical-align: middle;
+	    height: 100%;
+	*/
+	/* nor will these work with a "caption-like" outline
+		margin-left: auto;
+		margin-right: auto;
+	*/
+	/* so spell out the position */
+		top: 20%;
+		left:25%;
+		width:50%;
+	}
+</style>
+
+<style>
+	/* so, attempting to NOT use a "caption" outline */
+	.theButton2 {
+		/* spell out this object -- note: these are based on "images/smileyface.png" dimensions */
+		width: 200px;
+		height: 200px;
+		position: relative;
+	}
+	.theImage2 {
+		position: absolute;
+	}
+	.theText2 {
+	    border: thin dotted black;
+		text-align: center;
+
+	/* without the following, this layer is under the outer layer?!? */
+		position: absolute;
+
+	/* and then these do not work if using [position:absolute]
+	    display: table-cell;
+	    vertical-align: middle;
+		height: 12em;
+	*/
+	/* nor will these work if using [position:absolute]
+		margin-left: auto;
+		margin-right: auto;
+	*/
+	/* oh well... spell out the position */
+		top: 45%;
+		left:25%;
+		width:50%;
+	}
+</style>
+
+<!-- .................................................. -->
+<!-- center text over images }}}2 -->
+<!-- wrapping text around images {{{2 -->
+<!-- .................................................. -->
+
+<style>
+	.floatright {
+		float: right;
+		margin: 0 0 1em 1em;
+	}
+</style>
+
+<!-- .................................................. -->
+<!-- wrapping text around images }}}2 -->
+<!-- WEB FONTS {{{2 -->
+<!-- .................................................. -->
+
+<style>
+/* load font from local... */
+	@font-face {
+		font-family: 'Tangerine';
+		font-style: normal;
+		font-weight: normal;
+		src: local('Tangerine'), url('fonts/tangerine.woff') format('woff');
+	}
+
+	.webfont {
+		font-family: 'Tangerine', serif;
+		font-size: 48px;
+		text-shadow: 4px 4px 4px #aaa;
+	}
+</style>
+
+
+<!-- .................................................. -->
+<!-- WEB FONTS }}}2 -->
+<!-- css 3D {{{2 -->
+<!-- .................................................. -->
+
+<style>
+/* http://www.w3schools.com/cssref/css3_pr_perspective.asp
+ * - webkit only
+ */
+#anim1 {
+	-webkit-perspective: 800;
+	perspective: 800;
+	margin: 100px 0 100px 50px;
+}
+
+#anim1 iframe {
+	-webkit-transition: -webkit-transform 1s ease-in-out;
+	-webkit-transform: rotate3d(0, 1, 1, 30deg);
+	transition: transform 1s ease-in-out;
+	transform: rotate3d(0, 1, 1, 30deg);
+}
+
+#anim1 iframe:hover {
+	-webkit-transform: rotate3d(0, 0, 1, 30deg);
+	transform: rotate3d(0, 0, 1, 30deg);
+}
+</style>
+
+<!-- .................................................. -->
+<!-- css 3D }}}2 -->
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+<!-- CSS and javascript {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function css_onload() {
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- CSS and javascript }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		css_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+
+<h3>Centering Text in a Paragraph</h3>
+<div style="width:300; border: thin dashed black;">
+	<p class="center">
+	The lines in this paragraph are all centered between the paragraph's
+	margins, thanks to the value 'center' of the CSS property 'text-align'.
+	If there are multiple lines, they will wrap but still be centered.
+	</p>
+</div>
+
+<h3>Centering Blocks of Content with CSS</h3>
+<div style="width:100%; border: thin dashed black;">
+	<p class="blocktext">
+	This rather narrow block of text is centered.
+	Note that the lines inside the block are not centered
+	(they are left-aligned), unlike in the earlier example.
+	</p>
+</div>
+
+<h3>Centering Images</h3>
+<div style="width:100%; border: thin dashed black;">
+	<img src="images/smileyface.png" class="center" />
+</div>
+
+<h3>Centering Vertically</h3>
+<div class="vcenter">
+	<p>This small paragraph is vertically centered.</p>
+</div>
+
+<!-- .................................................. -->
+
+<h3>Center Multiple Divs</h3>
+
+<!-- center this example -->
+<div style="width: 615px; margin: 0 auto 0 auto;">
+
+	<div id="parent">
+	
+		<div class="child">
+			<p>This is the first box with text.</p>
+		</div>
+	
+		<div class="child">
+			<p>This is another box</p>
+		</div>
+	
+		<div class="child">
+			<p>This is a box</p>
+		</div>
+	
+		<div class="child">
+			<p>This is a box</p>	
+		</div>
+	
+	</div>
+
+</div>
+
+<!-- .................................................. -->
+<hr>
+
+<h3>Center Text Over Images</h3>
+
+<div class="ProdDiv">
+	<img src="images/smileyface.png" alt="" width="" height="" />
+	<p class="Sold">Hello There!</p>
+</div>
+
+<div class="theButton">
+	<img src="images/smileyface.png"/>
+	<div class="theText"> Hello There! </div>
+</div>
+
+<div class="theButton2">
+	<div class="theImage2"><img src="images/smileyface.png"/></div>
+	<div class="theText2"> Hello There! </div>
+</div>
+
+<!-- .................................................. -->
+<hr>
+
+<h3>Wrapping Text Around Images</h3>
+<div style="width: 50%; border: 1px solid blue; font-size: 105%; padding: 20px; margin: 20px;">
+	<div class="floatright">
+		<img src="images/smileyface.png" style="width: 60px; height: 30px;"/>
+		<!-- note: <br /> could have been used here, but <div> works just as well
+			(remember, to stylize inlined use <span>)... -->
+		<div class="caption__note_this_style_does_not_exist___">Image caption here...</div>
+	</div>
+	This is some text that will wrap around the image that sits on the right side
+	of the text that you are writing about the image that is there. That is, if
+	you are writing about the image in the first place and you want to write about
+	this specific image.
+</div>
+
+<!-- .................................................. -->
+<hr>
+
+<h3>Dynamically Loaded WebFonts</h3>
+<div class="webfont">
+	Making the Web Beautiful!
+</div>
+
+<!-- .................................................. -->
+<hr>
+
+<h3>CSS3D</h3>
+warning: webkit only
+<div id="anim1">
+	<iframe src="images/smileyface.jpg"></iframe>
+</div>
+
+
+
+<!-- ================================================== -->
+
+</body>
+</html>
+

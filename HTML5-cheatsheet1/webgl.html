@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<!--
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- webGL
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://learningwebgl.com/cookbook/index.php/Main_Page
++ http://learningwebgl.com/blog/?page_id=1217
++ https://developer.mozilla.org/en/WebGL
+
++ WebGL Inspector (Ben Vanik)
+
+DEMO!!!
++ https://developer.mozilla.org/en-US/demos/tag/tech:webgl/
+  o https://developer.mozilla.org/en-US/demos/detail/glass-shader/launch
++ http://www.chromeexperiments.com/tag/webgl/
+  o http://madebyevan.com/webgl-water/
+
+note:
+- this is basically a copy of the DEMO found at:
+  o http://learningwebgl.com/lessons/lesson01/index.html
++ some browsers NEED to have WEBGL ENABLED MANUALLY to have 3D working
+  o goto: [ http://get.webgl.org/ ]
+    & then it will tell you where to go if webGL is not running...
+  o http://www.google.com/support/forum/p/Chrome/thread?tid=1b0581be273af677&hl=en
+  o https://discussions.apple.com/thread/3300585?start=0&tstart=0
+  o https://wiki.mozilla.org/Blocklisting/Blocked_Graphics_Drivers#How_to_force-enable_blocked_graphics_features
+  o http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>WebGL : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type="text/javascript" src="js/gl-matrix-min.js"></script>
+<!--
+<script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
+-->
+
+<!-- .................................................. -->
+<!-- WebGL {{{2 -->
+<!-- .................................................. -->
+
+<script id="shader-fs" type="x-shader/x-fragment">
+	#ifdef GL_ES
+	precision highp float;
+	#endif
+
+	void main(void) {
+		gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+	}
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+	attribute vec3 aVertexPosition;
+
+	uniform mat4 uMVMatrix;
+	uniform mat4 uPMatrix;
+
+	void main(void) {
+		gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+	}
+</script>
+
+
+<script type="text/javascript">
+	var gl;
+	function initGL(canvas) {
+		try {
+			gl = canvas.getContext("experimental-webgl");
+			gl.viewportWidth = canvas.width;
+			gl.viewportHeight = canvas.height;
+		} catch (e) {
+		}
+		if (!gl) {
+			alert("Could not initialise WebGL, sorry :-(");
+		}
+	}
+
+
+	function getShader(gl, id) {
+		var shaderScript = document.getElementById(id);
+		if (!shaderScript) {
+			return null;
+		}
+
+		var str = "";
+		var k = shaderScript.firstChild;
+		while (k) {
+			if (k.nodeType == 3) {
+				str += k.textContent;
+			}
+			k = k.nextSibling;
+		}
+
+		var shader;
+		if (shaderScript.type == "x-shader/x-fragment") {
+			shader = gl.createShader(gl.FRAGMENT_SHADER);
+		} else if (shaderScript.type == "x-shader/x-vertex") {
+			shader = gl.createShader(gl.VERTEX_SHADER);
+		} else {
+			return null;
+		}
+
+		gl.shaderSource(shader, str);
+		gl.compileShader(shader);
+
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+			alert(gl.getShaderInfoLog(shader));
+			return null;
+		}
+
+		return shader;
+	}
+
+
+	var shaderProgram;
+
+	function initShaders() {
+		var fragmentShader = getShader(gl, "shader-fs");
+		var vertexShader = getShader(gl, "shader-vs");
+
+		shaderProgram = gl.createProgram();
+		gl.attachShader(shaderProgram, vertexShader);
+		gl.attachShader(shaderProgram, fragmentShader);
+		gl.linkProgram(shaderProgram);
+
+		if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+			alert("Could not initialise shaders");
+		}
+
+		gl.useProgram(shaderProgram);
+
+		shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+		gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+		shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+		shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+	}
+
+
+	var mvMatrix = mat4.create();
+	var pMatrix = mat4.create();
+
+	function setMatrixUniforms() {
+		gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+		gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+	}
+
+
+
+	var triangleVertexPositionBuffer;
+	var squareVertexPositionBuffer;
+
+	function initBuffers() {
+		triangleVertexPositionBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+		var vertices = [
+			 0.0,  1.0,  0.0,
+			-1.0, -1.0,  0.0,
+			 1.0, -1.0,  0.0
+		];
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+		triangleVertexPositionBuffer.itemSize = 3;
+		triangleVertexPositionBuffer.numItems = 3;
+
+		squareVertexPositionBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+		vertices = [
+			 1.0,  1.0,  0.0,
+			-1.0,  1.0,  0.0,
+			 1.0, -1.0,  0.0,
+			-1.0, -1.0,  0.0
+		];
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+		squareVertexPositionBuffer.itemSize = 3;
+		squareVertexPositionBuffer.numItems = 4;
+	}
+
+
+	function drawScene() {
+		gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+		mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+		mat4.identity(mvMatrix);
+
+		mat4.translate(mvMatrix, [-1.5, 0.0, -7.0]);
+		gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+		gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		setMatrixUniforms();
+		gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
+
+
+		mat4.translate(mvMatrix, [3.0, 0.0, 0.0]);
+		gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+		gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		setMatrixUniforms();
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
+	}
+
+
+
+	function webGLStart() {
+		var canvas = document.getElementById("webGL");
+		initGL(canvas);
+		initShaders();
+		initBuffers();
+
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.enable(gl.DEPTH_TEST);
+
+		drawScene();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- WebGL }}}2 -->
+<!-- requestAnimationFrame() {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	var last_timestamp = 0;
+	var fps_sixty_hz = 1000/60; 
+
+	function draw( timestamp ) {
+		if (typeof timestamp === "undefined") { // this is for safari  
+			var d = new Date(); 
+			timestamp = d.getTime(); 
+		} 
+		var fps = ( timestamp - last_timestamp ); 
+		last_timestamp = timestamp; 
+		fps /= fps_sixty_hz;
+		fps *= 60; // 1000/(60*60);
+
+		var el = document.getElementById('test');
+		el.innerHTML = Math.round(fps) + ' fps';
+
+		window.requestAnimFrame( draw ); // ask to be called again:
+	}
+
+	function dothis_onload() {
+		window.requestAnimFrame = (function(){ 
+			return	window.requestAnimationFrame       ||  
+					window.webkitRequestAnimationFrame ||  
+					window.mozRequestAnimationFrame    ||  
+					window.oRequestAnimationFrame      ||  
+					window.msRequestAnimationFrame     ||  
+					function(/* function */ callback, /* DOMElement */ element){ 
+						window.setTimeout(callback, fps_sixty_hz); 
+					}; 
+		})(); 
+
+		window.requestAnimFrame( draw ); // kick off the first frame:
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- requestAnimationFrame() }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// the following is to bypass an automatic breakpoint in firebug/firefox
+	document.addEventListener("DOMNodeInserted", function(e){ if (!e.target.tagName) e.target.tagName = 'dummy'; }, false);
+
+	onload = onload_handler;
+
+	function onload_handler() {
+		webGLStart();
+		dothis_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+
+<canvas id="webGL" width="600" height="400" style="border:1px solid #c3c3c3;">
+	Your browser doesn't support canvas.
+</canvas>
+
+<hr>
+
+<div id="test">hi</div>
+
+<!-- ================================================== -->
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- webworkers
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/workers/basics/
++ http://www.whatwg.org/specs/web-apps/current-work/multipage/workers.html
+
+notes:
++ 'multi-threading' for javascript...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>WebWorkers : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type='text/javascript' src='js/DebugLog.js'></script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// for this file, replacing (hooking) the log() and throw()
+	// with the DEBUGLOG system
+	var log_hook = DEBUGLOG.printhook;
+	var throw_hook = DEBUGLOG.printhook;
+	function debuglog_onload() {
+		DEBUGLOG.setElementById( 'logwindow' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js }}}2 -->
+<!-- webworkers {{{2 -->
+<!-- .................................................. -->
+
+<script> // DEDICATED
+	function webworker1() {
+		log_hook( '<hr><p>Dedicated webworkers' );
+
+		var worker1 = new Worker( 'webworkers1.js' ); // continues to live outside of scope
+		worker1.onmessage = function ( evt ) {
+			log_hook( evt.data );
+			if ( evt.data == 'WORKER READY' )
+				worker1.postMessage( { 'cmd':'start', 'msg':'hi' } );
+			else if ( evt.data == '5' )
+				worker1.postMessage( { 'cmd':'spawn' } );
+			else if ( evt.data == '31' ) {
+				worker1.postMessage( { 'cmd':'stop', 'msg':'bye' } );
+				// can also force worker (DEDICATED ONLY) to die with:
+				// worker1.terminate();
+			}
+		};
+		// notice: no forward postMessage() to worker here...
+	}
+</script>
+
+<script> // INLINED
+	function webworker2() {
+		log_hook( '<hr><p>Inlined webworkers' );
+
+		var bb1 = new BlobBuilder();
+		// note: 'backslash continuation' in use here (for readability)
+		// javascript doesn't really have 'heredoc' explicitly...
+		bb1.append( "								\
+			onmessage = function(e) {				\
+				postMessage('MSG from worker2a');	\
+				close();							\
+			}" );
+		var blobURL1 = window.URL.createObjectURL( bb1.getBlob() );
+
+		var worker2a = new Worker( blobURL1 );
+		worker2a.onmessage = function( evt ) {
+			log_hook( evt.data );
+		};
+		// notice: kick starting the worker...  1 seconds from now...
+		setTimeout( function() { worker2a.postMessage( 'x' ); }, 1000 );
+
+
+		// ----------------------------------------
+		// forcing an error condition -- jic: ( 1 / x ) is the error: x is not defined...
+		var bb2 = new BlobBuilder();
+		bb2.append( "					\
+			onmessage = function(e) {	\
+				postMessage( 1/x );		\
+			}" );
+		var blobURL2 = window.URL.createObjectURL( bb2.getBlob() );
+
+		var worker2b = new Worker( blobURL2 );
+		worker2b.onmessage = function( evt ) {
+			log_hook( evt.data );
+		};
+		worker2b.onerror = function( evt ) {
+			log_hook( 'ERROR: Line ' + evt.lineno + ' in ' + evt.filename + ': ' + evt.message );
+		};
+		// notice: kick starting the worker...  2 seconds from now...
+		setTimeout( function() { worker2b.postMessage( 'x' ); }, 2000 );
+	}
+</script>
+
+<script> // SHARED
+	function webworker3() {
+		log_hook( '<hr><p>Shared webworkers' );
+
+		if ( typeof SharedWorker === 'undefined' ) {
+// WARNING: FF(Moz) does not support this yet...
+// https://bugzilla.mozilla.org/show_bug.cgi?id=643325
+			log_hook( 'SharedWorker not supported on this browser...' );
+			return;
+		}
+
+		var worker3a = new SharedWorker( 'webworkers3.js' );
+		// onmessage
+		worker3a.port.onmessage = function( evt ) {
+			log_hook( evt.data );
+		};
+
+
+		// NOTE: this part could have been also been loaded in from:
+		// an iframe or an entirely separate page
+		var worker3b = new SharedWorker( 'webworkers3.js' );
+		// addEventListener
+		worker3b.port.addEventListener('message', function( evt ) {
+			log_hook( evt.data );
+		}, false);
+		worker3b.port.start(); // note: need this when using addEventListener
+
+
+		// house keeping...
+		worker3a.port.postMessage('ping');
+		worker3b.port.postMessage('ping');
+	}
+</script>
+
+<script>
+	function webworker_onload() {
+		webworker1();
+
+		// do not wish to pollute examples above by having them call the next demo function.
+		// so using setTimeout() to fire them off approximately one after each other. =)
+		setTimeout( function() { webworker2(); }, 12000 ); // webworker1 takes about 11 secs to complete
+		setTimeout( function() { webworker3(); }, 15500 ); // webworker2 takes about 2 secs to complete
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- webworkers }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function shim() {
+		window.BlobBuilder = window.BlobBuilder ||
+							window.WebKitBlobBuilder ||
+							window.MozBlobBuilder ||
+							window.MsBlobBuilder ||
+							null;
+
+		window.URL = window.URL ||
+					window.webkitURL ||
+					{};
+	}
+</script>
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		debuglog_onload();
+		shim();
+		webworker_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- ================================================== -->
+
+</body>
+</html>

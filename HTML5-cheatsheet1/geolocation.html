@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<!--
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- geolocation
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/
++ http://www.slideshare.net/peterlubbers/html5-web-workersunleashed
+  o page 22
+
+DEMO!!!
++ http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/
+
+notes:
+- this is basically a copy of the DEMO above...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>Geolocation : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+<!-- ================================================== -->
+
+<style>
+	#tripmeter {
+		border: 3px double black;
+		padding: 10px;
+		margin: 10px 0;
+	}
+
+	p {
+		color: #222;
+		font: 14px Arial;
+	}
+
+	span {
+		color: #00C;
+	}
+</style>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<!-- .................................................. -->
+<!-- geolocation {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function geolocation_onload() {
+		var startPos;
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				startPos = position;
+				document.getElementById("startLat").innerHTML = startPos.coords.latitude;
+				document.getElementById("startLon").innerHTML = startPos.coords.longitude;
+			}, function(error) {
+				alert("Error occurred. Error code: " + error.code);
+				// error.code can be:
+				//   0: unknown error
+				//   1: permission denied
+				//   2: position unavailable (error response from locaton provider)
+				//   3: timed out
+			});
+
+			navigator.geolocation.watchPosition(function(position) {
+				document.getElementById("currentLat").innerHTML = position.coords.latitude;
+				document.getElementById("currentLon").innerHTML = position.coords.longitude;
+				document.getElementById("distance").innerHTML =
+					calculateDistance(startPos.coords.latitude, startPos.coords.longitude,
+										position.coords.latitude, position.coords.longitude);
+			});
+		}
+	};
+
+	// Reused code - copyright Moveable Type Scripts - retrieved May 4, 2010.
+	// http://www.movable-type.co.uk/scripts/latlong.html
+	// Under Creative Commons License http://creativecommons.org/licenses/by/3.0/
+	function calculateDistance(lat1, lon1, lat2, lon2) {
+		var R = 6371; // km
+		var dLat = (lat2-lat1).toRad();
+		var dLon = (lon2-lon1).toRad();
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+				Math.sin(dLon/2) * Math.sin(dLon/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var d = R * c;
+		return d;
+	}
+
+	Number.prototype.toRad = function() {
+		return this * Math.PI / 180;
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- geolocation }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		geolocation_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+
+	<div id="tripmeter">
+		<p>
+			Starting Location (lat, lon):<br/>
+			<span id="startLat">???</span>&deg;, <span id="startLon">???</span>&deg;
+		</p>
+		<p>
+			Current Location (lat, lon):<br/>
+			<span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
+		</p>
+		<p>
+			Distance from starting location:<br/>
+			<span id="distance">0</span> km
+		</p>
+	</div>
+
+<!-- ================================================== -->
+
+</body>
+</html>

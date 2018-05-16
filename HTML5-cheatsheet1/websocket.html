@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- websocket
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ this is tested with the stock pywebsocket project "echo" test server:
+  o http://code.google.com/p/pywebsocket/
+  o http://code.google.com/p/pywebsocket/wiki/TestingYourWebSocketImplementation
+
+
++ http://www.w3.org/TR/2008/WD-html5-20080122/
++ http://dev.w3.org/wiki/HTML/Elements/websockets/
+
++ http://websocket.org/
+
+note:
++ some browsers NEED to have WEBSOCKET ENABLED MANUALLY
+  o http://my.opera.com/ODIN/blog/2010/12/17/new-html5-features-in-opera-11
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>WebSocket : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type='text/javascript' src='js/DebugLog.js'></script>
+
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// for this file, replacing (hooking) the log() and throw()
+	// with the DEBUGLOG system
+	var log_hook = DEBUGLOG.printhook;
+	var throw_hook = DEBUGLOG.printhook;
+	function debuglog_onload() {
+		DEBUGLOG.setElementById( 'logwindow' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js }}}2 -->
+<!-- websockets {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	var WEBSOCKET = (function () {
+		// ----------------------------------------
+		// constructor
+		var my = function () {
+			// private static unique to 'this' instance
+			var socket = null;
+
+			// these are technically public static...
+			this.getsocket = function () {
+				return ( this.classcheck() ) ? socket : null;
+			};
+			this.setsocket = function ( sock ) {
+				if ( this.classcheck() )
+					socket = sock;
+			};
+		};
+	
+
+		// ----------------------------------------
+		// private static
+		var error_code = 0;
+
+		// public static (enums) ;-)
+		my.WEBSOCK_SUCCESS						= error_code--;
+		my.WEBSOCK_BAD_CLASS					= error_code--;
+		my.WEBSOCK_ERNO_WEBSOCKET_NOT_AVAILABLE	= error_code--;
+		my.WEBSOCK_ERNO_NOT_CONNECTED			= error_code--;
+		my.WEBSOCK_ERNO_CREATE					= error_code--;
+
+
+		// ----------------------------------------
+		// public static
+		this.className = 'WEBSOCKET';
+
+
+		// ----------------------------------------
+		// public static
+		// can be overridden -- a new property is created for that instance
+		my.prototype = {
+			open: function ( host, protocols, open_cb, message_cb, error_cb, close_cb ) {
+				if ( ! this.classcheck() )
+					return WEBSOCKET.WEBSOCK_BAD_CLASS;
+
+				var sockAPI = null;
+				if ('WebSocket' in window)
+					sockAPI = WebSocket;
+		
+				else if ('MozWebSocket' in window)
+					sockAPI = MozWebSocket;
+
+				else
+					return WEBSOCKET.WEBSOCK_ERNO_WEBSOCKET_NOT_AVAILABLE;
+
+				// ........................................
+
+				var sock = ( protocols ) ? new sockAPI( host, protocols ) : new sockAPI( host );
+				if ( ! sock )
+					return WEBSOCKET.WEBSOCK_ERNO_CREATE;
+
+				sock.onopen    = ( open_cb )    ? open_cb    : donothing;
+				sock.onmessage = ( message_cb ) ? message_cb : donothing;
+				sock.onerror   = ( error_cb )   ? error_cb   : donothing;
+				sock.onclose   = ( close_cb )   ? close_cb   : donothing;
+
+				this.setsocket( sock );
+
+				return WEBSOCKET.WEBSOCK_SUCCESS;
+			},
+
+			// ----------------------------------------
+			close: function () {
+				var sock = this.getsocket();
+				if ( ! sock )
+					return WEBSOCKET.WEBSOCK_ERNO_NOT_CONNECTED;
+				sock.close();
+				return WEBSOCKET.WEBSOCK_SUCCESS;
+			},
+
+			// ----------------------------------------
+			send: function (data) {
+				var sock = this.getsocket();
+				if ( ! sock )
+					return WEBSOCKET.WEBSOCK_ERNO_NOT_CONNECTED;
+				sock.send( data );
+				return WEBSOCKET.WEBSOCK_SUCCESS;
+			},
+		
+			// ----------------------------------------
+			getstate: function () {
+				var sock = this.getsocket();
+				if ( ! sock )
+					return 'Not connected';
+
+				return 'url = ' + sock.url +
+						', readyState = ' + sock.readyState +
+						', bufferedAmount = ' + sock.bufferedAmount;
+			},
+
+			// ----------------------------------------
+			// house keeping
+			classcheck: function () {
+				if ( this.className === WEBSOCKET.className )
+					return true;
+				throw_hook( "*** ERRRO: object's className mismatch" );
+				return false;
+			},
+
+			donothing: function () {} // no-op
+		};
+
+		return my; // must be last
+	}());
+</script>
+
+<script>
+	var MYAPP = (function () {
+		// ----------------------------------------
+		// constructor
+		var my = function () {
+			// ----------------------------------------
+			// 'this' collision tests
+			var ws = null;
+
+			this.getsocket = function () {
+				return ( this.classcheck() ) ? ws : null;
+			};
+			this.setsocket = function ( websock ) {
+				if ( this.classcheck() )
+					ws = websock;
+			};
+		};
+
+
+		// ----------------------------------------
+		// private static
+		var error_code = 0;
+
+		// public static (enums) ;-)
+		my.MYAPP_SUCCESS				= error_code--;
+		my.MYAPP_BAD_CLASS				= error_code--;
+		my.MYAPP_ERNO_NO_WEBSOCKET		= error_code--;
+
+
+		// ----------------------------------------
+		// public static
+		this.className = 'MYAPP';
+
+
+		// ----------------------------------------
+		// public static
+		// can be overridden -- a new property is created for that instance
+		my.prototype = {
+			sock_onopen: function ( evt ) {
+				log_hook('Opened');
+			},
+		
+			sock_onmessage: function ( evt ) {
+				log_hook('RECV < [' + evt.data +']');
+			},
+		
+			sock_onerror: function ( evt ) {
+				log_hook('Error: ' + evt.data);
+			},
+		
+			sock_onclose: function ( evt ) {
+				var result = 'Closed (';
+				if (   (arguments.length == 1)
+					&& ('CloseEvent' in window)
+					&& (evt instanceof CloseEvent) ) {
+					result += 'wasClean = ' + evt.wasClean;
+					// code and reason are present only for
+					// draft-ietf-hybi-thewebsocketprotocol-06 and later
+					if ('code' in evt)
+						result += ', code = ' + evt.code;
+					if ('reason' in evt)
+						result += ', reason = ' + evt.reason;
+				} else
+					result += 'CloseEvent is not available';
+				log_hook(result + ')');
+			},
+		
+			send: function ( msg ) {
+// could have been written as:
+//				var ws = this.getsocket().send( msg ); 
+				var ws = this.getsocket(); 
+				if ( ! ws )
+					return MYAPP.MYAPP_ERNO_NO_WEBSOCKET;
+				ws.send( msg );
+				log_hook('SEND > [' + msg +']');
+				return MYAPP.MYAPP_SUCCESS;
+			},
+
+			// ----------------------------------------
+			// 'this' collision tests
+
+			init: function ( host, protocols ) {
+				if ( ! this.classcheck() )
+					return MYAPPET.MYAPP_BAD_CLASS;
+				
+				var websock = new WEBSOCKET;
+				if ( ! websock )
+					return MYAPP.MYAPP_ERNO_NO_WEBSOCKET;
+				this.setsocket( websock );
+				websock.open( host, protocols, this.sock_onopen, this.sock_onmessage, this.sock_onerror, this.sock_onclose );
+				log_hook('Connect init(): ' + host);
+				return MYAPP.MYAPP_SUCCESS;
+			},
+
+			// ........................................
+			setwebsocket: function ( websock ) {
+				this.setsocket( websock );
+				return MYAPP.MYAPP_SUCCESS;
+			},
+
+			getwebsocket: function () {
+				return this.getsocket();
+			},
+
+			// ----------------------------------------
+			// house keeping
+			classcheck: function () {
+				if ( this.className === MYAPP.className )
+					return true;
+				throw_hook( "*** ERRRO: object's className mismatch" );
+				return false;
+			},
+
+			donothing: function () {} // no-op
+		};
+
+		return my; // must be last
+	}());
+</script>
+
+<script>
+	var myapp1 = null;
+	var myapp2 = null;
+
+	function websocket_onload() {
+		// ----------------------------------------
+//		var host = 'ws://10.11.22.238:12345/echo';		// pylibwebsocket
+//		var host = 'ws://192.168.101.120:12345/echo';	// pylibwebsocket
+		var host = 'ws://localhost:12345/echo';			// pylibwebsocket
+		var proto = null;
+
+		// ----------------------------------------
+		myapp1 = new MYAPP;
+		myapp1.init( host, proto );
+
+		// ----------------------------------------
+		myapp2 = new MYAPP;
+		var websock = new WEBSOCKET;
+		if ( websock ) {
+			myapp2.setwebsocket( websock );
+			websock.open( host, proto, myapp2.sock_onopen, myapp2.sock_onmessage, myapp2.sock_onerror, myapp2.sock_onclose );
+			log_hook('Connect onload(): ' + host);
+		}
+
+		// ----------------------------------------
+// moved to the buttons below
+//		myapp1.send( 'sending from myapp1' );
+//		myapp2.send( 'sending from myapp2' );
+
+	}
+
+	function websocket_unload() {
+		if ( myapp1 )
+			myapp1.getsocket().close();
+		if ( myapp2 )
+			myapp2.getsocket().close();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- websockets }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload         = onload_handler;
+	onbeforeunload = onbeforeunload_handler;
+
+	function onload_handler() {
+		debuglog_onload();
+		websocket_onload();
+	}
+
+	function onbeforeunload_handler() {
+		websocket_unload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- .................................................. -->
+<input type="button" value="sock1" onclick="myapp1.send( 'sending from myapp1' );">
+<input type="button" value="sock2" onclick="myapp2.send( 'sending from myapp2' );">
+
+<!-- ================================================== -->
+
+</body>
+</html>

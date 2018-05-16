@@ -1,0 +1,30 @@
+CACHE MANIFEST
+# 2011-10-17 01:38 v1
+
+# Explicitly cached entries
+eventsource.html
+
+
+FALLBACK:
+# this is supposed to redirect to eventsource_static.html when browser
+# is offline.  but, it seems that browser will playback last recorded
+# message sequence...  this may be eventsource specific, because the
+# browser likes to crash when going online/offline back and forth...
+#
+# so, moving these down to online required (NETWORK) section:
+#/HTML5/cgi-bin/sse.pl storage/eventsource_static.html
+#servers/sse.php storage/eventsource_static.html
+
+
+NETWORK:
+# All other resources (e.g. sites) require the user to be online.
+# for example: presence status, notifications, feeds, ad networks, etc.
+/HTML5/cgi-bin/sse.pl
+servers/sse.php
+*
+
+
+# Additional resources to cache
+CACHE:
+js/DebugLog.js
+

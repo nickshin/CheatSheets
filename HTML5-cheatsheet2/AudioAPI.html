@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- AudioAPI
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ 
+  o http://www.html5rocks.com/en/tutorials/webaudio/positional_audio/
+  o http://www.html5rocks.com/en/tutorials/webaudio/intro/
+  o http://www.html5rocks.com/en/tutorials/webaudio/fieldrunners/#toc-beat
+
+DEMO!!!
++ 
+
+notes:
+- 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>AudioAPI : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script>
+	// ----------------------------------------
+	var audio_extension__ = null;
+	function audio_setup() {
+		var a = document.createElement('audio'); 
+		if (a.canPlayType && a.canPlayType('audio/mpeg;'))
+			audio_extension__ = ".mp3";
+		else if (a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"'))
+			audio_extension__ = ".ogg";
+		else if (a.canPlayType && a.canPlayType('audio/wav; codecs="1"'))
+			audio_extension__ = ".wav";
+
+//		audio_debugprint( 'audio extension is: ' + audio_extension__ );
+	}
+	// ----------------------------------------
+	var snd_ctx = null;
+	function audioAPI_setup() {
+		window.AudioContext = (function(){
+			return  window.AudioContext       || 
+					window.webkitAudioContext || 
+					window.mozAudioContext    || 
+					window.oAudioContext      || 
+					window.msAudioContext     || 
+					null;
+		})();
+	
+		if (!AudioContext) {
+			alert("AudioContext not supported!");
+			return;
+		}
+		snd_ctx = new AudioContext();
+	}
+</script>
+
+<script>
+	function audioAPI_load( f ) {
+		if ( ! snd_ctx )
+			return null;
+		var snd = {};
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+			snd_ctx.decodeAudioData(
+				xhr.response,
+				function (buffer) {
+					if (!buffer) {
+						audio_debugprint( '*** ERROR: error decoding file data: ' + f );
+						return;
+					}
+					snd.buffer = buffer;	// *** !!! ***
+					snd.src = null;			// initialize to NULL
+					// -----
+					var el = document.getElementById('audiobtn1');
+					el.removeAttribute('disabled');
+				},
+				function (error)
+					{ audio_debugprint( '*** ERROR: decodeAudioData error: ' + error ); }
+			);
+		};
+		xhr.onerror = function ()
+			{ audio_debugprint( '*** ERROR: BufferLoader: XHR error' ); };
+		xhr.open('GET', f + audio_extension__, true);
+		xhr.responseType = 'arraybuffer';
+		xhr.send();
+	
+		return snd;
+	}
+
+	function audioAPI_play( snd, loop ) {
+		loop = ( loop == undefined || loop == '' ) ? 0 : 1;
+	
+		var src = snd_ctx.createBufferSource(); // NOTE: one time use buffers...
+		src.connect(snd_ctx.destination);
+		src.buffer = snd.buffer;			// *** !!! ***
+		snd.src = src;						// current buffer source
+		// -----
+		snd.startTime = snd_ctx.currentTime;
+		if ( snd.timeout ) {				// pause loop handler
+			clearTimeout( snd.timeout );
+			snd.timeout = null;
+		}
+		if ( snd.isPaused > 0 ) {
+			snd.startTime -= snd.isPaused; // update startTime for next pause() call
+			var delta = snd.buffer.duration - snd.isPaused;
+			src.noteGrainOn(0, snd.isPaused, delta);
+			snd.isPaused = 0;
+			if ( loop ) {
+				// on paused assets, loops will loop on sub-clips (due to one time use
+				//     buffers only containing a 'part' of the full asset)
+				// so handle this after delta time (which the next buffer will contain
+				//     full audio version)
+				// NOTE: only needs to be done once...
+				snd.timeout = setTimeout( function() {
+					audioAPI_play( sndID, loop );
+				}, delta * 1000);
+			}
+		} else {
+			src.loop = loop;
+			src.noteGrainOn(0, 0, snd.buffer.duration);
+		}
+		snd.isPaused = 0;
+	}
+
+	function audioAPI_stop( snd ) {
+		if ( snd.src )
+			snd.src.noteOff(0);
+		if ( snd.timeout ) {
+			clearTimeout( snd.timeout );
+			snd.timeout = null;
+		}
+		snd.isPaused = 0;
+	}
+	
+	function audioAPI_pause( snd ) {
+		if ( snd.src )
+			snd.src.noteOff(0);
+		if ( snd.timeout ) {
+			clearTimeout( snd.timeout );
+			snd.timeout = null;
+		}
+		snd.isPaused = snd_ctx.currentTime - snd.startTime;
+		snd.isPaused = snd.isPaused % snd.buffer.duration;
+	}
+</script>
+
+<script>
+	// ----------------------------------------
+	var audio_object = null;
+	function audio_play() {
+		audioAPI_play( audio_object );
+	}
+
+	onload = onload_handler;
+
+	function onload_handler() {
+		audio_setup();
+		audioAPI_setup();
+
+		audio_object = audioAPI_load( 'media/song' );
+	}
+</script>
+
+<!-- ================================================== -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+Please see source code for details. =)
+<!-- .................................................. -->
+<p>
+<input id="audiobtn1" type="button" value="play1" onclick="audio_play();" disabled="disabled">
+
+<!-- ================================================== -->
+
+</body>
+</html>

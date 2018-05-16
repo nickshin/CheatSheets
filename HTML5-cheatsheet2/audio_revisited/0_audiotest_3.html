@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+this file was written to hunt down why <audio> doesn't work on iOS as expected....
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+<html><title>audio tests 3</title>
+<head>
+<style>
+</style>
+</head>
+<body>
+Attempting to load Audio via [ dispatchEvent ] with a touch event
+
+<p>
+<div id='status'>Delaying: 1 Sec...</div>
+
+Note:<br>
+Firefox, Chrome, Android and Opera support ogg/vorbis.<br>
+IE9, Safari, Chrome, Android and iOS support mp3.<br>
+Safari, Chrome, IE and iOS support AAC.<br>
+<select id="ext" onchange="reload_snds();">
+<option value="mp3">mp3</option>
+<option value="ogg">ogg</option>
+<option value="wav" selected>wav</option>
+</select>
+
+	<div id='buttons'></div>
+
+	<p></p>
+	<div id='audiohack'>[fallback button]</div>
+
+<script>
+/* fake the touch event to generate the 'user-initiated' input
+
+hmmm....
+
+seems that iOS has once again foiled this hack:
+- http://stackoverflow.com/questions/3009888/autoplay-audio-files-on-an-ipad-with-html5
+*/
+
+
+// http://www.w3.org/wiki/HTML/Elements/audio
+// 
+//	var eventToListenFor = 'loadeddata';
+//	var eventToListenFor = 'canplay';
+//	var eventToListenFor = 'canplaythrough';
+	var eventToListenFor = 'durationchange';
+//	var eventToListenFor = 'ended'; // note: on new load and NO play is called immediately, this mimic the iOS 'click-to-play' and continue issue...
+
+	var snd_list = [
+			[ 'icecream',		'60608__morgantj__icecreamtruck' ]
+		,	[ 'jingle',			'105228__club-sound__old-fashion-radio-jingle-2' ]
+		,	[ 'yay',			'139971__jessepash__crowd-yay-applause-25ppl-medium' ]
+		,	[ 'coinshuffle',	'60769__dobroide__20080928-coins-05' ]
+		,	[ 'coinwin',		'69682__lukaso__coinwin' ]
+		,	[ 'cha-ching',		'75235__creek23__cha-ching' ]
+		,	[ 'coindrop',		'90397__ehproductions__money1' ]
+	];
+	var snd_objs = [];
+	var snd_rdy = 0;
+	
+	function load_snds() {
+		if ( snd_rdy >= snd_list.length )
+			return;
+		var html = '';
+		var path = 'media/';
+		var sel = document.getElementById('ext');
+		// ----------------------------------------
+		// the meat of this test..
+			snd_objs[snd_rdy] = {};
+			var a = new Audio();
+			a.addEventListener(eventToListenFor, audio_loaded, false);
+			a.preload = 'auto';
+			a.src = path + snd_list[snd_rdy][1] + '.' + sel.value;
+			a.load();
+			snd_objs[snd_rdy].sndObj = a;
+
+			html += '<input id="snd_list_index_' + snd_rdy + '" type=button value="' + snd_list[snd_rdy][0] +
+					'" OnClick="playsnd(' + snd_rdy + ');">\n';
+			if ( snd_rdy && ! ( snd_rdy % 3 ) )
+				html += '<br>';
+		// ----------------------------------------
+		var el = document.getElementById('buttons');
+		el.innerHTML += html;
+	}
+	
+	function audio_loaded() {
+		this.removeEventListener(eventToListenFor, audio_loaded, false);
+		snd_rdy++;
+		update_loaded();
+		if ( snd_rdy < snd_list.length )
+			audio_hack_trigger(); // the core of this test
+	}
+	
+	function playsnd( index ) {
+		var snd = snd_objs[index].sndObj;
+		snd.pause();
+		if ( snd.currentTime ) // on iOS, this is not accessible until audio asset is playable
+			snd.currentTime = 0;
+		snd.play();
+	}
+	
+	function update_loaded() {
+		var el = document.getElementById('status');
+		el.innerHTML = 'audio loaded: ' + snd_rdy + '/' + snd_objs.length + '<br>via event: ' + eventToListenFor;
+	}
+
+	function reload_snds() {
+		snd_rdy = 0;
+		var el = document.getElementById('buttons');
+		el.innerHTML = '';
+		setTimeout( audio_hack_trigger, 1000 ); // the core of this test
+	}
+
+	onload = function() {
+		audio_hack_setup();
+		setTimeout( audio_hack_trigger, 1000 ); // the core of this test
+	};
+	
+	function audio_hack_setup() {
+		var el = document.getElementById('audiohack');
+		el.addEventListener('click', function(e){
+			// e.target matches the elem from above
+			load_snds();
+		}, false);
+	}
+	
+	function audio_hack_trigger() {
+	
+		if ( window.Touch ) {
+			var evt = document.createEvent('TouchEvent');
+			evt.initEvent("touchstart", true, false);
+		} else {
+//			var evt = document.createEvent('Event');			// either of these will work
+			var evt = document.createEvent('MouseEvent');		// either of these will work
+			evt.initEvent("click", true, false);
+		}
+	
+		var el = document.getElementById('audiohack');
+		el.dispatchEvent(evt);
+	}
+</script>
+</body>
+</html>

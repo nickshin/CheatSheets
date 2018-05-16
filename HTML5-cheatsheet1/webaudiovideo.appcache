@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2011-10-17 01:31 v1
+
+# Explicitly cached entries
+webaudiovideo.html
+
+
+# Additional resources to cache
+CACHE:
+media/movie.ogg
+media/song.ogg
+media/movie.mp4
+media/song.mp3
+

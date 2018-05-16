@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+this file was written to hunt down why <audio> doesn't work on iOS as expected....
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+<html><title>audio tests 2</title>
+<head>
+<style>
+</style>
+</head>
+<body>
+Round-about test: Audio load via a [ touch event ] -- except iOS can only load/play 1 audio asset at a time
+
+<p>
+	<div id='status'></div>
+
+Note:<br>
+Firefox, Chrome, Android and Opera support ogg/vorbis.<br>
+IE9, Safari, Chrome, Android and iOS support mp3.<br>
+Safari, Chrome, IE and iOS support AAC.<br>
+<select id="ext" onchange="reload_snds();">
+<option value="mp3">mp3</option>
+<option value="ogg">ogg</option>
+<option value="wav" selected>wav</option>
+</select>
+
+	<div id='buttons'></div>
+
+<script>
+/* this test stems from the following finding:
+
+- iOS does not automatically load audio assets until a user-initiated input is done
+  o http://stackoverflow.com/questions/4259928/how-can-i-autoplay-media-in-ios-4-2-1-mobile-safari/4449793#4449793
+    * safari doesn't begin to play audio files until 'a user action' event
+    * safari also doesn't cache file until 'played' first
+    * and safari can only play one audio asset at a time...
+*/
+
+
+// http://www.w3.org/wiki/HTML/Elements/audio
+// 
+//	var eventToListenFor = 'loadeddata';
+//	var eventToListenFor = 'canplay';
+//	var eventToListenFor = 'canplaythrough';
+	var eventToListenFor = 'durationchange';
+//	var eventToListenFor = 'ended'; // note: on new load and NO play is called immediately, this mimic the iOS 'click-to-play' and continue issue...
+
+	var snd_list = [
+			[ 'icecream',		'60608__morgantj__icecreamtruck' ]
+		,	[ 'jingle',			'105228__club-sound__old-fashion-radio-jingle-2' ]
+		,	[ 'yay',			'139971__jessepash__crowd-yay-applause-25ppl-medium' ]
+		,	[ 'coinshuffle',	'60769__dobroide__20080928-coins-05' ]
+		,	[ 'coinwin',		'69682__lukaso__coinwin' ]
+		,	[ 'cha-ching',		'75235__creek23__cha-ching' ]
+		,	[ 'coindrop',		'90397__ehproductions__money1' ]
+	];
+	var snd_objs = [];
+	var snd_rdy = 0;
+	function load_snds() {
+		var html = '';
+		var path = 'media/';
+		var sel = document.getElementById('ext');
+		// ----------------------------------------
+		// the meat of this test..
+			snd_objs[snd_rdy] = {};
+			var a = new Audio();
+			a.addEventListener(eventToListenFor, audio_loaded, false);
+			a.preload = 'auto';
+			a.src = path + snd_list[snd_rdy][1] + '.' + sel.value;
+			a.volume = 0.01; // NOTE: for iOS: this is READONLY !!!!
+			snd_objs[snd_rdy].sndObj = a;
+
+			html += '<input id="snd_list_index_' + snd_rdy + '" type=button value="' + snd_list[snd_rdy][0] +
+					'" OnClick="playsnd(' + snd_rdy + ');">\n';
+			if ( snd_rdy && ! ( snd_rdy % 3 ) )
+				html += '<br>';
+		// ----------------------------------------
+		var el = document.getElementById('buttons');
+		el.innerHTML += html;
+	}
+	function audio_loaded() {
+		this.removeEventListener(eventToListenFor, audio_loaded, false);
+		this.volume = 1;
+		snd_rdy++;
+		update_loaded();
+		if ( snd_rdy < snd_list.length )
+			load_snds();
+	}
+	function playsnd( index ) {
+		var snd = snd_objs[index].sndObj;
+		snd.pause();
+		if ( snd.currentTime ) // on iOS, this is not accessible until audio asset is playable
+			snd.currentTime = 0;
+		snd.play();
+	}
+	function update_loaded() {
+		var el = document.getElementById('status');
+		el.innerHTML = 'audio loaded: ' + snd_rdy + '/' + snd_list.length + '<br>via event: ' + eventToListenFor;
+	}
+
+	function reload_snds() {
+		snd_rdy = 0;
+		var el = document.getElementById('buttons');
+		el.innerHTML = '';
+		load_snds();
+	}
+
+	onload = function() {
+		load_snds();
+	};
+</script>
+</body>
+</html>

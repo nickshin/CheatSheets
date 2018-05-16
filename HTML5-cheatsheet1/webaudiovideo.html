@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- webaudio
+- webvideo
+- basic media control
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ http://www.w3.org/wiki/HTML/Elements/audio
++ http://www.w3.org/wiki/HTML/Elements/video
+
++ http://www.w3schools.com/html5/html5_audio.asp
++ http://www.w3schools.com/html5/html5_video.asp
++ http://www.w3schools.com/html5/html5_ref_eventattributes.asp
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html manifest='webaudiovideo.appcache'>
+<head>
+<title>Web Audio/Video : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Javascript {{{ -->
+<!-- AUDIO {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// ----------------------------------------
+	var audio_extension__ = null;
+	function audio_setup() {
+		var a = document.createElement('audio'); 
+		if (a.canPlayType && a.canPlayType('audio/mpeg;'))
+			audio_extension__ = ".mp3";
+		else if (a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"'))
+			audio_extension__ = ".ogg";
+		else if (a.canPlayType && a.canPlayType('audio/wav; codecs="1"'))
+			audio_extension__ = ".wav";
+
+//		audio_debugprint( 'audio extension is: ' + audio_extension__ );
+	}
+</script>
+
+<script>
+	// ----------------------------------------
+	function audio_load( f ) {
+		// do this the long way to get an oncanplaythrough event
+//		var audioElement = new Audio( f + audio_extension__ );
+
+		var audioElement = document.createElement('audio');
+		audioElement.setAttribute( 'src', f + audio_extension__ );
+		audioElement.is_ready = 0;
+		audioElement.load();
+
+		// the following doesn't work on safari
+		audioElement.oncanplaythrough = function() {
+//			audio_debugprint( 'audio ready: ' + f + audio_extension__ );
+//			audio_debugprint( 'audio length: ' + audioElement.duration );
+			audioElement.is_ready = 1;
+			var el = document.getElementById('audiobtn1');
+			el.removeAttribute('disabled');
+		};
+		// this works for both
+		audioElement.addEventListener( "canplaythrough", function() {
+//			audio_debugprint( 'audio ready: ' + f + audio_extension__ );
+//			audio_debugprint( 'audio length: ' + audioElement.duration );
+			audioElement.is_ready = 1;
+			var el = document.getElementById('audiobtn2');
+			el.removeAttribute('disabled');
+		}, true );
+
+		audioElement.addEventListener( "timeupdate", function() {
+			// update audio slider
+		}, true );
+		return audioElement;
+	}
+
+	function audio_replay( snd ) {
+		snd.pause(); // jic
+		if ( snd.currentTime ) // iOS will not have this set until asset is loaded
+			snd.currentTime = 0;
+		snd.play();
+	}
+
+	function audio_pause( snd ) {
+		if (snd.paused)
+			snd.play();
+		else
+			snd.pause();
+	}
+
+	function audio_volume( snd, vol ) {
+		if ( ! vol )
+			snd.muted = true;
+		else {
+			snd.muted = false;
+			snd.volume = vol; // float: 0.0 to 1.0
+		}
+	}
+
+	function audio_volume( snd, vol ) {
+		snd.volume = vol; // float: 0.0 to 1.0
+	}
+</script>
+	
+<script>
+	// ----------------------------------------
+	var audio_object = null;
+	function audio_play() {
+//		audio_replay( audio_object );
+		audio_pause( audio_object );
+	}
+
+	function audio_onload() {
+		audio_setup();
+
+		audio_object = audio_load( 'media/song' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- AUDIO }}}2 -->
+<!-- VIDEO {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// ----------------------------------------
+	var video_extension__ = null;
+	function video_setup() {
+		var v = document.createElement('video'); 
+		if (v.canPlayType && v.canPlayType('video/mp4; codecs="avc1, mp4a"'))
+			video_extension__ = ".mp4";
+		else if (v.canPlayType && v.canPlayType('video/ogg; codecs="theora, vorbis"'))
+			video_extension__ = ".ogg";
+
+//		video_debugprint( 'video extension is: ' + video_extension__ );
+	}
+</script>
+
+<script>
+	// ----------------------------------------
+	function video_load( f ) {
+		// do this the long way to get an oncanplaythrough event
+//		var videoElement = new Video( f + video_extension__ );
+
+		var videoElement = document.createElement('video');
+		videoElement.setAttribute( 'src', f + video_extension__ );
+		videoElement.is_ready = 0;
+		videoElement.load();
+
+		// the following doesn't work on safari
+		videoElement.oncanplaythrough = function() {
+//			video_debugprint( 'video ready: ' + f + video_extension__ );
+//			video_debugprint( 'video length: ' + videoElement.duration );
+			videoElement.is_ready = 1;
+			var el = document.getElementById('videobtn1');
+			el.removeAttribute('disabled');
+		};
+		// this is works for both
+		videoElement.addEventListener( "canplaythrough", function() {
+//			video_debugprint( 'video ready: ' + f + video_extension__ );
+//			video_debugprint( 'video length: ' + videoElement.duration );
+			videoElement.is_ready = 1;
+			var el = document.getElementById('videobtn2');
+			el.removeAttribute('disabled');
+		}, true );
+
+		videoElement.addEventListener( "timeupdate", function() {
+			// update video slider
+		}, true );
+		return videoElement;
+	}
+
+	function video_replay( vid ) {
+		vid.pause(); // jic
+		if ( vid.currentTime ) // it seems that iPad does not have this...
+			vid.currentTime = 0;
+		vid.play();
+	}
+
+	function video_pause( vid ) {
+		if (vid.paused)
+			vid.play();
+		else
+			vid.pause();
+	}
+
+	function video_volume( vid, vol ) {
+		if ( ! vol )
+			vid.muted = true;
+		else {
+			vid.muted = false;
+			vid.volume = vol; // float: 0.0 to 1.0
+		}
+	}
+
+	function video_volume( vid, vol ) {
+		vid.volume = vol; // float: 0.0 to 1.0
+	}
+</script>
+
+<script>
+	// ----------------------------------------
+	var video_object = null;
+	function video_play() {
+//		video_replay( video_object );
+		video_pause( video_object );
+	}
+
+	function video_onload() {
+		video_setup();
+
+		video_object = video_load( 'media/movie' );
+		video_object.id = 'vid';
+		document.getElementById('videobox').appendChild(video_object);
+
+// to remove (i.e. replace the video)
+//		var x = document.getElementById('vid');
+//		document.getElementById('videobox').removeChild(x);
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- VIDEO }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		audio_onload();
+		video_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+
+<audio controls="controls">
+	<source src="media/song.ogg" type="audio/ogg" />
+	<source src="media/song.mp3" type="audio/mpeg" />
+	Your browser does not support the audio element.
+</audio>
+
+<!-- .................................................. -->
+<hr>
+<input id="audiobtn1" type="button" value="play1" onclick="audio_play();" disabled="disabled">
+<input id="audiobtn2" type="button" value="play2" onclick="audio_play();" disabled="disabled">
+
+
+<!-- .................................................. -->
+<hr>
+
+<video width="320" height="240" controls="controls">
+	<source src="media/movie.mp4" type='video/mp4; codecs="avc1, mp4a"' />
+	<source src="media/movie.ogg" type='video/ogg; codecs="theora, vorbis"' />
+	Your browser does not support the video tag.
+</video>
+
+<!-- .................................................. -->
+<hr>
+
+<div id="videobox"></div>
+<input id="videobtn1" type="button" value="play1" onclick="video_play();" disabled="disabled">
+<input id="videobtn2" type="button" value="play2" onclick="video_play();" disabled="disabled">
+
+
+<!-- ================================================== -->
+
+</body>
+</html>

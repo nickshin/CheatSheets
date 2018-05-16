@@ -1,0 +1,527 @@
+<!DOCTYPE HTML>
+<!--
+written by Nick Shin - nick.shin@gmail.com
+the code found in this file is licensed under:
+- Unlicense - http://unlicense.org/
+
+this file is from https://www.nickshin.com/CheatSheets/
+
+
+this file contains some HTML5 snippets on:
+- indexedDB
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reference sources:
++ https://developer.mozilla.org/en/IndexedDB/Using_IndexedDB
++ https://developer.mozilla.org/en/IndexedDB/IDBDatabaseSync
++ http://www.html5rocks.com/en/tutorials/offline/whats-offline/#toc-indexedDB
++ http://www.html5rocks.com/en/tutorials/offline/storage/#indexed-db
++ http://www.html5rocks.com/en/tutorials/indexeddb/todo/
+
+DEMO!!!
++ http://code.google.com/p/indexeddb/wiki/CodeSamples
++ http://nparashuram.com/trialtool/index.html#example=/IndexedDB/jquery/trialtool.html
+
+notes:
++ a collection of "object stores" to drop objects into.
++ stores are something like SQL tables
+  o of any object structure
+  o so no need to define anything upfront
++ asynchronous API
++ can create indexes on stores to improve search speed
++ all IndexedDB databases are stored in the same origin
+
+DEFUNCT - webSQL
+- http://www.html5rocks.com/en/tutorials/webdatabase/todo/
+- http://hacks.mozilla.org/2010/06/comparing-indexeddb-and-webdatabase/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+best viewed in editor with tab stops set to 4
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+-->
+
+
+<!-- ================================================== -->
+<!-- START OF HTML -->
+
+<html>
+<head>
+<title>IndexedDB : WebStoreage : HTML5 test code</title>
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets {{{ -->
+
+
+<!-- ================================================== -->
+<!-- Cascade Style Sheets }}} -->
+<!-- Javascript {{{ -->
+<!-- ================================================== -->
+
+<script type='text/javascript' src='js/DebugLog.js'></script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	// for this file, replacing (hooking) the log() and throw()
+	// with the DEBUGLOG system
+	var log_hook = DEBUGLOG.printhook;
+	var throw_hook = DEBUGLOG.printhook;
+	function debuglog_onload() {
+		DEBUGLOG.setElementById( 'logwindow' );
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- js/DebugLog.js }}}2 -->
+<!-- indexedDB {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	function indexedDB_shim() { // browser agnostic...
+		var indexedDB = window.indexedDB ||
+						window.webkitIndexedDB ||
+						window.mozIndexedDB ||
+						null;
+		if ('webkitIndexedDB' in window) {
+			window.IDBTransaction = window.webkitIDBTransaction;
+			window.IDBKeyRange = window.webkitIDBKeyRange;
+		}
+		if ( ! indexedDB ) {
+			log_hook( 'WARNING: BROWSER DOES NOT HAVE indexedDB SUPPORT!!!' );
+		}
+		return indexedDB;
+	}
+
+	function indexedDB_openDB( db_name, cb_success, cb_error ) {
+		var indexedDB = indexedDB_shim();
+		var request = indexedDB.open( db_name );
+		request.onsuccess = function( evt ) { if ( cb_success ) cb_success( evt ); };
+		request.onerror   = function( evt ) { if ( cb_error )   cb_error  ( evt ); };
+	}
+
+	function indexedDB_versionUpdate( db, curver, cb_success, cb_error, cb_blocked ) {
+		var verChangeReq = db.setVersion( curver );
+		verChangeReq.onsuccess = function( evt ) { if ( cb_success ) cb_success( evt ); };
+		verChangeReq.onerror   = function( evt ) { if ( cb_error   ) cb_error  ( evt ); };
+		verChangeReq.onblocked = function( evt ) { if ( cb_blocked ) cb_blocked( evt ); };
+	}
+
+	function indexedDB_objectStore( db, name, read_write, cb_complete, cb_error ) {
+		// transaction are scoped to this event loop
+		// If called on a different IDBTransaction (even with the same storeName),
+		//		a different IDBObjectStore instance is returned.
+		//	If an error event is not handled or by calling abort() on the transaction,
+		//		then the transaction is rolled back and an abort event is fired.
+		//		Error events handled by calling preventDefault() -- prevents roll backs.
+		var flag = read_write ? IDBTransaction.READ_WRITE : IDBTransaction.READ_ONLY;
+		var transaction = db.transaction( [name],		// storeNames, empty array will span all object stores
+											flag );		// optional, defaults to READ_ONLY
+		// gets expanded to: db.transaction([name], null /* synchronous API */, flag, infinite /* synchronous API */);
+		transaction.oncomplete = function( evt ) { if ( cb_complete ) cb_complete( evt ); };
+		transaction.onerror    = function( evt ) { if ( cb_error    ) cb_error   ( evt ); };
+		return transaction.objectStore(name);
+	}
+</script>
+
+<script>
+	// NOTE: this is the ASYNCHRONOUS API version
+	//       there exists a synchronous API version, but it exists for workers only
+	//       (see webworkers.html - for synchronous DB implementation)
+	var db = null;
+</script>
+
+<script>
+	function idb_get() {
+		log_hook( "<br>LOG: GET START..." );
+
+// ........................................
+// (search) index
+		var objectStore = indexedDB_objectStore( db, "magicAnimal", 0 );
+		var index = objectStore.index("indexName1");
+
+
+		var x1 = index.get("Bacon");	// BOOOO!!! webkit errors out instead of returning onsuccess with null data...
+		x1.onerror = function( evt ) {	// NOTE: only needed on webkit browsers
+			x1.nodata( evt );
+		};
+		x1.onsuccess = function( evt ) {
+// ........................................
+// (search) index :: get
+//		index.get("Bacon").onsuccess = function( evt ) {
+			var get = evt.target.result;
+			if (get)
+				log_hook( "idb_get::index get:: Bacon's SSN is " + get.ssn );
+			else
+//				log_hook( "idb_get::index get:: No Bacon entry found!" );
+				x1.nodata( evt );
+		};
+		x1.nodata = function( evt ) {
+			var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : ''; // meh...
+			log_hook( "idb_get::index get:: No Bacon entry found! " + msg );
+		};
+
+
+		var x2 = index.openCursor(/* range, direction */);	// BOOOO!!! webkit errors out instead of returning onsuccess with null data...
+		x2.onerror = function( evt ) {						// NOTE: only needed on webkit browsers
+			x2.nodata( evt );
+		};
+		x2.onsuccess = function( evt ) {
+// ........................................
+// (search) index :: cursor
+//		index.openCursor(/* range, direction */).onsuccess = function( evt ) {
+			var cursor = evt.target.result;
+			if (cursor) {
+				// cursor.key is a name, like "Bacon", and cursor.value is the whole object.
+				log_hook( "idb_get::index cursor:: Name: " + cursor.key + ", SSN: " + cursor.value.ssn + ", email: " + cursor.value.email );
+				cursor.continue();
+			} else
+//				log_hook( "idb_get::index cursor:: No more openCursor entryies found!" );
+				x2.nodata( evt );
+		};
+		x2.nodata = function( evt ) {
+			var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : ''; // meh...
+			log_hook( "idb_get::index cursor:: No more openCursor entryies found! " + msg );
+		};
+
+
+		var x3 = index.openKeyCursor();	// BOOOO!!! webkit errors out instead of returning onsuccess with null data...
+		x3.onerror = function( evt ) {	// NOTE: only needed on webkit browsers
+			x3.nodata( evt );
+		};
+		x3.onsuccess = function( evt ) {
+// ........................................
+// (search) index :: key cursor
+////	index.openKeyCursor(null, IDBCursor.NEXT_NO_DUPLICATE).onsuccess = function( evt ) {
+////	index.openKeyCursor(null, IDBCursor.PREV_NO_DUPLICATE).onsuccess = function( evt ) {
+//		index.openKeyCursor().onsuccess = function( evt ) {
+			var cursor = evt.target.result;
+			if (cursor) {
+				// cursor.key is a name, like "Bacon", and cursor.value is the SSN.
+				// No way to directly get the rest of the stored object.
+				log_hook( "idb_get::index key cursor:: Name: " + cursor.key + ", SSN: " + cursor.value );
+				cursor.continue();
+			} else
+//				log_hook( "idb_get::index key cursor:: No more openKeyCursor entryies found!" );
+				x3.nodata( evt );
+		};
+		x3.nodata = function( evt ) {
+			var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : ''; // meh...
+			log_hook( "idb_get::index key cursor:: No more openKeyCursor entryies found!" + msg );
+		};
+
+
+// ........................................
+// (search) keyRange :: limits
+//		var keyRange = IDBKeyRange.only(value);					// i.e. bound( value, value, false, false );
+//		var keyRange = IDBKeyRange.lowerBound(value, open);		// i.e. bound( value, undef, open /* defaults to false */, true );
+//		var keyRange = IDBKeyRange.upperBound(value, open);		// i.e. bound( undef, value, true, open /* defaults to false */ );
+		var keyRange = IDBKeyRange.bound(1,		// lower bound
+										10,		// upper bound
+										true,	// lower inclusive?
+										false);	// upper inclusive?
+		request = objectStore.openCursor(keyRange /*, optional: IDBCursor.PREV */ );
+
+
+		// BOOOO!!! webkit errors out instead of returning onsuccess with null data...
+		request.onerror = function( evt ) {	// NOTE: only needed on webkit browsers
+			request.nodata( evt );
+		};
+// ........................................
+// Object Store :: (search) cursor
+//		objectStore.openCursor( /* all */ ).onsuccess = function( evt ) {
+		request.onsuccess = function( evt ) {
+			var cursor = evt.target.result;
+			if (cursor) {
+				log_hook( "idb_get::keyrange cursor:: Name for SSN " + cursor.key + " is " + cursor.value.name );
+//				cursor.delete(/* count */);
+//				cursor.update(/* value */);
+//				cursor.advance(/* count */);
+				cursor.continue(/* next key */);
+			} else
+//				log_hook( "idb_get::keyrange cursor:: No more openCursor store entries!" );
+				request.nodata( evt );
+		};
+		request.nodata = function( evt ) {
+			var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : ''; // meh...
+			log_hook( "idb_get::keyrange cursor:: No more openCursor store entries!" + msg );
+		};
+
+
+
+		log_hook( "LOG: GET END..." );
+	}
+</script>
+
+<script>
+	function idb_add() {
+		log_hook( "<br>LOG: ADD START..." );
+		var objectStore = indexedDB_objectStore( db, "magicAnimal", 1, idb_ostore_complete, idb_ostore_error );
+
+		var customerData = [
+			{ ssn: "444-44-4444", name: "Bacon", age: 44, email: "bacon@company.com" },
+			{ ssn: "555-55-5555", name: "Ham", age: 55, email: "ham@home.net" }
+		];
+		for (var i in customerData) {
+			// Note that the add() function requires that no object already be in the database with the same key.
+			// To modify an existing entry, or don't care if one exists already, use the put() function.
+			var requestAdd = objectStore.add(customerData[i]);
+			requestAdd.onsuccess = function( evt ) {
+		    	log_hook( 'idb_add:: [0] Saved with id ' + evt.target.result );
+			};
+			requestAdd.onerror = function( evt ) {
+				log_hook( "ERROR: idb_add:: unable to add() new entry" );
+			};
+		}
+
+		var data = { ssn: "666-66-6666", name: "Pork", age: 66, email: "pork@club.org" }
+		// overwrite entry (if exists) -- otherwise it creates a new entry
+		var requestPut = objectStore.put(data);
+		requestPut.onsuccess = function( evt ){
+		   	log_hook( 'idb_add:: [1] Saved with id ' + evt.target.result );
+		};
+		requestPut.onerror = function( evt ) {
+			log_hook( "ERROR: idb_add:: unable to put() entry" );
+		};
+		log_hook( "LOG: ADD END..." );
+	}
+
+	function idb_del() {
+		log_hook( "<br>LOG: Removing DB entry..." );
+		// NOTE: compact transaction and objectStore scope
+		// ( see indexedDB_objectStore() for the long winded way... )
+		var request = db.transaction( ["magicAnimal"], IDBTransaction.READ_WRITE )
+						.objectStore( "magicAnimal" )
+						.delete( "555-55-5555" ); // remove Ham
+		request.onsuccess = function( evt ) {
+			idb_get();
+		};
+		request.onerror = function( evt ) {
+			log_hook( "ERROR: idb_del:: unable to remove entry" );
+		};
+		log_hook( "LOG: DB entry removed" );
+	}
+
+	function idb_nuke() {
+		idb_btns(0);
+		log_hook( "<br>LOG: Nuking DB..." );
+		// close to ensure there are no pending commits
+		// need to make DB mutable -- REMEBER: done only during a VERSION_CHANGE transaction callback
+		db.close();
+		indexedDB_openDB( "testDBname", idb_nuke_open_success, idb_open_error );
+	}
+
+	function idb_nuke_open_success( evt ) {
+		db = evt.target.result;
+		var date = new Date();
+		var time = date.getTime();
+		indexedDB_versionUpdate( db, "1.0." + time, idb_nuke_ver_success, idb_ver_error, idb_ver_blocked );
+	}
+
+	function idb_nuke_ver_success( evt ) {
+		if ( db.objectStoreNames.contains("magicAnimal") ) {
+			// REMEMBER: any DB table modifications MUST be called from a VERSION_CHANGE transaction callback
+			db.deleteObjectStore("magicAnimal");	// Object Store :: destroy
+			log_hook( "LOG: NUKING magicAnimal" );
+		}
+		db.close();
+// the following is not used anymore -- see idb_nuke_open_success_future_feature()
+//		var indexedDB = indexedDB_shim();
+//		indexedDB.deleteDatabase( "testDBname" ); // indexDB :: destroy
+		log_hook( "LOG: DB destroyed" );
+	}
+
+	function idb_nuke_open_success__future_feature( evt ) {
+		db = evt.target.result;
+		// NOTE: can only delete database if "oldVersion" matches and "newVersion" is null...
+		var verChangeReq = db.setVersion( "1.1", null );
+		verChangeReq.onsuccess = function( evt ) {
+			log_hook( "LOG: DB destroyed<br>" );
+		};
+		verChangeReq.onerror   = function( evt ) { idb_ver_error( evt ); };
+		verChangeReq.onblocked = function( evt ) { idb_ver_blocked( evt ); };
+	}
+</script>
+
+<script>
+	function idb_open_success( evt ) {
+		db = evt.target.result;
+		log_hook( "LOG: Database Opened: " + db.name );
+		for ( var i = 0; i < db.objectStoreNames.length; i++ )
+			log_hook( "LOG: -- with objectStore: " + db.objectStoreNames[i] );
+
+		// ----------------------------------------
+		// DB catch all error handler
+		db.onerror = function( evt ) {
+			var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : '';
+			log_hook( "ERROR: Database catch all error: " + evt.target.errorCode + ": " + msg );
+		};
+		
+		// version check...
+		if (db.version != "1.1")  { // version: can be any "string"
+//		if (db.oldVersion != "1.1")  { // future variable name...
+			var date = new Date();
+			var time = date.getTime();
+			indexedDB_versionUpdate( db, "1.0." + time, idb_ver_success, idb_ver_error, idb_ver_blocked );
+		} else
+			idb_get();
+
+		idb_btns(1);
+		log_hook( "LOG: Ready to use Database...<br>" );
+	}
+
+	function idb_open_error( evt ) {
+		log_hook( "ERROR: Database open error: " + evt ); // request.errorCode
+	}
+
+	// ++++++++++++++++++++++++++++++++++++++++
+
+	function idb_ver_success( evt ) {
+		log_hook( "LOG: version change detected..." ); // this is either a new DB or an outdated DB...
+
+		if ( db.objectStoreNames.contains("magicAnimal") ) {
+			// REMEMBER: any DB table modifications MUST be called from a VERSION_CHANGE transaction callback
+			log_hook( "LOG: Removing old DB objectStore..." );
+
+			var objectStore = indexedDB_objectStore( db, "magicAnimal", 1, idb_ostore_complete, idb_ostore_error );
+			var index = objectStore.index("indexName1");
+			if ( index )
+				objectStore.delete('indexName1');	// (search) index :: destroy
+
+			objectStore.clear();					// Object Store :: clear
+
+			db.deleteObjectStore("magicAnimal");	// Object Store :: destroy
+			log_hook( "LOG: Old DB objectStore removed" );
+		}
+
+// ----------------------------------------
+// Object Store :: create
+
+// Key		Key
+// Path		Generator 	Description
+// Yes 		No			1) only hold JavaScript objects. The object must have keyPath and value pair.
+// Yes 		Yes			2) only hold JavaScript objects. Usually a generated key value stored in the object.
+// No 		No			3) hold any kind of value, even primitive values like numbers and strings. Must supply separate key argument to add a new value.
+// No 		Yes			4) hold any kind of value. The key is (4a) generated automatically.  Or, supply (4b) a separate key argument to use a specific key.
+						// 1)  { keyPath: "id" }
+						// 2)  { keyPath: "id", true }
+						// 3)  "id"
+						// 4a) "id", true
+						// 4b) "id", ssn
+		var objectStore = db.createObjectStore( "magicAnimal",
+							{ keyPath: "ssn" } );
+		log_hook( "LOG: New DB objectStore created" );
+
+
+		// can create search rules called 'index'
+// ........................................
+// (search) index :: create
+		objectStore.createIndex( 'indexName1',  'name' /* keyPath */, { unique: false /* default */ } );
+		objectStore.createIndex( 'indexName2', 'email' /* keyPath */, { unique: true } );
+//		objectStore.create( 'indexName3', 'age' /* keyPath */, { multirow: false /* default */ } );
+		log_hook( "LOG: New DB indexes created" );
+
+		// feedback
+		idb_get();
+	}
+
+	function idb_ver_error( evt ) {
+		log_hook( "ERROR: ibd_ver_error:: " + evt.target.errorCode );
+	}
+
+	function idb_ver_blocked( evt ) {
+		// If some other tab is loaded with the database,
+		// then it needs to be closed before we can proceed.
+		log_hook( "BLOCKED: Please close all other tabs with this site open!" );
+	}
+
+	// ++++++++++++++++++++++++++++++++++++++++
+
+	function idb_ostore_complete( evt ) {
+		// triggered after the rest of (calling) function is done
+		log_hook( 'idb_ostore_complete:: transaction complete' );
+	}
+
+	function idb_ostore_error( evt ) {
+		// if TRANSACTION_INACTIVE_ERR, escaped event loop -- transaction has become inactive
+		var msg = evt.target.webkitErrorMessage ? evt.target.webkitErrorMessage : '';
+		log_hook( "ERROR: idb_ostore_error:: " + evt.target.errorCode + ": " + msg );
+	}
+</script>
+
+<script>
+	function idb_onload() {
+		log_hook( '<p>' );
+		log_hook( '<hr style="height:5px">' );
+		log_hook( '<b>indexedDB</b>' );
+
+		log_hook( "LOG: Opening Database..." );
+		indexedDB_openDB( "testDBname", idb_open_success, idb_open_error );
+	}
+
+	function idb_btns( enable ) {
+		var el = document.getElementById('iDBbtn_nuke'); // nuke button is special cased
+
+		var btns = [ 'iDBbtn_get', 'iDBbtn_add', 'iDBbtn_del' ];
+
+		if ( enable ) {
+			el.removeAttribute('disabled');
+			el.value = 'nuke';
+			el.onclick = idb_nuke;
+			for (var i in btns) { // enable buttons
+				el = document.getElementById(btns[i]);
+				el.removeAttribute('disabled');
+			}
+		} else {
+			el.removeAttribute('disabled');
+			el.value = 'open';
+			el.onclick = idb_onload;
+			for (var i in btns) { // disable buttons
+				el = document.getElementById(btns[i]);
+				el.setAttribute('disabled', 'disabled');
+			}
+		}
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- indexedDB }}}2 -->
+<!-- this document {{{2 -->
+<!-- .................................................. -->
+
+<script>
+	onload = onload_handler;
+
+	function onload_handler() {
+		debuglog_onload();
+		idb_onload();
+	}
+</script>
+
+<!-- .................................................. -->
+<!-- this document }}}2 -->
+<!-- Javascript }}} -->
+<!-- ================================================== -->
+</head>
+
+
+<!-- ================================================== -->
+<!-- START OF BODY -->
+
+<body>
+
+<!-- .................................................. -->
+<div id="logwindow"></div>
+
+<!-- .................................................. -->
+<input id="iDBbtn_get" type="button" value="get" onclick="idb_get();" disabled="disabled">
+<input id="iDBbtn_add" type="button" value="add" onclick="idb_add();" disabled="disabled">
+<input id="iDBbtn_del" type="button" value="del" onclick="idb_del();" disabled="disabled">
+<input id="iDBbtn_nuke" type="button" value="nuke" onclick="idb_nuke();" disabled="disabled">
+
+<!-- ================================================== -->
+
+</body>
+</html>
