@@ -24,7 +24,7 @@
 [//] # (LEFT OFF ON: search for TODO                                          )
 -->
 
-# Nick Shin's Programming Cheatsheets
+#### Nick Shin's Programming Cheatsheets
 
 This page will list some sample code files that I have writen and have
 made available to the public domain.
@@ -35,16 +35,15 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 
 * * *
 
-### C
+# C
 
-##### [c_cheatsheet1.c](code/c_cheatsheet1.c)
-
-will describe **design patterns** in C
+## [c_cheatsheet1.c](code/c_cheatsheet1.c)
+- will describe **design patterns** in C
 (even though patterns are normally used with Object Oriented languages)
-- creational patterns
-- structural patterns
-- behavioral patterns
-- design principles
+	- creational patterns
+	- structural patterns
+	- behavioral patterns
+	- design principles
 
 <!--
 [//] # ( o'reilly - head first: design patterns - 2004                                                        )
@@ -76,96 +75,96 @@ will describe **design patterns** in C
 
 * * *
 
-### C++
+# C++
 
-##### [cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)
-covers the following C++ usage:
-- constructors
-- destructors
-- base, derived, multiple inheritance and friendship classes
-- private vs protected vs public member data access
-- pure and basic virtual function declarations
-- polymorphism
-- type casting
+## [cpp_cheatsheet1.cpp](code/cpp_cheatsheet1.cpp)
+- covers the following C++ usage:
+	- constructors
+	- destructors
+	- base, derived, multiple inheritance and friendship classes
+	- private vs protected vs public member data access
+	- pure and basic virtual function declarations
+	- polymorphism
+	- type casting
 
-##### [cpp_cheatsheet2.cpp](code/cpp_cheatsheet2.cpp)
-covers the following C++ usage:
-- templates
-- const-ness
-- dynamic memory
-- exceptions
+## [cpp_cheatsheet2.cpp](code/cpp_cheatsheet2.cpp)
+- covers the following C++ usage:
+	- templates
+	- const-ness
+	- dynamic memory
+	- exceptions
 
-##### [cpp_cheatsheet3.cpp](code/cpp_cheatsheet3.cpp)
-covers the following:
-- STL programming
-	- containers
-	- algorithms
-- some Boost library features
-	- foreach
-	- smart pointers
-- and using class string
+## [cpp_cheatsheet3.cpp](code/cpp_cheatsheet3.cpp)
+- covers the following:
+	- STL programming
+		- containers
+		- algorithms
+	- some Boost library features
+		- foreach
+		- smart pointers
+	- and using class string
 
 **external links:**
 - _[Bartlomiej Filipek](https://www.bfilipek.com) - an amazing resource on all things c++_
 - _keep a page opened to: [cppreference.com](http://cppreference.com/)_
 
 <!--
-[//] # ( - [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
-[//] # ( - [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
-[//] # ( - [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
-[//] # ( 	- multithreaded (
-[//] # ( 		[atomic](http://www.cplusplus.com/reference/atomic/),
-[//] # ( 		[future](http://www.cplusplus.com/reference/future/),
-[//] # ( 		[condition](http://www.cplusplus.com/reference/condition_variable/condition_variable/),
-[//] # ( 		etc.)
-[//] # ( 	- smart pointers (
-[//] # ( 		[unique](http://www.cplusplus.com/reference/memory/unique_ptr/),
-[//] # ( 		[shared](http://www.cplusplus.com/reference/memory/shared_ptr/),
-[//] # ( 		[weak](http://www.cplusplus.com/reference/memory/weak_ptr/),
-[//] # ( 		etc.)
-[//] # ( 	- new types ( auto inference, range-based for loop, Rvalue, constexpr, un/ordered hash tables, etc. )
-[//] # ( 	- lamba functions and syntax
+[//] # (	- [C++17](https://en.wikipedia.org/wiki/C%2B%2B17)
+[//] # ( 	- [C++14](https://en.wikipedia.org/wiki/C%2B%2B14)
+[//] # ( 	- [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
+[//] # ( 		- multithreaded (
+[//] # ( 			[atomic](http://www.cplusplus.com/reference/atomic/),
+[//] # ( 			[future](http://www.cplusplus.com/reference/future/),
+[//] # ( 			[condition](http://www.cplusplus.com/reference/condition_variable/condition_variable/),
+[//] # ( 			etc.)
+[//] # ( 		- smart pointers (
+[//] # ( 			[unique](http://www.cplusplus.com/reference/memory/unique_ptr/),
+[//] # ( 			[shared](http://www.cplusplus.com/reference/memory/shared_ptr/),
+[//] # ( 			[weak](http://www.cplusplus.com/reference/memory/weak_ptr/),
+[//] # ( 			etc.)
+[//] # ( 		- new types ( auto inference, range-based for loop, Rvalue, constexpr, un/ordered hash tables, etc. )
+[//] # ( 		- lamba functions and syntax
 -->
 
 * * *
 
-### LLVM
+# LLVM
 
-##### LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh) (_coming soon_)
-notes and boilerplate LLVM &amp; Clang project
+## LLVM_Clang_cheatsheet1[](code/LLVM_Clang_cheatsheet1.sh) (_coming soon_)
+- notes and boilerplate LLVM &amp; Clang project
 
 **external links:**
 - the list is so large, they are placed here: [LLVM_external_links](code/LLVM_external_links.md)
 
 * * *
 
-### Perl
+# Perl
 
-##### [perl_cheatsheet1.pl.inc](code/perl_cheatsheet1.inc)
-written to be included in by perl_cheatsheet2 and contains the following perl snippets:
-- unique sort
-- time n date
-- file notes
-- wget
+## [perl_cheatsheet1.pl.inc](code/perl_cheatsheet1.inc)
+- written to be included in by perl_cheatsheet2 and contains the following perl snippets:
+	- unique sort
+	- time n date
+	- file notes
+	- wget
 
-##### [perl_cheatsheet2.pl](code/perl_cheatsheet2.pl)
-executable and contains more perl snippets:
-- file IO
-- fork
-- arrays, arrays of arrays, array references, slice n splice
-- hashes, hashes of arrays, hash references
-- references to functions
-- and some boiler plate code
+## [perl_cheatsheet2.pl](code/perl_cheatsheet2.pl)
+- executable and contains more perl snippets:
+	- file IO
+	- fork
+	- arrays, arrays of arrays, array references, slice n splice
+	- hashes, hashes of arrays, hash references
+	- references to functions
+	- and some boiler plate code
 
-##### [perl_cheatsheet3.pm](code/perl_cheatsheet3.pm) _(example perl module)_
-##### [perl_cheatsheet4.pl](code/perl_cheatsheet4.pl)
-##### [perl_cheatsheet5.pl](code/perl_cheatsheet5.pl) _(using the perl module)_
-while showing the tiny differences on:
-- require
-- use
-- fully qualified names
-- automatic exported names
-- controlled (manually) exported names
+## [perl_cheatsheet3.pm](code/perl_cheatsheet3.pm) _(example perl module)_
+## [perl_cheatsheet4.pl](code/perl_cheatsheet4.pl)
+## [perl_cheatsheet5.pl](code/perl_cheatsheet5.pl) _(using the perl module)_
+- while showing the tiny differences on:
+	- require
+	- use
+	- fully qualified names
+	- automatic exported names
+	- controlled (manually) exported names
 
 **external links:**
 - _good collection of perl tips: [Perl Training Australia - Perl Tips](http://perltraining.com.au/tips/)_
@@ -174,28 +173,28 @@ chances are: someone did and threw it up on **[CPAN](http://www.cpan.org/)**_
 
 * * *
 
-### Python
+# Python
 
-##### [python_cheatsheet1.py](code/python_cheatsheet1.py)
-covers the following python usage:
-- some of my most used python snippets
-- file IO
-- dictionary
-- lists, tuples and arrays
-- classes
+## [python_cheatsheet1.py](code/python_cheatsheet1.py)
+- covers the following python usage:
+	- some of my most used python snippets
+	- file IO
+	- dictionary
+	- lists, tuples and arrays
+	- classes
 
 <!--
-[//] # ( ##### python_cheatsheet2.py[](code/python_cheatsheet2.py) )
-[//] # ( covers the following C/C++ with python interaction        )
-[//] # ( - access python scripts from C/C++ code                   )
-[//] # ( - access C/C++ code from python script                    )
-[//] # ( - dynamic library loading in python                       )
-[//] # ( - script load/reloading in C/C++                          )
-[//] # ( - handle basic data structures                            )
-[//] # ( 	- structs                                              )
-[//] # ( 	- union                                                )
-[//] # ( 	- pointers                                             )
-[//] # ( 	- return values                                        )
+[//] # ( ## python_cheatsheet2.py[](code/python_cheatsheet2.py) )
+[//] # ( - covers the following C/C++ with python interaction   )
+[//] # (	- access python scripts from C/C++ code             )
+[//] # ( 	- access C/C++ code from python script              )
+[//] # ( 	- dynamic library loading in python                 )
+[//] # ( 	- script load/reloading in C/C++                    )
+[//] # ( 	- handle basic data structures                      )
+[//] # ( 		- structs                                       )
+[//] # ( 		- union                                         )
+[//] # ( 		- pointers                                      )
+[//] # ( 		- return values                                 )
 -->
 
 here are some more python code i have made free to the public:
@@ -208,7 +207,7 @@ chances are: someone did and threw it up on **[PyPI](https://pypi.python.org/pyp
 
 * * *
 
-### Ruby
+# Ruby
 
 Please see my [networking notes](#network) for more sample code written in
 Ruby used to generate the all of the network code and pretty printed HTML files.
@@ -224,20 +223,20 @@ chances are: someone did and threw it up on **[RubyGems](http://rubygems.org/)**
 
 * * *
 
-### Network
+# Network
 
-##### [network_notes1.rb](code/network_notes1.rb)
-covers networking sockets (open read write close) (for both peer2peer and multi-users) in:
-- C/C++
-- C#
-- Exlixir
-- GoLang
-- Java
-- Node.js
-- Perl
-- Python
-- Ruby
-- Scala
+## [network_notes1.rb](code/network_notes1.rb)
+- covers networking sockets (open read write close) (for both peer2peer and multi-users) in:
+	- C/C++
+	- C#
+	- Exlixir
+	- GoLang
+	- Java
+	- Node.js
+	- Perl
+	- Python
+	- Ruby
+	- Scala
 
 if the "all in one file" is too confusing to look at _(hurray for VIM! ":set filetype=lang")_,
 run the script to generate all of the network code for the different programming languages:
@@ -246,37 +245,37 @@ run the script to generate all of the network code for the different programming
 ruby network_notes1.rb code
 ```
 
-##### [network_notes2.md](code/network_notes2.md)
-covers the following networking snippets:
-- [Node.js](code/network_nodejs.js)
-	- http(s)://
-	- ws(s)://
-	- AMQP(s)://
-	- XMPP(s)://
-- HTTPd
-	- SSL
-	- CGI / FastCGI
-- AMQP
-	- RabbitMQ
-- XMPP
-	- ejabberd
-		- writing server components
-		- websockets
-		- HTTP binding
-		- admin
+## [network_notes2.md](code/network_notes2.md)
+- covers the following networking snippets:
+	- [Node.js](code/network_nodejs.js)
+		- http(s)://
+		- ws(s)://
+		- AMQP(s)://
+		- XMPP(s)://
+	- HTTPd
+		- SSL
+		- CGI / FastCGI
+	- AMQP
+		- RabbitMQ
+	- XMPP
+		- ejabberd
+			- writing server components
+			- websockets
+			- HTTP binding
+			- admin
 
-##### [network_notes2_htaccess.pl](code/network_notes2_htaccess.pl)
-generates .htaccess files (for authentication access) for
-- Apache
-- lighttpd
+## [network_notes2_htaccess.pl](code/network_notes2_htaccess.pl)
+- generates .htaccess files (for authentication access) for
+	- Apache
+	- lighttpd
 
-##### [network_notes3.md](code/network_notes3.md)
-covers the following networking snippets:
-- Concurrency
-- WebSockets
-- WebRTC
-- SSL (libraries)
-- behind firewall _(STUN TURN ICE)_
+## [network_notes3.md](code/network_notes3.md)
+- covers the following networking snippets:
+	- Concurrency
+	- WebSockets
+	- WebRTC
+	- SSL (libraries)
+	- behind firewall _(STUN TURN ICE)_
 
 **my notes** on:
 - [stunnel.md](code/network_stunnel.md)
@@ -293,11 +292,12 @@ covers the following networking snippets:
 
 * * *
 
-### HTML5
+# HTML5
 
-##### [HTML5-cheatsheet1](HTML5-cheatsheet1)
-covers the following HTML5 topics:
-1. WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
+## [HTML5-cheatsheet1](HTML5-cheatsheet1)
+- covers the following HTML5 topics:
+	- WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
+
 	1. canvas
 	1. css3
 	1. devicemotion ¹
@@ -317,9 +317,10 @@ covers the following HTML5 topics:
 	1. webstorage: localStorage
 	1. webworkers ⁵
 
-##### [HTML5-cheatsheet2](HTML5-cheatsheet2)
-covers the following demos:
-1. WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
+## [HTML5-cheatsheet2](HTML5-cheatsheet2)
+- covers the following demos:
+	-  WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
+
 	1. AudioAPI
 	1. Audio Element (webaudio revisited -- tests): _(NOTE: this is NOT AudioAPI but the &lt;audio&gt; element)_
 	1. drag &amp; drop ¹
@@ -335,13 +336,13 @@ note: all files are written static (i.e. plain ol' HTML) so they can be looked u
 1. WARNING: WebKit does NOT support subworkers (but Mozilla does).  Mozilla does NOT support SharedWorker (but WebKit does).
 1. Work In Progress... coming soon
 
-##### HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
-covers the following topics:
-- emscripten
-	- web assembly
-	- webgl2
-	- multi-threading
-	- file manager (async and local storage)
+## HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
+- covers the following topics:
+	- emscripten
+		- web assembly
+		- webgl2
+		- multi-threading
+		- file manager (async and local storage)
 
 **external links:**
 - _[HTML 5 Rocks](http://www.html5rocks.com/en/) - the mother load of all things HTML5_
@@ -352,37 +353,36 @@ covers the following topics:
 
 * * *
 
-### PHP
+# PHP
 
-##### [php_cheatsheet1.php](code/php_cheatsheet1.php)
-covers the following PHP usage:
-- predefined variables: _GET _POST _SERVER _FILES
-- binary and file handling
-- passing by reference
-- classes
+## [php_cheatsheet1.php](code/php_cheatsheet1.php)
+- covers the following PHP usage:
+	- predefined variables: _GET _POST _SERVER _FILES
+	- binary and file handling
+	- passing by reference
+	- classes
 
-##### [php_cheatsheet2.php](code/php_cheatsheet2.php)
-covers the following PHP usage:
-- user agent detection
-- crafted headers
-- memcache
-- NoSQL _(coming soon, my most used snippets...)_
+## [php_cheatsheet2.php](code/php_cheatsheet2.php)
+- covers the following PHP usage:
+	- user agent detection
+	- crafted headers
+	- memcache
+	- NoSQL _(coming soon, my most used snippets...)_
 
 **external links**
-- _it might be useful to enable
-[PHP: short_open_tag](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag)_
+- _it might be useful to enable [PHP: short_open_tag](http://www.php.net/manual/en/ini.core.php#ini.short-open-tag)_
 - _keep a page opened to: [PHP: function reference](http://www.php.net/manual/en/funcref.php)_
 
 * * *
 
-### Linux
+# Linux
 
-##### [docker_cheatsheet1.md](code/docker_cheatsheet1.md)
-covers the following:
-- some of my most used docker snippets
-- local/private registry notes
+## [docker_cheatsheet1.md](code/docker_cheatsheet1.md)
+- covers the following:
+	- some of my most used docker snippets
+	- local/private registry notes
 
-##### docker_cheatsheet2.md[](code/docker_cheatsheet2.md) _(coming soon)_
+## docker_cheatsheet2.md[](code/docker_cheatsheet2.md) _(coming soon)_
 - provisioning _(machine)_
 - clustering/scheduling _(swarm &amp; swarmkit)_
 - orchestration _(composer)_
@@ -393,7 +393,7 @@ covers the following:
 [//] # ( https://lostechies.com/gabrielschenker/2016/11/25/docker-and-swarmkit-part-6-new-features-of-v1-13/ )
 -->
 
-##### docker_cheatsheet3.md[](code/docker_cheatsheet3.md) _(coming soon)_
+## docker_cheatsheet3.md[](code/docker_cheatsheet3.md) _(coming soon)_
 - my favorite Dockerfiles
 - unikernels
 
@@ -409,26 +409,26 @@ covers the following:
 [//] # ( http://erlangonxen.org/                                    )
 -->
 
-##### [LLVM_Linux_cheatsheet1.sh](code/LLVM_Linux_cheatsheet1.sh)
+## [LLVM_Linux_cheatsheet1.sh](code/LLVM_Linux_cheatsheet1.sh)
 - notes on building LLVMLinux with LLVM, Clang and LLDB
 
-##### [linux_writingdevicedrivers1.md](code/linux_writingdevicedrivers1.md)
-covers the following:
-- kernel module programming
-- character device driver
-- usb stick example
+## [linux_writingdevicedrivers1.md](code/linux_writingdevicedrivers1.md)
+- covers the following:
+	- kernel module programming
+	- character device driver
+	- usb stick example
 
-##### [linux_SSD.md](code/linux_SSD.md)
--notes on SolidStateDrive optimizations, display DPI settings and surface pro 3 configurations
+## [linux_SSD.md](code/linux_SSD.md)
+- notes on SolidStateDrive optimizations, display DPI settings and surface pro 3 configurations
 
 **external links:**
 - the list was getting large, they are placed here: [Linux_external_links](code/linux_external_links.md)
 
 * * *
 
-### Vim
+# Vim
 
-##### [https://github.com/nickshin/vimfiles](https://github.com/nickshin/vimfiles)
+## [https://github.com/nickshin/vimfiles](https://github.com/nickshin/vimfiles)
 
 - latest [vimrc](https://github.com/nickshin/vimfiles/vimrc) file I use:
 	- editor configuration
@@ -440,7 +440,7 @@ covers the following:
 	- a bit of how to use them and where to find them
 	- and old settings that i used to use...
 
--[vim_fetch.sh](https://github.com/nickshin/vimfiles/vim_fetch.sh) plugins
+- [vim_fetch.sh](https://github.com/nickshin/vimfiles/vim_fetch.sh) plugins
 	- normally, plugins only need be placed in: **.vim/bundle**
 	- but sometimes, some packages needs some extra hand holding to get em working (especially when working on a bunch of different OS)
 	- this script helps me remember them
@@ -470,26 +470,26 @@ covers the following:
 
 * * *
 
-### 3D Math
+# 3D Math
 
-##### [3D_notes1](code/3D_notes1.md)
-covers the following 3D math:
-- matrix math
-- vector math
-- lines w/ points, lines, circles equations
-- planes w/ points, lines, planes equations
+## [3D_notes1](code/3D_notes1.md)
+- covers the following 3D math:
+	- matrix math
+	- vector math
+	- lines w/ points, lines, circles equations
+	- planes w/ points, lines, planes equations
 
 <!--
-[//] # ( TODO: ##### 3D_notes2[](code/3D_notes2.md) )
-[//] # ( TODO: covers the following 3D math:        )
-[//] # ( TODO: - quaternions )
-[//] # ( TODO: - curves      )
-[//] # ( TODO: - surfaces    )
+[//] # ( TODO: ## 3D_notes2[](code/3D_notes2.md) )
+[//] # ( TODO: - covers the following 3D math:   )
+[//] # ( TODO:	- quaternions )
+[//] # ( TODO: 	- curves      )
+[//] # ( TODO: 	- surfaces    )
 -->
 
 * * *
 
-### Misc
+# Misc
 
 - [my bookmarks](https://www.nickshin.com/bookmark_tools/demo/index.html)
 - [Git-LFS](code/gitlfs_gitlab.md) _(with GitLab)_
