@@ -2,7 +2,7 @@
 
 written by Nick Shin - nick.shin@gmail.com<br>
 this file is licensed under: [Unlicense - http://unlicense.org/](http://unlicense.org/)<br>
-and, is from - <https://www.nickshin.com/CheatSheets/>
+and, is from - <https://github.com/nickshin/CheatSheets/>
 
 * * *
 * * *

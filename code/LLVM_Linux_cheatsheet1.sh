@@ -2,7 +2,7 @@
 # the code found in this file is licensed under:
 # - Unlicense - http://unlicense.org/
 #
-# this file is from https://www.nickshin.com/CheatSheets/
+# this file is from https://github.com/nickshin/CheatSheets/
 
 
 # LLVMLinux with LLVM, Clang and LLDB

@@ -2,7 +2,7 @@
 // the code found in this file is licensed under:
 // - Creative Commons Attribution 3.0 License
 //
-// this file is from https://www.nickshin.com/CheatSheets/
+// this file is from https://github.com/nickshin/CheatSheets/
 //
 //
 // these are my used NodeJS code snippets

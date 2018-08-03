@@ -4,7 +4,7 @@
 # the code found in this file is licensed under:
 # - Unlicense - http://unlicense.org/
 #
-# this file is from https://www.nickshin.com/CheatSheets/
+# this file is from https://github.com/nickshin/CheatSheets/
 #
 #
 # part 3 of 3 - writting perl modules

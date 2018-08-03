@@ -4,7 +4,7 @@
 # the code found in this file is licensed under:
 # - Creative Commons Attribution 3.0 License.
 #
-# this file is from https://www.nickshin.com/CheatSheets/
+# this file is from https://github.com/nickshin/CheatSheets/
 #
 #
 # to help reduce user error prone steps when creating .htaccess
