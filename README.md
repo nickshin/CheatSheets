@@ -422,17 +422,17 @@ ruby network_notes1.rb code
 
 ## [https://github.com/nickshin/vimfiles](https://github.com/nickshin/vimfiles)
 
-- latest [vimrc](https://github.com/nickshin/vimfiles/vimrc) file I use:
+- latest [vimrc](https://github.com/nickshin/vimfiles/blob/master/vimrc) file I use:
 	- editor configuration
 	- plugin mapings
 	- and some archived configs and maps for reference
 
-- my [vim_notes.txt](https://github.com/nickshin/vimfiles/vim_notes.txt) on plugins &amp; stuff
+- my [vim_notes.txt](https://github.com/nickshin/vimfiles/blob/master/vim_notes.txt) on plugins &amp; stuff
 	- a list of plugins i found useful in the past or currently
 	- a bit of how to use them and where to find them
 	- and old settings that i used to use...
 
-- [vim_fetch.sh](https://github.com/nickshin/vimfiles/vim_fetch.sh) plugins
+- [vim_fetch.sh](https://github.com/nickshin/vimfiles/blob/master/vim_fetch.sh) plugins
 	- normally, plugins only need be placed in: **.vim/bundle**
 	- but sometimes, some packages needs some extra hand holding to get em working (especially when working on a bunch of different OS)
 	- this script helps me remember them
