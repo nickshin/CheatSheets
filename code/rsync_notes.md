@@ -133,3 +133,10 @@ $rsynccmd --delete $EXCLUDE_THESE --exclude-from=$EXCLUDES_FILE --filter=". $FIL
 
 * * *
 
+### rsync for git-bash (a.k.a. msysgit)
+
+get it from the: [MSYS2 Package repository](http://repo.msys2.org/msys/x86_64/)
+- original tip from: https://serverfault.com/questions/310337/using-rsync-from-msysgit-for-binary-files/872557#872557
+
+* * *
+
