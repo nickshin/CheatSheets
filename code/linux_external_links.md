@@ -147,3 +147,65 @@ also, a !!! **FANTASTIC** !!! project to resurrect and install **latest macOS** 
 
 * * *
 
+## Misc Notes
+
+#### find motherboard model
+```sh
+dmidecode -t 2
+```
+
+#### find cpu info
+```sh
+cat /proc/cpuinfo
+```
+
+#### find memory info
+```sh
+cat /proc/meminfo
+```
+
+#### hard disk
+
+- specs
+	- [find hard disk hardware specs](https://www.cyberciti.biz/faq/find-hard-disk-hardware-specs-on-linux/)
+	- [retrieve disk info](https://www.linuxjournal.com/content/tech-tip-retrieve-disk-info-command-line)
+
+```sh
+# directly from storage device
+hdparm -I /dev/sdX
+# from kernel driver
+hdparm -i /dev/sdX
+
+# details
+lshw -class disk -class storage
+# summary
+lshw -short -C disk
+
+# all
+smartctl -a /dev/sdX
+smartctl -d ata -a /dev/sdX
+smartctl -d ata -a -i /dev/sdX
+# summary
+smartctl -i /dev/sdX
+
+# via /dev
+ls /dev/disk/by-id
+```
+
+- health
+	- linux_SSD.md#check-health
+
+```sh
+smartctl -data -A /dev/sdX
+```
+
+- SATA speeds
+	- [find sata harddisk link speed](https://www.cyberciti.biz/faq/linux-command-to-find-sata-harddisk-link-speed/)
+
+```sh
+dmesg | grep -i sata | grep 'link up'
+dmesg | grep -i ahci | grep -i --color Gbps
+```
+
+* * *
+
