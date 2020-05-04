@@ -137,6 +137,10 @@ also, a !!! **FANTASTIC** !!! project to resurrect and install **latest macOS** 
 - [Mathias Bynens: dotfiles: macos](https://github.com/mathiasbynens/dotfiles/blob/master/.macos) - SUPER !!!
 - [Create symlink with Msys2](http://superuser.com/a/1044337)
 
+#### rsyslogs
+- [$template ruleset via %HOSTNAME%](https://www.tecmint.com/install-rsyslog-centralized-logging-in-centos-ubuntu/)
+- [with log rotate example](https://serverfault.com/questions/400293/syslog-ip-ranges-to-specific-files-using-rsyslog/400294)
+
 #### firewall distros
 - [untangle](https://github.com/untangle/ngfw_src)
 - [pfsense](https://github.com/pfsense)
