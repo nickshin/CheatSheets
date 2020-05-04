@@ -221,18 +221,20 @@ sudo cp -duvpr iso mnt/boot/.
 			- [pfSense](http://distrowatch.com/table.php?distribution=pfsense)
 			- [Untangle](http://distrowatch.com/table.php?distribution=untangle)
 			- [OPNsense](http://distrowatch.com/table.php?distribution=opnsense)
-<!--
-[//] # ( 			- [IPCop](http://distrowatch.com/table.php?distribution=ipcop)           )
-[//] # ( 			- [Sophos](http://distrowatch.com/table.php?distribution=sophos)         )
-[//] # ( 			- [Smoothwall](http://distrowatch.com/table.php?distribution=smoothwall) )
-[//] # ( 			- [Zentyal](http://distrowatch.com/table.php?distribution=zentyal)       )
--->
 
 		- small
 			- [Puppy](http://distrowatch.com/table.php?distribution=puppy)
 			- [antiX](http://distrowatch.com/table.php?distribution=antix)
 			- [Tiny Core](http://distrowatch.com/table.php?distribution=tinycore)
 			- [SliTaz](http://distrowatch.com/table.php?distribution=slitaz)
+
+<!--
+[//]		- firewall
+[//] # ( 			- [IPCop](http://distrowatch.com/table.php?distribution=ipcop)           )
+[//] # ( 			- [Sophos](http://distrowatch.com/table.php?distribution=sophos)         )
+[//] # ( 			- [Smoothwall](http://distrowatch.com/table.php?distribution=smoothwall) )
+[//] # ( 			- [Zentyal](http://distrowatch.com/table.php?distribution=zentyal)       )
+-->
 
 * * *
 
@@ -466,6 +468,7 @@ EndSection
 	- a nice list of boot options for a number of distributions
 - <https://wiki.archlinux.org/index.php/GUID_Partition_Table>
 	- gdisk basic (with hybrid MBR)
+
 <!--
 [//] # ( - <https://forums.fogproject.org/topic/7727/building-usb-booting-fos-image/3> )
 [//] # ( - <http://wiki.osdev.org/GRUB_2>                                              )
@@ -476,6 +479,7 @@ EndSection
 	- <https://github.com/thias/glim>
 
 - [Making a QEMU disk image bootable with GRUB](http://nairobi-embedded.org/making_a_qemu_disk_image_bootable_with_grub.html)
+
 <!--
 [//] # ( - [preview your GRUB](http://unix.stackexchange.com/questions/110015/how-can-i-preview-the-grub2-boot-screen) )
 -->

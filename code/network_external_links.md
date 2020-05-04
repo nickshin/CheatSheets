@@ -46,6 +46,7 @@ The external links list was getting so large, I placed them here.
 		- PHP centric (but is applicable to Perl, Python and Ruby as well)
 - [Nginx](http://wiki.nginx.org/Configuration#FastCGI_examples)
 	- great collection of setup and examples for: ( Perl, Python, Ruby and PHP ) and more
+
 <!--
 [//] # ( 	- [nginx pitfalls](http://wiki.nginx.org/Pitfalls) )
 -->
