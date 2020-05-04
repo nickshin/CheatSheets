@@ -106,6 +106,8 @@ and paste code that I use a lot (efficiently), often (lazy) or rarely (forgetful
 
 **external links:**
 - _[Bartlomiej Filipek](https://www.bfilipek.com) - an amazing resource on all things c++_
+- _[The World Map of C+++ STL Algorithms](https://www.fluentcpp.com/getthemap/) - a fun way to learn 105 STL Algorithms in less than an hour_
+- _[lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE) - and more great C++ crash course videos_
 - _keep a page opened to: [cppreference.com](http://cppreference.com/)_
 
 <!--
