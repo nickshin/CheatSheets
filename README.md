@@ -7,10 +7,6 @@
 [//] # (docker external - favorite dockerfiles                                )
 [//] # (network_notes3 - concurrency                                          )
 
-[//] # (UE4 build notes - README.md                                           )
-[//] # (networking: AWS (Signature Version 4) - link to HTML5ToolChain        )
-[//] # (html5_cheatsheet3 - emscripten - my notes...                          )
-
 [//] # (LLVM:                                                                 )
 [//] # (- clang sample project (study emscripten/YouCompleteMe?)              )
 [//] # (- update external links                                               )
@@ -300,60 +296,52 @@ ruby network_notes1.rb code
 
 # HTML5
 
-## [HTML5-cheatsheet1](HTML5-cheatsheet1)
-- WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
-- covers the following HTML5 topics:
-	1. canvas
-	1. css3
-	1. devicemotion ¹
-	1. deviceorientation ¹
-	1. eventsource ²
-	1. fullscreen ¹
-	1. geolocation ¹
-	1. javascript ² classes and modules
-	1. svg
-	1. webaudio and webvideo
-	1. webGL ¹: requestAnimationFrame
-	  _(warning: many mobile **browsers** do not have hardware acceleration)_
-	1. websocket ²
-	1. webstorage: appcache
-	1. webstorage: FileReader ³
-	1. webstorage: indexDB ² ⁴
-	1. webstorage: localStorage
-	1. webworkers ⁵
+#### [HTML5-cheatsheet1](HTML5-cheatsheet1) (_OLD_)
+- WARNING: i do not use these anymore -- left here for reference...
+- covered things like: screen orientation, audio, video, websockets and webstorage
 
-## [HTML5-cheatsheet2](HTML5-cheatsheet2)
--  WARNING: these are pretty old and i don't really use them anymore -- left here for reference...
-- covers the following demos:
-	1. AudioAPI
-	1. Audio Element (webaudio revisited -- tests): _(NOTE: this is NOT AudioAPI but the &lt;audio&gt; element)_
-	1. drag &amp; drop ¹
-	1. gamepad ⁶ _(note: it seems better to just map pad to keyboard strokes...)_
-	1. mouselock ⁶
-	1. swipegesture ²: sketchpad + noclickdelay
+#### [HTML5-cheatsheet2](HTML5-cheatsheet2) (_OLD_)
+- WARNING: i do not use these anymore -- left here for reference...
+- covered demos like: audio, drag &amp; drop, pointerlock and swipegesture
 
-note: all files are written static (i.e. plain ol' HTML) so they can be looked up or run as-is.
-1. copy of reference source (or close to it) for testing purposes
-1. terse and was written to be re/usable
-1. WARNING: Safari does NOT support FileReader API (but WebKit [on Chrome] and Mozilla does).
-1. WARNING: WebKit has a slightly different handler requirement after accessing DB with no results
-1. WARNING: WebKit does NOT support subworkers (but Mozilla does).  Mozilla does NOT support SharedWorker (but WebKit does).
-1. Work In Progress... coming soon
-
-#### HTML5-cheatsheet3[](HTML5-cheatsheet3) _(coming soon)_
-- covers the following topics:
+## HTML5-cheatsheet3[](HTML5-cheatsheet3)
+- was going to cover the following topics:
 	- emscripten
 		- web assembly
 		- webgl2
 		- multi-threading
 		- file manager (async and local storage)
+- much of this work was plowed into:
+	- _[UnrealEngineHTML5](https://github.com/UnrealEngineHTML5/Documentation)_
+		- _run your UE4 projects in the (latest) browsers!_
+		- i helped maintained this for a handful of years until EPIC has ended official support of the HTML5 platform the end of 2019
+
 
 **external links:**
-- _[HTML 5 Rocks](http://www.html5rocks.com/en/) - the mother load of all things HTML5_
-- _[HTML 5 Canvas Tutorials](http://www.html5canvastutorials.com/) - excellent crash course on using the canvas_
-- _[HTML 5 Demos and Examples](http://html5demos.com/) - a nice collection of little HTML5 howtos_
-- _[Stories In Flight: HTML5/CSS3 Cheatsheet](http://www.storiesinflight.com/html5/) - a nice and little and easy to read summary of HTML5 features_
-- _[HTML5 differences from HTML4](http://www.w3.org/TR/html5-diff/) - a very terse but good read on HTML5 differences_
+- _[HTML5 Gamepad Tester](https://html5gamepad.com/) - fantastic way to test your gamepads on your OS on your browser_
+- _[three.js](https://threejs.org/) - the mother load of all things 3D in HTML5_
+- _[d3js.js](https://d3js.org/) - the mother load of all things data-driven-docs in HTML5_
+
+<!--
+[//]- _[tipboard](http://allegro.tech/tipboard/)_
+[//]- _[grafana](https://grafana.com/)_
+-->
+
+#### favorite browser extensions:
+- _[uBlock Origin](https://github.com/gorhill/uBlock)_
+- _[Video Speed Controller](https://github.com/codebicycle/videospeed)_
+- _[Markdown Viewer](https://github.com/simov/markdown-viewer)_
+- _[Dark Mode](https://mybrowseraddon.com/dark-mode.html)_
+
+<!--
+[//]- _[BypassPaywalls](https://mybrowseraddon.com/dark-mode.html)_
+[//]- _[Video DownloadHelper](http://www.downloadhelper.net/)_
+-->
+
+#### favorite mobile browser:
+- _Firefox Focus_
+	- _for [Android](https://play.google.com/store/apps/details?id=org.mozilla.focus&hl=en_US)_
+	- _for [iOS](https://apps.apple.com/us/app/firefox-focus-privacy-browser/id1055677337)_
 
 * * *
 
