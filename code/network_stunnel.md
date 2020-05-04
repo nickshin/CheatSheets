@@ -19,7 +19,7 @@ running commands that require super user access:
 | **ifconfig** | assigning an IP address to the new device |
 | **pty** | pseudo terminal |
 
-These are all basically
+These are all basically ssl /
 [ssh-based virtual private network](http://www.freebsd.org/cgi/man.cgi?query=ssh#SSH-BASED_VIRTUAL_PRIVATE_NETWORKS)
 tunnelling.  And it seemed like an overkill solution for what I needed.
 
@@ -31,7 +31,8 @@ to make this work.
 works the same way.  But "stunnel is running as it's own daemon, you can use
 this port forward without first establishing the ssh connection." _-- [stunnel.org](http://www.stunnel.org/examples/generic_tunnel.html)_
 
-_( A fun read: [SSH Tunnels: Bypass (Almost) Any Firewall](http://polishlinux.org/apps/ssh-tunneling-to-bypass-corporate-firewalls/).)_
+_( A fun read: [SSH Tunnels: Bypass (Almost) Any Firewall](http://polishlinux.org/apps/ssh-tunneling-to-bypass-corporate-firewalls/)
+-- [ [archive.org](https://web.archive.org/web/20150504095900/http://polishlinux.org/apps/ssh-tunneling-to-bypass-corporate-firewalls/) ].)_
 
 * * *
 
@@ -78,6 +79,18 @@ Then, execute on the respective computers:
 user@server:~# stunnel stunnel_server.conf
 user@client:~# stunnel stunnel_client.conf
 ```
+
+* * *
+
+## [Mosh](https://mosh.org)
+
+a UDP based, roaming safe, SSH-friendly based network connection system, 
+- this is going to superceed my stunnel needs...
+	- (good for single port use -- not so much if you're going to be opening more
+	   than one -- which they said they are working on...)
+
+the Mosh web page is very detailed and has all the docs up that are pretty much
+straightforward to follow and use.  HIGHLY RECOMMENDED !!!
 
 * * *
 

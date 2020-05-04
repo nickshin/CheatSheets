@@ -280,6 +280,8 @@ ruby network_notes1.rb code
 	- behind firewall _(STUN TURN ICE)_
 
 **my notes** on:
+- [wireguard.md](code/network_wireguard.md)
+- [openvpn.md](code/network_openvpn.md)
 - [stunnel.md](code/network_stunnel.md)
 - [smtp.md](code/network_smtp.md)
 
