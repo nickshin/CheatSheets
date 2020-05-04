@@ -29,8 +29,8 @@ and, is from - <https://github.com/nickshin/CheatSheets/>
 
 #### XMPP
 - [node-xmpp](https://github.com/node-xmpp/node-xmpp)
-	- [node-xmpp-server](https://github.com/node-xmpp/node-xmpp-server)
-	- [node-xmpp-client](https://github.com/node-xmpp/node-xmpp-client)
+	- [server](https://github.com/xmppjs/xmpp.js/tree/master/server)
+	- [client](https://github.com/xmppjs/xmpp.js/tree/master/packages/client)
 - [node-simple-xmpp](https://github.com/simple-xmpp/node-simple-xmpp)
 
 #### TLS(SSL)
@@ -40,20 +40,198 @@ and, is from - <https://github.com/nickshin/CheatSheets/>
 	
 	- [https://](http://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)
 	- [amqps://](https://github.com/postwait/node-amqp#connection-options-and-url)
-	- [xmpps://](https://github.com/node-xmpp/node-xmpp-server/blob/master/examples/s2s_echo_tls.js)
+	- [xmpps://](https://github.com/xmppjs/xmpp.js/tree/master/packages/tls)
+
+* * *
+## Let's Encrypt
+
+### USING: [acme.sh](https://github.com/acmesh-official/acme.sh/)
+- use acme.sh (written in shell code only) with many **free or premium** dns providers
+- excellent README file -- the following are notable excerpts and findings...
+
+#### acme.sh: LE certs
+
+```sh
+# example of main and subdomains
+acme.sh --issue -d example.com -d www.example.com
+```
+
+#### acme.sh: when port 80 is blocked
+
+##### acme.sh: LE certs - DNS challenge
+
+- when using "supported dns providers" (that can add TXT records via an API):
+
+```sh
+acme.sh --issue --dns <supported_dns_provider> -d example.com -d www.example.com
+```
+
+	- just in case this is not obvious:
+		- FOR ONLY PERSONAL USE - DO NOT USE IN PRODUCTION
+		- should use **hardened** steps instead (next)
+
+- for **hardened domain name providers** (no API access), will need to do this manually.
+	- login to your domain name provider
+	- head to domain's DNS and nameserver settings
+	- get ready to add TXT record(s)
+		- follow instructions when command (below) is executed
+		- you will need to add TXT records for each (main and sub) domains used in the command
+
+```sh
+acme.sh --issue --dns -d example.com -d www.example.com
+
+# accept IP recording
+
+# setup the first of two TXT -- i.e.
+# NAME:     _acme-challenge
+# CONTENT:  random-string-of-characters
+
+# setup the second of two TXT -- i.e.
+# NAME:     _acme-challenge.www
+# CONTENT:  random-string-of-characters
+```
+
+##### acme.sh: LE certs - [DNS alias mode](https://github.com/acmesh-official/acme.sh/wiki/DNS-alias-mode) -- !!! DOES NOT WORK !!!
+
+- tried using this a number of ways with CNAME pointing to the alias domain (as instructed by the docs)
+- but it seems that LE is looking AT the TXT from the original domain instead of the CNAME'd alias
+- **!!! DOES NOT WORK !!!**
+
+##### acme.sh: LE certs - ALPN challenge (i.e. :443) -- !!! DO NOT USE THIS !!!
+
+- while "staging" works:
+
+```sh
+./acme.sh --alpn --issue -d example.com -d www.example.com -w /usr/share/nginx/html/example-com/ --debug --staging
+```
+
+- officially, `--alpn` **IS NOT SUPPORTED** by Let's Encrypt ... when obtaining "live" certs (i.e. dropping `--staging` parameter):
+	- there are all kinds of posts about :443 not being secure with shared hosting servers and vulnerabilies found via this mechanism...
+	- so again, **DO NOT USE THIS** -- use [DNS challenge](#acmesh-le-certs---dns-challenge) instead (above)
+
+##### acme.sh: install LE certs
+
+```sh
+# housekeeping
+dst='/etc/letsencrypt/live/mysubdomain.mydomain.tld'
+mkdir -p $dst
+
+# install (locally):
+acme.sh --install-cert \
+		--domain mysubdomain.mydomain.tld \
+		--cert-file $dst/cert/cert.pem \
+		--key-file $dst/keyfile/key.pem \
+		--ca-file $dst/cert/cert.pem \
+		--fullchain-file $dst/fullchain/fullchain.pem \
+		--reloadcmd "sudo systemctl reload nginx.service"
+
+# copy up manually (almost the same as above):
+src='~/.acme.sh/mysubdomain.mydomain.tld'
+cp $src/ca.cer $dst/ca.pem
+cp $src/fullchain.cer $dst/fullchain.pem
+cp $src/mysubdomain.mydomain.tld.cer $dst/cert.pem
+cp $src/mysubdomain.mydomain.tld.key $dst/key.pem
+
+# fix permissions
+cd $dst
+chmod 544 ca.pem fullchain.pem cert.pem
+chmod 500 key.pem
+
+# reload
+systemctl reload nginx
+systemctl reload apache
+```
+
+### USING: certbot
+
+see: https://certbot.eff.org/instructions
+- FANTASTIC bare bones howto for a handful of software (e.g. nginx and apache)
+  on a number of platforms (e.g. linux, macos)
+
+see: https://certbot.eff.org/hosting_providers/
+- for **support status** of a large list of hosting providers
+
+
+and, https://certbot.eff.org/docs/using.html
+- the **user guide** it quite thorough
+- the following are notable excerpts and findings...
+
+#### certbot: LE certs
+
+```sh
+# multiple webroot and (main/sub) domain names
+certbot certonly --webroot -w /var/www/example -d www.example.com -d example.com -w /var/www/other -d other.example.net -d another.other.example.net
+```
+
+#### certbot: LE certs - DNS challenge (i.e. when port 80 is blocked)
+
+- login to your domain name provider
+- head to domain's DNS and nameserver settings
+- get ready to add TXT record(s)
+	- follow instructions when command (below) is executed
+	- you will need to add TXT records for each (main and sub) domains used in the command
+
+```sh
+certbot --manual --preferred-challenges dns certonly -d example.com -d www.example.com
+
+# accept IP recording
+
+# setup the first of two TXT -- i.e.
+# NAME:     _acme-challenge
+# CONTENT:  random-string-of-characters
+
+# setup the second of two TXT -- i.e.
+# NAME:     _acme-challenge.www
+# CONTENT:  random-string-of-characters
+```
+
+- interesting example of using pre and post validation hooks
+	- https://certbot.eff.org/docs/using.html#pre-and-post-validation-hooks
+	- under the `Example usage for DNS-01`
+		- writing custom authentication script for **hardened domain name providers** might be possible here...
+
+#### certbot: handy commands
+
+- view a list of the certificates Certbot knows about
+
+```sh
+certbot certificates
+
+# note, this list is also used when running:
+certbot renew
+```
+
+- revoking certs
+	- https://certbot.eff.org/docs/using.html#revoking-certificates
+	- reasons include: `unspecified` (default) `keycompromise`,
+	  `affiliationchanged`, `superseded`, and `cessationofoperation`
+
+```sh
+certbot revoke --cert-path /etc/letsencrypt/live/CERTNAME/cert.pem --reason keycompromise
+```
+
+## TESTING: LE SSL implementation:
+- https://www.ssllabs.com/ssltest/index.html
 
 * * *
 ## HTTPd
 
-#### setting up SSL _for Apache_
-- [HTTPD - Apache2 Web Server :: HTTPS Configuration](https://help.ubuntu.com/10.04/serverguide/C/httpd.html#https-configuration)
-_(on Ubuntu)_
+### setting up SSL
+- see [Let's Encrypt](#lets-encrypt) guide above
+- ~~[Create a Self-Signed SSL Certificate for Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-on-centos-7#step-2-create-the-ssl-certificate) (nginx)~~
+- ~~[SSL/TLS Strong Encryption: How-To](https://httpd.apache.org/docs/2.4/ssl/ssl_howto.html) (apache)~~
 
-#### .htaccess
+if need to harden - see good tips at:
+- [Nginx Web Server Security and Hardening Guide](https://geekflare.com/nginx-webserver-security-hardening-guide/)
+- [Strong SSL Security on nginx](https://raymii.org:8443/s/tutorials/Strong_SSL_Security_On_nginx.html)
+	- !!! there's a lot of good tutorials on this site !!!
+
+
+### .htaccess (_OLD_)
 - [Stupid htaccess Tricks](http://perishablepress.com/stupid-htaccess-tricks/)
 - My [network_notes2_htaccess.pl](network_notes2_htaccess.pl) to generate .htaccess files for Apache and lighttpd
 
-#### CGI configuration
+## CGI configuration
 
 ```apache
 # remember to 'chmod 755 script/executable'
@@ -61,7 +239,7 @@ _(on Ubuntu)_
 # (e.g. uploads, submissions, un-sanitized inputs, etc.)
 ```
 
-- [Apache](http://httpd.apache.org/docs/2.2/howto/cgi.html)
+#### Apache - http://httpd.apache.org/docs/2.2/howto/cgi.html
 
 ```apache
 LoadModule cgi_module modules/mod_cgi.so
@@ -92,7 +270,7 @@ LoadModule cgi_module modules/mod_cgi.so
 </Directory>
 ```
 
-- [lighttpd](http://redmine.lighttpd.net/projects/1/wiki/docs_modcgi)
+#### lighttpd - http://redmine.lighttpd.net/projects/1/wiki/docs_modcgi
 
 ```nginx
 # /etc/lighttpd/conf-available/10-cgi.conf
@@ -113,10 +291,10 @@ $HTTP["url"] =~ "^/cgi-bin/" {
 }
 ```
 
-- [Nginx](http://wiki.nginx.org/Fcgiwrap)
-	- NOTE: Nginx cannot directly execute external programs (CGI), it will run them via fcgiwrap.
-		- but, be aware that it's still not "fast"CGI (even if it was writen as a FastCGI bin)
-		- fcgiwrap will terminate the execution -- thus "CGI-bin" behavior
+#### Nginx - http://wiki.nginx.org/Fcgiwrap
+- NOTE: Nginx cannot directly execute external programs (CGI), it will run them via fcgiwrap.
+	- but, be aware that it's still not "fast"CGI (even if it was writen as a FastCGI bin)
+	- fcgiwrap will terminate the execution -- thus "CGI-bin" behavior
 
 ```nginx
 # /etc/nginx/sites-available/default
@@ -140,31 +318,35 @@ location /fastCGI/ {
 }
 ```
 
-#### FastCGI configuration
-- in general, web servers connects to spawned processes (can be remote)
-	- unlike apache, **lighttpd [and] nginx does not automatically** spawn [blind] FastCGI processes
+## FastCGI configuration
+in general, web servers connects to spawned processes (can be remote)
+- unlike apache, **lighttpd [and] nginx does not automatically** spawn [blind] FastCGI processes
 	([nginx.org](http://wiki.nginx.org/FcgiExample#Spawning_a_FastCGI_Process))
-	- so, remember to **start a sufficient number instances** of the program to handle concurrent requests,
-		and these programs remain running to handle further incoming requests (i.e. does not exit)
-	- ensure FastCGI processes stay running -- so, just in case they die unexpectedly, use **process watchers** such as:
-		- [monit](http://mmonit.com/monit/)
-		- [supervisor](http://supervisord.org/)
-		- [perp](http://b0llix.net/perp/)
-		- [restartd](https://packages.debian.org/stable/utils/restartd)
-		- [supervise - daemontools](http://cr.yp.to/daemontools/supervise.html)
-		- [supervise - daemontools-encore](http://untroubled.org/daemontools-encore/supervise.8.html)
-		- [runsv](http://smarden.org/runit/runsv.8.html)
 
-- don't forget to:
+- so, remember to **start a sufficient number instances** of the program to handle concurrent requests,
+	and these programs remain running to handle further incoming requests (i.e. does not exit)
+
+ensure FastCGI processes stay running
+- so, just in case they die unexpectedly, use **process watchers** such as:
+	- [monit](http://mmonit.com/monit/)
+	- [supervisor](http://supervisord.org/)
+	- [perp](http://b0llix.net/perp/)
+	- [restartd](https://packages.debian.org/stable/utils/restartd)
+	- [supervise - daemontools](http://cr.yp.to/daemontools/supervise.html)
+	- [supervise - daemontools-encore](http://untroubled.org/daemontools-encore/supervise.8.html)
+	- [runsv](http://smarden.org/runit/runsv.8.html)
+
+don't forget to:
 
 ```sh
 chown -R www-data.www-data /var/www/html/fastCGI
 chmod 755 /var/www/html/fastCGI/*
 ```
 
-- _(just in case it isn't obvious)_ if ".fcgi" program is edited, pid needs to be killed to be reloaded
+and, _(just in case it isn't obvious)_ if ".fcgi" program is edited:
+- pid needs to be killed to be reloaded
 
-- [Apache](http://www.cyberciti.biz/tips/rhel-fedora-centos-apache2-external-php-spawn.html)
+#### Apache - http://www.cyberciti.biz/tips/rhel-fedora-centos-apache2-external-php-spawn.html
 
 ```apache
 # /etc/apache2/sites-available/000-default.conf
@@ -197,7 +379,7 @@ chmod 755 /var/www/html/fastCGI/*
 		- in other words, it'll be just like a simple "CGI-bin" execution
 
 
-- [lighttpd](http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModFastCGI)
+#### lighttpd - http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ModFastCGI
 
 ```nginx
 # /etc/lighttpd/conf-available/10-fastcgi.conf
@@ -238,7 +420,7 @@ fastcgi.server = (
 )
 ```
 
-- [Nginx](https://library.linode.com/web-servers/nginx/perl-fastcgi/ubuntu-12.04-precise-pangolin)
+#### Nginx - https://library.linode.com/web-servers/nginx/perl-fastcgi/ubuntu-12.04-precise-pangolin
 
 ```nginx
 # /etc/nginx/sites-available/default
@@ -286,12 +468,12 @@ server {
 [//] # ( TODO: ```                                                                      )
 -->
 
-- in general, UNIX sockets are faster as compared to TCP/IP sockets
-	- but, UNIX sockets are local only
-	- while TCP/IP sockets can be distributed (e.g. **load balancing** configurations)
-		- [Load Balancing with Apache](http://bradley-holt.com/2011/03/load-balancing-with-apache/)
-		- [How to configure multiple load balanced fastcgi back-ends with lighty](http://redmine.lighttpd.net/projects/1/wiki/HowToSetupLoadBalancedFCGIBackends)
-		- [Using nginx as HTTP load balancer](http://nginx.org/en/docs/http/load_balancing.html)
+in general, UNIX sockets are faster (as compared to TCP/IP sockets)
+1. but, UNIX sockets are local only
+2. while TCP/IP sockets can be distributed (e.g. **load balancing** configurations)
+	- [Load Balancing with Apache](http://bradley-holt.com/2011/03/load-balancing-with-apache/)
+	- [How to configure multiple load balanced fastcgi back-ends with lighty](http://redmine.lighttpd.net/projects/1/wiki/HowToSetupLoadBalancedFCGIBackends)
+	- [Using nginx as HTTP load balancer](http://nginx.org/en/docs/http/load_balancing.html)
 
 * * *
 ## AMQP

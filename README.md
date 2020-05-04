@@ -2,7 +2,7 @@
 [//] # (LEFT OFF ON: search for TODO                                          )
 [//] # (LEFT OFF ON: search for TODO                                          )
 
-[//] # (network_notes1 - exlixir golang scala                                 )
+[//] # (network_notes1 - exlixir golang rust scala                            )
 [//] # (docker_cheatsheet2 - latest                                           )
 [//] # (docker external - favorite dockerfiles                                )
 [//] # (network_notes3 - concurrency                                          )
@@ -254,6 +254,7 @@ ruby network_notes1.rb code
 		- ws(s)://
 		- AMQP(s)://
 		- XMPP(s)://
+	- Let's Encrypt
 	- HTTPd
 		- SSL
 		- CGI / FastCGI
@@ -266,7 +267,7 @@ ruby network_notes1.rb code
 			- HTTP binding
 			- admin
 
-## [network_notes2_htaccess.pl](code/network_notes2_htaccess.pl)
+## [network_notes2_htaccess.pl](code/network_notes2_htaccess.pl) (_OLD_)
 - generates .htaccess files (for authentication access) for
 	- Apache
 	- lighttpd

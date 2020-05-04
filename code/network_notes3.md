@@ -21,18 +21,18 @@ and, is from - <https://github.com/nickshin/CheatSheets/>
 
 ## WebSockets
 
-- programming language implimentations
-	- (perl) [Net::Async::WebSocket::Server](http://search.cpan.org/dist/Net-Async-WebSocket/lib/Net/Async/WebSocket/Server.pm)
-	- (python) [pywebsocket](http://code.google.com/p/pywebsocket/)
-	- (ruby) [em-websocket](https://github.com/igrigorik/em-websocket)
+- examples written in: _(coming soon)_
+	- perl
+	- python
+	- ruby
 
 * * *
 
 ## WebRTC
 
 my notes on compiling WebRTC _(as well as libWebSockets and libCurl)_ with zlib and OpenSSL:
-- [https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/ThirdParty/libcurl/BUILD.EPIC.sh](https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/ThirdParty/libcurl/BUILD.EPIC.sh)
-	- _you will need to sign up for Unreal Engine access..._
+- https://github.com/EpicGames/UnrealEngine/blob/4.16/Engine/Source/ThirdParty/libcurl/BUILD.EPIC.sh
+	- WARNING: _you will need to sign up for Unreal Engine access..._
 	- _will copy it here one of these days ... please stand by ..._
 
 * * *
